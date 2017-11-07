@@ -60,6 +60,10 @@ def typedef_underlying_declaration(cursor):
 
 
 def fully_qualified_name(thing, parent_cursor=None):
+    if thing.kind == CursorKind.TRANSLATION_UNIT:
+        # Happens e.g. for unscoped enums, which pass their parent_cursor
+        return ""
+
     cursor = getattr(thing, "cursor", thing) # thing may be a token
     if thing is not cursor and cursor.referenced is not None:
         # cursor associated with token may be a type ref
