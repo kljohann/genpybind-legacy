@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+
+import os
+
+from waflib import Logs
+import genpybind_waf
+
+
+def options(opt):
+    opt.load("python")
+    opt.load("compiler_cxx")
+
+    opt.load("waf_unit_test")
+    opt.load("pytest")
+
+
+def configure(cfg):
+    cfg.load("python")
+    cfg.load("compiler_cxx")
+    cfg.check_python_version((2, 7))
+    cfg.check_python_headers()
+    genpybind_waf.configure(cfg)
+
+    cfg.load("waf_unit_test")
+    cfg.load("pytest")
+
+    cfg.check(
+        compiler="cxx",
+        features="cxx pyext",
+        uselib_store="PYBIND11",
+        mandatory=True,
+        header_name="pybind11/pybind11.h",
+        cxxflags="-std=c++11",
+    )
+
+    cfg.find_program("pytest", mandatory=True, var="PYTEST")
+
+
+def test_summary(bld):
+    if bld.options.no_tests:
+        return
+
+    SUCCESS = 0
+    NO_TESTS = 5
+
+    any_failed = False
+    for (f, code, out, err) in getattr(bld, "utest_results", []):
+        rel = os.path.relpath(f, bld.path.abspath())
+
+        color = {SUCCESS: "GREEN"}.get(code, "RED")
+
+        if code != SUCCESS:
+            any_failed = True
+
+        summary = out.strip().rsplit("\n", 1)[-1]
+        Logs.pprint(color, "{} -> {}".format(rel, summary))
+
+        if code not in [SUCCESS, NO_TESTS]:
+            Logs.pprint("NORMAL", out)
+
+        if err.strip():
+            Logs.pprint("PINK", err)
+
+    if any_failed:
+        bld.fatal("failed or missing tests")
+
+
+def build(bld):
+    for node in bld.path.ant_glob("*.cpp"):
+        target = os.path.splitext(node.name)[0]
+        pytarget = "py{0}".format(target)
+        header = node.parent.find_node("{0}.h".format(target))
+        test = node.parent.find_node("{0}_test.py".format(target))
+
+        bld(
+            target=target,
+            source=node,
+            features="cxx cxxshlib",
+            export_includes=".",
+            cxxflags="-std=c++11",
+            install_path=None,
+        )
+
+        bld(
+            target=pytarget,
+            source=header,
+            features="genpybind cxx cxxshlib pyext",
+            use=[target, "PYBIND11"],
+            install_path=None,
+        )
+
+        bld(
+            pytest_source=test,
+            features="pytest",
+            use=pytarget,
+            ut_str="${PYTEST} -q ${SRC}",
+        )
+
+    bld.add_post_fun(test_summary)
