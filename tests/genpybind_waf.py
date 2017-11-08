@@ -17,7 +17,26 @@ def configure(cfg):
     cfg.load('compiler_cxx')
     cfg.load('python')
     cfg.check_python_version(minver=(2, 7))
-    cfg.check_python_headers()
+    cfg.find_program('genpybind', var='GENPYBIND')
+    cfg.find_program('genpybind-parse', var='GENPYBIND_PARSE')
+    if not cfg.env.LLVMCONFIG:
+        cfg.find_program('llvm-config', var='LLVMCONFIG')
+
+    # If genpybind-parse does not live in same prefix as llvm-config
+    # we have to provide the -resource-dir argument.
+
+    genpybind_parse_path = os.path.dirname(cfg.env.GENPYBIND_PARSE[0])
+    llvm_config_path = os.path.dirname(cfg.env.LLVMCONFIG[0])
+    if genpybind_parse_path != llvm_config_path:
+        version, libdir = cfg.cmd_and_log(
+            cfg.env.LLVMCONFIG + ["--version", "--libdir"],
+            output=Context.STDOUT, quiet=Context.STDOUT,
+        ).strip().split("\n")
+        resource_dir = os.path.join(libdir, "clang", version)
+        if not os.path.exists(resource_dir):
+            cfg.fatal("could not find resource dir ({} does not exist)".format(
+                resource_dir))
+        cfg.env.CLANG_RESOURCE_DIR = resource_dir
 
 def flatten(it):
     result = []
@@ -66,16 +85,25 @@ class genpybind(Task.Task):
         if not self.inputs:
             return
 
+        bld = self.generator.bld
         relative_includes = self._inputs_as_relative_includes()
         is_cxx = "cxx" in self.features
 
+        tool_path = bld.env.GENPYBIND
+        genpybind_parse = bld.env.GENPYBIND_PARSE
+        resource_dir = bld.env.CLANG_RESOURCE_DIR
+
+        if not tool_path:
+            bld.fatal("genpybind executable not found")
+
         args = flatten([
-            "genpybind",
+            tool_path,
 
             # options for genpybind
             "--genpybind-module", self.module,
-            ["--genpybind-tag", self.genpybind_tags] if self.genpybind_tags else [],
-            ["--genpybind-include", relative_includes] if relative_includes else [],
+            ["--genpybind-tag"] + self.genpybind_tags if self.genpybind_tags else [],
+            ["--genpybind-include"] + relative_includes if relative_includes else [],
+            ["--genpybind-parse"] + genpybind_parse if genpybind_parse else [],
 
             "--",
             # headers to be processed by genpybind
@@ -89,6 +117,9 @@ class genpybind(Task.Task):
              for flag in self.env["CXXFLAGS" if is_cxx else "CFLAGS"]],
             ["-I{}".format(n.abspath()) for n in self._include_paths()],
             ["-D{}".format(p) for p in self.env.DEFINES],
+
+            # point to clang resource dir, if specified
+            ["-resource-dir={}".format(resource_dir)] if resource_dir else [],
         ])
 
         # For debugging / log output
@@ -96,13 +127,13 @@ class genpybind(Task.Task):
 
         # genpybind emits generated code to stdout
         try:
-            stdout, stderr = self.generator.bld.cmd_and_log(
-                args, cwd=self.generator.bld.variant_dir,
+            stdout, stderr = bld.cmd_and_log(
+                args, cwd=bld.variant_dir,
                 output=Context.BOTH, quiet=Context.BOTH)
             if stderr.strip():
                 Logs.debug("non-fatal warnings during genbybind run:\n{}".format(stderr))
         except Errors.WafError as e:
-            self.generator.bld.fatal(
+            bld.fatal(
                 "genpybind returned {code} during the following call:"
                 "\n{command}\n\n{stdout}\n\n{stderr}".format(
                     code=e.returncode,
