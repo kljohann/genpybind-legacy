@@ -18,6 +18,7 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--genpybind-module", dest="module", required=True)
+    parser.add_argument("--genpybind-parse", dest="executable", default="genpybind-parse")
     parser.add_argument("--genpybind-docstring", dest="docstring")
     parser.add_argument("--genpybind-include", nargs="+", dest="includes")
     parser.add_argument("--genpybind-isystem", nargs="+", dest="isystem")
@@ -42,7 +43,7 @@ def main():
             if rest[0] == "--":
                 del rest[0]
             status = subprocess.call(
-                ["genpybind-parse", "-output-file", ast_file] + rest, stdout=sys.stderr)
+                [args.executable, "-output-file", ast_file] + rest, stdout=sys.stderr)
             if status != 0:
                 parser.error("genpybind-parse returned status {} when called with\n{}".format(
                     status, rest))
