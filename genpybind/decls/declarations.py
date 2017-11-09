@@ -95,8 +95,8 @@ class Declaration(object):
     def set_visible(self, value=True):
         self._visibility = utils.convert_none(bool, value)
 
-    def set_hidden(self, value=True):
-        self._visibility = utils.convert_none(operator.not_, value)
+    def set_hidden(self):
+        self._visibility = False
 
     @property
     def implicit(self):
