@@ -55,7 +55,7 @@ class Callable(Declaration):
 
     def set_keep_alive(self, *values):
         # [return value, self reference, arguments...]
-        prefix = [None, "this"]
+        prefix = ["return", "this"]
         self._keep_alive = [
             self._argument_index(value, prefix=prefix) for value in values
         ]
