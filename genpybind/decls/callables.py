@@ -39,7 +39,7 @@ class Callable(Declaration):
             return value
 
         raise RuntimeError(
-            "{!} was given invalid argument specifier {!}".format(
+            "{!r} was given invalid argument specifier {!r}".format(
                 self, value))
 
     @property
