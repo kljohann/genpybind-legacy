@@ -72,7 +72,7 @@ class Callable(Declaration):
         return tuple(self._required)
 
     def set_required(self, *values):
-        self._required = map(self.argument_index, values)
+        self._required = map(self._argument_index, values)
 
     def argument_types(self):
         return [tp.fully_qualified_name for tp in self.cursor.type.argument_types()]
