@@ -129,7 +129,7 @@ class Callable(Declaration):
             args.append("py::arg({name}){noconvert}{required}{value}".format(
                 name=quote(child.spelling),
                 noconvert=".noconvert()" if ii in self.noconvert else "",
-                required=".required()" if ii in self.required else "",
+                required=".none(false)" if ii in self.required else "",
                 value=default_value,
             ))
         return args
