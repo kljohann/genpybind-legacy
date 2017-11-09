@@ -1,5 +1,5 @@
 from .. import cutils, utils
-from ..utils import join_arguments
+from ..utils import join_arguments, quote
 from .methods import Method
 
 
@@ -33,6 +33,7 @@ class Constructor(Method):
             parent=parent,
             args=join_arguments(
                 "py::init<{}>()".format(join_arguments(self.argument_types())),
+                quote(self.cursor.brief_comment),
                 self.arguments(),
             )
         )
