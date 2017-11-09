@@ -29,9 +29,6 @@ class FieldOrVar(Declaration):
     def set_readonly(self, value=True):
         self.set_writable(not value)
 
-    def set_readwrite(self, value=True):
-        self.set_writable(value)
-
     def is_field_or_static(self):
         return cutils.first_parent_by_kind(
             self.cursor, [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL]) is not None
