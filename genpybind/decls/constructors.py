@@ -19,6 +19,10 @@ class Constructor(Method):
     def set_implicit_conversion(self, value=True):
         self._implicit_conversion = bool(value)
 
+    def set_return_value_policy(self, value):
+        raise RuntimeError(
+            "return_value_policy not supported for constructors")
+
     def statements(self, parent, registry):
         if self.implicit_conversion:
             yield (self, parent)
@@ -35,6 +39,7 @@ class Constructor(Method):
                 "py::init<{}>()".format(join_arguments(self.argument_types())),
                 quote(self.cursor.brief_comment),
                 self.arguments(),
+                self.policies(),
             )
         )
 
