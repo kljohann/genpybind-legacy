@@ -10,6 +10,8 @@ Parent::~Parent() { ++destroyed; }
 int Parent::created = 0;
 int Parent::destroyed = 0;
 
+Parent::Parent(Child *child) : Parent() {}
+
 void Parent::sink(Child *child) {}
 void Parent::sink_keep_alive(Child *child) {}
 void Parent::sink_keep_alive_plain(Child *child) {}

@@ -45,6 +45,26 @@ def test_sink_unannotated():
     del p
     assert parents.alive == 0
 
+def test_ctor_keep_alive():
+    children.reset()
+    parents.reset()
+
+    assert children.created == 0
+    assert children.destroyed == 0
+    assert children.alive == 0
+    assert parents.alive == 0
+    p = m.Parent(m.Child())
+    assert children.created == 1
+    assert children.destroyed == 0
+    assert children.alive == 1
+    assert parents.alive == 1
+
+    del p
+    assert parents.alive == 0
+    assert children.created == 1
+    assert children.destroyed == 1
+    assert children.alive == 0
+
 def test_sink_keep_alive():
     children.reset()
     parents.reset()

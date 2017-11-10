@@ -21,6 +21,9 @@ struct GENPYBIND(visible) Parent {
   GENPYBIND(readonly)
   static int destroyed;
 
+  GENPYBIND(keep_alive(this, child))
+  Parent(Child *child);
+
   void sink(Child *child);
 
   GENPYBIND(keep_alive(this, child))
