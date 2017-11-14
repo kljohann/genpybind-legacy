@@ -92,7 +92,7 @@ def fully_qualified_name(thing, parent_cursor=None):
             break
         parts.append(parent_cursor.spelling)
         parent_cursor = parent_cursor.semantic_parent
-    return "::".join(reversed(filter(None, parts)))
+    return "::".join(reversed([p for p in parts if p]))
 
 
 def fully_qualified_expression(cursor):
@@ -101,7 +101,7 @@ def fully_qualified_expression(cursor):
     for token in get_tokens_with_whitespace(cursor):
         # FIXME: Handle leading token.spelling == "::"
         if token.kind == TokenKind.IDENTIFIER:
-            if isinstance(current[0], basestring):
+            if utils.is_string(current[0]):
                 output.append(current)
                 current = [token]
             else:
@@ -112,7 +112,7 @@ def fully_qualified_expression(cursor):
 
     for tokens in output:
         assert len(tokens) > 0
-        if not isinstance(tokens[0], basestring):
+        if not utils.is_string(tokens[0]):
             tokens[0] = fully_qualified_name(tokens[0])
 
     return "".join(utils.flatten(output))

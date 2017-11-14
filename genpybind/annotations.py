@@ -61,7 +61,8 @@ class Annotations(collections.Sequence):
                 append(elem.id, [])
             elif isinstance(elem, ast.Call):
                 arguments = []
-                if elem.kwargs is not None or elem.starargs is not None:
+                if any(getattr(elem, attr, None)
+                       for attr in ["keywords", "kwargs", "starargs"]):
                     raise RuntimeError(
                         "star args and keyword arguments are not supported "
                         "in {!r}".format(annotation))
@@ -92,7 +93,13 @@ class Annotations(collections.Sequence):
             if child.kind != CursorKind.ANNOTATE_ATTR:
                 continue
             # TODO: .displayname or .spelling ? does it matter?
-            text = child.spelling.decode("utf-8")
+            text = child.spelling
+            try:
+                string_type = unicode # Python 2
+            except NameError:
+                string_type = str # Python 3
+            if not isinstance(text, string_type):
+                text = text.decode("utf-8")
             if not text.startswith(LOZENGE):
                 continue
             text = text[len(LOZENGE):]

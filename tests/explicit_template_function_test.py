@@ -4,7 +4,10 @@ import pyexplicit_template_function as m
 def test_free_function_int():
     v = m.frobnicate(5)
     assert v == 37
-    assert type(v) in [int, long]
+    try:
+        assert isinstance(v, (int, long))
+    except NameError: # Python 3 does not have 'long'
+        assert isinstance(v, int)
 
 def test_free_function_float():
     v = m.frobnicate(5.0)

@@ -22,7 +22,7 @@ def test_dynamic_attr():
     x.some_function()
     x.existing_field = False
     x.something = 12
-    assert x.__dict__.keys() == ["something"]
+    assert list(x.__dict__.keys()) == ["something"]
     assert x.something == 12
     x.what = 5
     assert sorted(x.__dict__.keys()) == ["something", "what"]

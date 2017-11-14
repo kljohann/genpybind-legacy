@@ -31,7 +31,7 @@ class Callable(Declaration):
     def _argument_index(self, value, prefix=None):
         arguments = (prefix or []) + list(self.cursor.get_arguments())
         for index, elem in enumerate(arguments):
-            if elem is not None and not isinstance(elem, basestring):
+            if elem is not None and not utils.is_string(elem):
                 assert elem.kind == CursorKind.PARM_DECL
                 elem = elem.spelling
             if elem == value:

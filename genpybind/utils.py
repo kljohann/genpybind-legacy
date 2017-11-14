@@ -6,11 +6,18 @@ import json
 import re
 
 
+def is_string(text):
+    try:
+        return isinstance(text, (unicode, str))
+    except NameError:
+        return isinstance(text, str)
+
+
 def quote(text):
     """Returns a quoted representation of the given string, to be used
     as a C(++) string literal."""
     text = text or ""
-    if not isinstance(text, basestring):
+    if not is_string(text):
         raise TypeError("expected string")
     return json.dumps(text)
 

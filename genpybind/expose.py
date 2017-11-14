@@ -57,7 +57,7 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     def handle_return(declaration, value, postamble_only=False):
         if value is None:
             return
-        elif isinstance(value, basestring):
+        elif utils.is_string(value):
             statements.append(value)
             return
         declaration, _ = value
