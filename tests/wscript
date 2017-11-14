@@ -15,10 +15,10 @@ def options(opt):
     opt.load("pytest")
 
     opt.add_option(
-        '--pybind-includes', type='string',
-        default='', dest='pybind_includes',
-        help='''path to the directory where the pybind11 includes are,
-        e.g., /path/to/pybind11/include''')
+        "--pybind11-includes", type="string",
+        default=os.environ.get("PYBIND11_INCLUDES", ""), dest="pybind11_includes",
+        help="""path to the directory where the pybind11 includes are,
+        e.g., /path/to/pybind11/include""")
 
 
 def configure(cfg):
@@ -38,7 +38,7 @@ def configure(cfg):
         mandatory=True,
         header_name="pybind11/pybind11.h",
         cxxflags="-std=c++11",
-        includes=cfg.options.pybind_includes,
+        includes=cfg.options.pybind11_includes,
     )
 
     cfg.find_program(

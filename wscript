@@ -39,7 +39,11 @@ def configure(cfg):
     )
 
     clang_libtype = 'lib' if cfg.options.clang_use_shared else 'stlib'
-    for lib in [
+    cfg.check(
+        features="cxx cxxprogram",
+        use="LLVM",
+        uselib_store="CLANG",
+        **{clang_libtype: [
             "clangFrontend",
             "clangDriver",
             "clangSema",
@@ -53,13 +57,7 @@ def configure(cfg):
             "clangTooling",
             "clangSema",
             "clangToolingCore",
-    ]:
-        cfg.check(
-            features="cxx cxxprogram",
-            use="LLVM",
-            uselib_store="CLANG",
-            **{clang_libtype: lib},
-        )
+        ]})
     var = "{}PATH_CLANG".format(clang_libtype.upper())
     if not cfg.env[var]:
         cfg.env[var] = cfg.env.LIBPATH_LLVM
