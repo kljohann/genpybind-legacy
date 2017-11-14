@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from clang.cindex import Cursor, CursorKind, TypeKind, TokenGroup, TokenKind
 
 from . import utils
