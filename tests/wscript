@@ -40,7 +40,10 @@ def configure(cfg):
         includes=cfg.options.pybind_includes,
     )
 
-    cfg.find_program("pytest", mandatory=True, var="PYTEST")
+    cfg.find_program(
+        "pytest{}".format(cfg.env.PYTHON_VERSION[0]), mandatory=False, var="PYTEST")
+    if not cfg.env.PYTEST:
+        cfg.find_program("pytest", mandatory=True, var="PYTEST")
 
 
 def test_summary(bld):
