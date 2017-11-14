@@ -1,13 +1,9 @@
 from __future__ import unicode_literals
 
-from clang.cindex import CursorKind
-
 from ..utils import quote
 from .. import cutils
 from .declarations import Declaration
-from .enums import Enum
 from .gather import gather_declarations
-from .klasses import Klass
 
 
 class Typedef(Declaration):
@@ -33,7 +29,7 @@ class Typedef(Declaration):
     def set_opaque(self, value=True):
         self._opaque = bool(value)
 
-    def set(self, name, *args):
+    def set(self, _name, *_args):
         # We already capture annotations in the ctor.
         return True
 
@@ -63,7 +59,11 @@ class Typedef(Declaration):
         assert self.opaque is False
 
         decl_cursor = self.underlying_cursor()
-        declaration, = gather_declarations(decl_cursor, default_visibility=True)
+        declarations = gather_declarations(decl_cursor, default_visibility=True)
+        if not declarations:
+            raise RuntimeError(
+                "could not load declaration when exposing {}".format(self))
+        declaration = declarations[0]
 
         self._annotations.apply_to(declaration, exclude=["opaque"])
         for result in declaration.expose(toplevel, registry):
@@ -96,7 +96,11 @@ class Typedef(Declaration):
             return
 
         decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
-        declaration, = gather_declarations(decl_cursor, default_visibility=True)
+        declarations = gather_declarations(decl_cursor, default_visibility=True)
+        if not declarations:
+            raise RuntimeError(
+                "could not load declaration when exposing {}".format(self))
+        declaration = declarations[0]
         declaration.set_expose_as(self.expose_as)
 
         registry.register(decl_cursor, self)

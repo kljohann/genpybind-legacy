@@ -10,41 +10,41 @@ from .callables import Callable, METHOD_KINDS
 _OPERATORS = {
     (key, 1 + expr.count("r")):(names, expr)
     for (names, key, expr) in [
-            (("sub", "rsub"), "operator-", "l - r"),
-            (("add", "radd"), "operator+", "l + r"),
-            (("mul", "rmul"), "operator*", "l * r"),
-            (("truediv", "rtruediv"), "operator/", "l / r"), # Python 3
-            (("div", "rdiv"), "operator/", "l / r"), # Python 2
-            (("mod", "rmod"), "operator%", "l % r"),
-            (("lshift", "rlshift"), "operator<<", "l << r"),
-            (("rshift", "rrshift"), "operator>>", "l >> r"),
-            (("and", "rand"), "operator&", "l & r"),
-            (("xor", "rxor"), "operator^", "l ^ r"),
-            (("eq", "eq"), "operator==", "l == r"),
-            (("ne", "ne"), "operator!=", "l != r"),
-            (("or", "ror"), "operator|", "l | r"),
-            (("gt", "lt"), "operator>", "l > r"),
-            (("ge", "le"), "operator>=", "l >= r"),
-            (("lt", "gt"), "operator<", "l < r"),
-            (("le", "ge"), "operator<=", "l <= r"),
-            (("iadd",), "operator+=", "l += r"),
-            (("isub",), "operator-=", "l -= r"),
-            (("imul",), "operator*=", "l *= r"),
-            (("idiv",), "operator/=", "l /= r"),
-            (("imod",), "operator%=", "l %= r"),
-            (("ilshift",), "operator<<=", "l <<= r"),
-            (("irshift",), "operator>>=", "l >>= r"),
-            (("iand",), "operator&=", "l &= r"),
-            (("ixor",), "operator^=", "l ^= r"),
-            (("ior",), "operator|=", "l |= r"),
-            (("neg",), "operator-", "-l"),
-            (("pos",), "operator+", "+l"),
-            (("abs",), "abs", "std::abs(l)"),
-            (("invert",), "operator~", "(~l)"),
-            (("bool",), "operator!", "!!l"),
-            # __nonzero__
-            (("int",), "int_", "(int) l"),
-            (("float",), "float_", "(double) l"),
+        (("sub", "rsub"), "operator-", "l - r"),
+        (("add", "radd"), "operator+", "l + r"),
+        (("mul", "rmul"), "operator*", "l * r"),
+        (("truediv", "rtruediv"), "operator/", "l / r"), # Python 3
+        (("div", "rdiv"), "operator/", "l / r"), # Python 2
+        (("mod", "rmod"), "operator%", "l % r"),
+        (("lshift", "rlshift"), "operator<<", "l << r"),
+        (("rshift", "rrshift"), "operator>>", "l >> r"),
+        (("and", "rand"), "operator&", "l & r"),
+        (("xor", "rxor"), "operator^", "l ^ r"),
+        (("eq", "eq"), "operator==", "l == r"),
+        (("ne", "ne"), "operator!=", "l != r"),
+        (("or", "ror"), "operator|", "l | r"),
+        (("gt", "lt"), "operator>", "l > r"),
+        (("ge", "le"), "operator>=", "l >= r"),
+        (("lt", "gt"), "operator<", "l < r"),
+        (("le", "ge"), "operator<=", "l <= r"),
+        (("iadd",), "operator+=", "l += r"),
+        (("isub",), "operator-=", "l -= r"),
+        (("imul",), "operator*=", "l *= r"),
+        (("idiv",), "operator/=", "l /= r"),
+        (("imod",), "operator%=", "l %= r"),
+        (("ilshift",), "operator<<=", "l <<= r"),
+        (("irshift",), "operator>>=", "l >>= r"),
+        (("iand",), "operator&=", "l &= r"),
+        (("ixor",), "operator^=", "l ^= r"),
+        (("ior",), "operator|=", "l |= r"),
+        (("neg",), "operator-", "-l"),
+        (("pos",), "operator+", "+l"),
+        (("abs",), "abs", "std::abs(l)"),
+        (("invert",), "operator~", "(~l)"),
+        (("bool",), "operator!", "!!l"),
+        # __nonzero__
+        (("int",), "int_", "(int) l"),
+        (("float",), "float_", "(double) l"),
     ]
 }
 
@@ -87,7 +87,7 @@ class Operator(Callable):
     @property
     def visible(self):
         if (self.cursor.kind in METHOD_KINDS and
-            self.cursor.access_specifier != AccessSpecifier.PUBLIC):
+                self.cursor.access_specifier != AccessSpecifier.PUBLIC):
             return False
         return super(Operator, self).visible
 
@@ -123,15 +123,15 @@ class Operator(Callable):
             assert self.cursor.kind in METHOD_KINDS
             argument_types.append(self._record_type())
 
-        for tp in self.cursor.type.argument_types():
-            if cutils.is_valid_type(tp.get_pointee()):
-                tp = tp.get_pointee()
+        for type_ in self.cursor.type.argument_types():
+            if cutils.is_valid_type(type_.get_pointee()):
+                type_ = type_.get_pointee()
             # TODO: Retrieve non-const-qualified type
-            argument_types.append(tp)
+            argument_types.append(type_)
 
         return argument_types
 
-    def expose_stringstream(self, parent, registry):
+    def expose_stringstream(self, parent, _registry):
         assert self.stringstream is not None
         assert self.spelling in ["operator<<", "operator>>"]
         if self.spelling == "operator>>":
@@ -169,7 +169,7 @@ class Operator(Callable):
                 "// FIXME: expose {}{}{}\n".format(what, " " if what else "", self) +
                 "//        {} -> {}\n".format(key, operator) +
                 "//        {}".format(
-                [t.fully_qualified_name for t in argument_types]))
+                    [t.fully_qualified_name for t in argument_types]))
 
         if not operator:
             yield unhandled("(conversion?)")
@@ -180,7 +180,7 @@ class Operator(Callable):
             return
 
         names, expr = operator
-        typedef_name = registry.register(self.cursor, self)
+        _typedef_name = registry.register(self.cursor, self)
 
         # TODO: Support for call policies
 

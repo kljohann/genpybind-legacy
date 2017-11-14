@@ -4,7 +4,6 @@ import collections
 import re
 
 from clang import cindex
-from clang.cindex import CursorKind
 
 from . import cutils
 from .decls import Declaration
@@ -23,7 +22,8 @@ class Registry(collections.Mapping):
             return True
         return bool(self._tags.intersection(declaration.tags))
 
-    def identifier(self, thing):
+    @staticmethod
+    def identifier(thing):
         if isinstance(thing, Declaration):
             thing = thing.cursor
         if not isinstance(thing, cindex.Cursor):

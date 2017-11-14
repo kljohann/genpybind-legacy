@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import re
-
 from clang.cindex import CursorKind
 
 from .. import cutils, utils
@@ -37,7 +35,7 @@ class Callable(Declaration):
             if elem == value:
                 return index
 
-        if isinstance(value, int) and value <= index:
+        if isinstance(value, int) and value < len(arguments):
             return value
 
         raise RuntimeError(
@@ -119,7 +117,7 @@ class Callable(Declaration):
 
     def arguments(self):
         args = []
-        for ii, child in enumerate(
+        for idx, child in enumerate(
                 cutils.children_by_kind(self.cursor, CursorKind.PARM_DECL)):
             default_value = ""
             expr = next(cutils.children_by_kind(child, cutils.EXPRESSION_KINDS), None)
@@ -130,8 +128,8 @@ class Callable(Declaration):
                 default_value = " = {}".format(utils.strip_prefix(default_value, "="))
             args.append("py::arg({name}){noconvert}{required}{value}".format(
                 name=quote(child.spelling),
-                noconvert=".noconvert()" if ii in self.noconvert else "",
-                required=".none(false)" if ii in self.required else "",
+                noconvert=".noconvert()" if idx in self.noconvert else "",
+                required=".none(false)" if idx in self.required else "",
                 value=default_value,
             ))
         return args

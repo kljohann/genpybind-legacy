@@ -111,7 +111,7 @@ def fully_qualified_expression(cursor):
     output.append(current)
 
     for tokens in output:
-        assert len(tokens) > 0
+        assert tokens
         if not utils.is_string(tokens[0]):
             tokens[0] = fully_qualified_name(tokens[0])
 

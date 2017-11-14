@@ -34,9 +34,9 @@ def compile_globs(patterns):
     return regex
 
 
-def flatten(it):
+def flatten(iterable):
     result = []
-    stack = [list(it)]
+    stack = [list(iterable)]
     while stack:
         if not stack[-1]:
             stack.pop()

@@ -34,7 +34,7 @@ def gather_declarations(cursors, default_visibility=False):
         declaration = None
 
         # Check for GENPYBIND_MANUAL instructions
-        if annotations and cursor.kind == CursorKind.VAR_DECL and any(k == "manual" for k, _ in annotations):
+        if cursor.kind == CursorKind.VAR_DECL and any(k == "manual" for k, _ in annotations):
             child = cutils.first_by_kind_bfs(cursor, CursorKind.LAMBDA_EXPR)
             if child is not None:
                 child = cutils.first_by_kind_bfs(child, CursorKind.COMPOUND_STMT)
@@ -106,7 +106,7 @@ def gather_declarations(cursors, default_visibility=False):
             has_explicit_visibility = declaration.visibility != UNSPECIFIED
 
             if not isinstance(declaration, Namespace):
-                if len(annotations) > 0 and not has_explicit_visibility:
+                if annotations and not has_explicit_visibility:
                     # If visibility has not been specified explicitly but there
                     # were any annotations we default to visible.
                     # (except for namespaces).

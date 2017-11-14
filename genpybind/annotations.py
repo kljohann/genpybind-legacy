@@ -39,7 +39,7 @@ class Annotations(collections.Sequence):
 
     def extend(self, other):
         assert isinstance(other, Annotations)
-        self._annotations.extend(other._annotations)
+        self._annotations.extend(other._annotations) # pylint: disable=protected-access
 
     def parse(self, annotation):
         if not annotation:

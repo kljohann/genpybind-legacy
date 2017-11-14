@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from clang.cindex import TokenKind
 
-from .. import cutils, utils
+from .. import cutils
 from .declarations import Declaration
 
 
@@ -38,7 +38,7 @@ class Manual(Declaration):
             for result in self.expose_later(None, parent, registry):
                 yield result
 
-    def expose_later(self, _, parent, registry):
+    def expose_later(self, _, parent, _registry):
         output = []
         tokens = list(cutils.get_tokens_with_whitespace(self.code))
 
@@ -52,9 +52,9 @@ class Manual(Declaration):
                     continue
 
                 # Translate "parent" to appropriate identifier.  Also remove any instance of
-                # "parent->".  The resulting dependent name allows us to introduce expressions referring
-                # to things which are only in scope in the definition of the bindings but not in the
-                # header file, e.g. "parent->py::module".
+                # "parent->".  The resulting dependent name allows us to introduce expressions
+                # referring to things which are only in scope in the definition of the bindings but
+                # not in the header file, e.g. "parent->py::module".
                 if token.spelling == "parent":
                     if tokens and tokens[0].spelling == "->":
                         tokens.pop(0)

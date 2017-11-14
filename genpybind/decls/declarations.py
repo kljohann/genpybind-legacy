@@ -1,8 +1,5 @@
 from __future__ import unicode_literals
 
-import itertools
-import operator
-
 from clang import cindex
 from clang.cindex import AccessSpecifier
 
@@ -22,7 +19,7 @@ class Declaration(object):
         "_tags",
     )
 
-    def __init__(self, cursor, default_visibility=True, **kwargs):
+    def __init__(self, cursor, default_visibility=True, **_kwargs):
         self._cursor = cursor
         self._parent_cursor = cursor.semantic_parent
         self._default_visibility = default_visibility
@@ -115,5 +112,5 @@ class Declaration(object):
         for result in self.statements(parent, registry):
             yield result
 
-    def statements(self, parent, registry):
+    def statements(self, _parent, _registry):
         yield "// FIXME: expose {}".format(self)

@@ -35,7 +35,7 @@ class FieldOrVar(Declaration):
         return cutils.first_parent_by_kind(
             self.cursor, [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL]) is not None
 
-    def statements(self, parent, registry):
+    def statements(self, parent, _registry):
         if self.is_field_or_static():
             qualifier = "readwrite" if self.writable else "readonly"
             if self.cursor.kind == CursorKind.VAR_DECL:

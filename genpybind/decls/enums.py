@@ -34,7 +34,6 @@ class Enum(Declaration):
 
     def statements(self, parent, registry):
         var = registry.register(self.cursor, self)
-        values = []
         is_scoped = self.cursor.is_scoped_enum()
 
         yield "" # spacer

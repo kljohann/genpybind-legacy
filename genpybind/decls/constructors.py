@@ -45,10 +45,10 @@ class Constructor(Method):
             )
         )
 
-    def expose_later(self, toplevel, parent, registry):
+    def expose_later(self, _toplevel, _parent, _registry):
         argument_type = next(iter(self.cursor.type.argument_types()))
         if cutils.is_valid_type(argument_type.get_pointee()):
-                argument_type = argument_type.get_pointee()
+            argument_type = argument_type.get_pointee()
         # TODO: Retrieve non-const-qualified type
         record_type = self.parent_cursor.type
         yield "py::implicitly_convertible<{}>();".format(join_arguments(

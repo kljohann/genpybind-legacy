@@ -75,8 +75,12 @@ class Klass(Level):
                 if child.referenced.kind not in cutils.RECORD_KINDS:
                     assert False, child.referenced.kind
                     continue
-                declaration, = gather_declarations(
+                declarations = gather_declarations(
                     child.referenced, default_visibility=True)
+                if not declarations:
+                    raise RuntimeError(
+                        "could not load declaration when inlining {}".format(self))
+                declaration = declarations[0]
                 declaration.set_inline_base(*self.inline_base)
                 bases.append(declaration)
             else:

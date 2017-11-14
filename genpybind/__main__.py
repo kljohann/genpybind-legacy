@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from . import main
+from .tool import main
 
 if __name__ == "__main__":
     main()
