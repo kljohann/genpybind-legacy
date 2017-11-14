@@ -1,6 +1,7 @@
 import os
 import pipes
 import subprocess
+import sys
 
 from waflib import Logs, Task, Context, Errors
 from waflib.Tools.c_preproc import scan as scan_impl
@@ -126,6 +127,12 @@ class genpybind(Task.Task):
         proc = subprocess.Popen(
             args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
         stdout, stderr = proc.communicate()
+
+        if not isinstance(stdout, str):
+            stdout = stdout.decode(sys.stdout.encoding, errors="replace")
+        if not isinstance(stderr, str):
+            stderr = stderr.decode(sys.stderr.encoding, errors="replace")
+
         if proc.returncode != 0:
             bld.fatal(
                 "genpybind returned {code} during the following call:"
