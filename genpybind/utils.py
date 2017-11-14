@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import glob
+import inspect
 import json
 import re
 
@@ -35,12 +36,10 @@ def flatten(it):
             continue
 
         elem = stack[-1].pop()
-        if hasattr(elem, "next") and callable(elem.next):
-            elem = list(elem)
-        if isinstance(elem, list):
-            stack.append(elem[:])
-        else:
-            result.append(elem)
+        if isinstance(elem, list) or inspect.isgenerator(elem):
+            stack.append(list(elem))
+            continue
+        result.append(elem)
     result.reverse()
     return result
 

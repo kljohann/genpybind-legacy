@@ -1,6 +1,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import collections
+
 from clang.cindex import AvailabilityKind, CursorKind
 
 from .. import cutils
@@ -15,7 +17,7 @@ UNAVAILABLE_KINDS = frozenset([AvailabilityKind.NOT_AVAILABLE, AvailabilityKind.
 
 def gather_declarations(cursors, default_visibility=False):
     toplevel_declarations = []
-    if hasattr(cursors, "next") and callable(cursors.next):
+    if isinstance(cursors, collections.Iterable):
         cursors = list(cursors)
     if not isinstance(cursors, (list, tuple)):
         cursors = [cursors]
