@@ -121,9 +121,10 @@ class genpybind(Task.Task):
         env["PYTHONPATH"] = os.pathsep.join(
             filter(None, [pypath, env.get("PYTHONPATH")]))
 
+        kwargs = dict(env=env, cwd=bld.variant_dir)
+        bld.log_command(args, kwargs)
         proc = subprocess.Popen(
-            args, env=env, cwd=bld.variant_dir,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
         stdout, stderr = proc.communicate()
         if proc.returncode != 0:
             bld.fatal(
