@@ -23,8 +23,8 @@ def configure(cfg):
     cfg.load("compiler_cxx")
     cfg.load("python")
     cfg.check_python_version(minver=(2, 7))
-    if not cfg.env.LLVMCONFIG:
-        cfg.find_program("llvm-config", var="LLVMCONFIG")
+    if not cfg.env.LLVM_CONFIG:
+        cfg.find_program("llvm-config", var="LLVM_CONFIG")
 
 
 @feature("genpybind")
@@ -101,10 +101,10 @@ class genpybind(Task.Task):
         """
         bld = self.generator.bld
         version, libdir = bld.cmd_and_log(
-            bld.env.LLVMCONFIG + ["--version", "--libdir"],
+            bld.env.LLVM_CONFIG + ["--version", "--libdir"],
             output=Context.STDOUT, quiet=Context.STDOUT,
         ).strip().split("\n")
-        resource_dir = os.path.join(libdir, "clang", version)
+        resource_dir = os.path.join(libdir, "clang", version.replace("svn", ""))
         if not os.path.exists(resource_dir):
             bld.fatal("could not find resource dir ({} does not exist)".format(
                 resource_dir))

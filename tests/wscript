@@ -13,6 +13,12 @@ def options(opt):
     opt.load("waf_unit_test")
     opt.load("pytest")
 
+    opt.add_option(
+        '--pybind-includes', type='string',
+        default='', dest='pybind_includes',
+        help='''path to the directory where the pybind11 includes are,
+        e.g., /path/to/pybind11/include''')
+
 
 def configure(cfg):
     cfg.load("python")
@@ -31,6 +37,7 @@ def configure(cfg):
         mandatory=True,
         header_name="pybind11/pybind11.h",
         cxxflags="-std=c++11",
+        includes=cfg.options.pybind_includes,
     )
 
     cfg.find_program("pytest", mandatory=True, var="PYTEST")
