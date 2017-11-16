@@ -9,7 +9,7 @@ from clang.cindex import CursorKind
 
 
 LOZENGE = u"◊"
-SPECIAL_NAMES = {"true": True, "false": False, "default": None}
+SPECIAL_NAMES = {"true": True, "false": False, "default": None, "none": None}
 
 
 class Annotations(collections.Sequence):
@@ -73,6 +73,9 @@ class Annotations(collections.Sequence):
                         arg = arg.s
                     elif isinstance(arg, ast.Name):
                         arg = SPECIAL_NAMES.get(arg.id.lower(), arg.id)
+                    elif hasattr(ast, "NameConstant") and isinstance(arg, ast.NameConstant):
+                        # "True", "False", "None" in Python 3
+                        arg = arg.value
                     else:
                         raise RuntimeError(
                             "unknown argument type {!r} in {!r}".format(arg, annotation))
