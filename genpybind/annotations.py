@@ -13,17 +13,6 @@ SPECIAL_NAMES = {"true": True, "false": False, "default": None, "none": None}
 
 
 class Annotations(collections.Sequence):
-    """
-    >>> def as_list(inp): return list(Annotations(inp))
-    >>> as_list("plain, call(), with_arg(some_name), with_args(a, b, c, 1, 2, 3, 'hello', \\"world\\")")
-    [('plain', ()), ('call', ()), ('with_arg', ('some_name',)), ('with_args', ('a', 'b', 'c', 1, 2, 3, 'hello', 'world'))]
-    >>> as_list("plain")
-    [('plain', ())]
-    >>> as_list(["multiple", "attributes(are, supported)"])
-    [('multiple', ()), ('attributes', ('are', 'supported'))]
-    >>> as_list("required(true), visible(False)")
-    [('required', (True,)), ('visible', (False,))]
-    """
     def __init__(self, annotations=None):
         self._annotations = []
         if not isinstance(annotations, list):

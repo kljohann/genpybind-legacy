@@ -113,4 +113,11 @@ def build(bld):
             ut_str="${PYTEST} -q ${SRC}",
         )
 
+    bld(
+        pytest_source=bld.path.ant_glob("*_unit_test.py"),
+        features="pytest",
+        use="genpybind",
+        ut_str="${PYTEST} -q ${SRC}",
+    )
+
     bld.add_post_fun(test_summary)
