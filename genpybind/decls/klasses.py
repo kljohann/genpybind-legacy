@@ -57,6 +57,10 @@ class Klass(Level):
         self._inline_base.update(patterns)
 
     def bases(self):
+        """
+        Returns mixed list of visible/non-hidden base classes which contains cursors for non-inlined
+        base classes and Klass instances for inlined base classes.
+        """
         bases = []
         hide_base = utils.compile_globs(self._hide_base)
         inline_base = utils.compile_globs(self._inline_base)
@@ -107,17 +111,25 @@ class Klass(Level):
 
         for child in [None] + self.bases():
             if child is None:
+                # First process declarations of the class itself.
                 child_declarations = self.children
             elif isinstance(child, Klass):
+                # Process declarations of an inlined base class.
                 child_declarations = child.declarations()
             else:
+                # Non-inlined base classes do not directly contribute declarations.
+                assert isinstance(child, cindex.Cursor)
                 continue
             child_spellings = set()
             child_has_constructor = False
             for decl in child_declarations:
+                # If the declaration is hidden or a declaration/overload with the same name
+                # has already been defined by an earlier class, skip this declaration (shadowing).
                 if not decl.visible or decl.spelling in spellings:
                     continue
                 if isinstance(decl, Constructor):
+                    # If we have seen any constructor up to this point (e.g. in the original class
+                    # itself), skip constructors for all remaining inlined base classes.
                     if has_constructor:
                         continue
                     child_has_constructor = True
