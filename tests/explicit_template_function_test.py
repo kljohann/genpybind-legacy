@@ -2,23 +2,23 @@ import pytest
 import pyexplicit_template_function as m
 
 def test_free_function_int():
-    v = m.frobnicate(5)
-    assert v == 37
+    val = m.frobnicate(5)
+    assert val == 37
     try:
-        assert isinstance(v, (int, long))
+        assert isinstance(val, (int, long))
     except NameError: # Python 3 does not have 'long'
-        assert isinstance(v, int)
+        assert isinstance(val, int)
 
 def test_free_function_float():
-    v = m.frobnicate(5.0)
-    assert v == 37.0
-    assert type(v) == float
+    val = m.frobnicate(5.0)
+    assert val == 37.0
+    assert isinstance(val, float)
 
 def test_free_function_invalid():
     with pytest.raises(TypeError) as excinfo:
         m.frobnicate("uiae")
 
-    assert("incompatible function arguments" in str(excinfo.value))
+    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_member_function_int():
     k = m.Klass()
@@ -29,4 +29,4 @@ def test_member_function_invalid():
     with pytest.raises(TypeError) as excinfo:
         k.increase("uiae")
 
-    assert("incompatible function arguments" in str(excinfo.value))
+    assert "incompatible function arguments" in str(excinfo.value)

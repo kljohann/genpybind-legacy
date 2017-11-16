@@ -2,8 +2,8 @@ import pytest
 import pynoconvert as m
 
 def test_overloading():
-    assert m.called_with_double(5.0) == True
-    assert m.called_with_double(5) == False
+    assert m.called_with_double(5.0) is True
+    assert m.called_with_double(5) is False
 
 def test_conversion():
     assert m.convert(5.0) == 5.0

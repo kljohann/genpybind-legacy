@@ -9,5 +9,5 @@ def test_tags():
     m.NamespacedOnlyInAB()
     m.NamespacedEverywhere()
     with pytest.raises(AttributeError) as excinfo:
-        m.OnlyInB
+        m.OnlyInB # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)

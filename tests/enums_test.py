@@ -11,7 +11,7 @@ def test_unscoped_enum():
     assert int(m.YES) == 0 and m.YES == 0
 
     with pytest.raises(TypeError) as excinfo:
-        m.YES | m.NO
+        m.YES | m.NO # pylint: disable=pointless-statement
     assert "unsupported operand type" in str(excinfo.value)
 
 def test_arithmetic_enum():
@@ -30,7 +30,7 @@ def test_scoped_enum():
     assert m.test_enum(m.Color.blue) == "blue"
 
     with pytest.raises(TypeError):
-        m.Color.blue == 0
+        m.Color.blue == 0 # pylint: disable=pointless-statement
 
     with pytest.raises(AttributeError):
-        m.blue
+        m.blue # pylint: disable=pointless-statement

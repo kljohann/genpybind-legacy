@@ -1,4 +1,3 @@
-import pytest
 import pyargument_names as m
 
 def test_constructor():
@@ -15,8 +14,8 @@ def test_member_function():
     assert doc == (
         "do_something(self: pyargument_names.Something, "
         "some_argument: int, another_argument: float) -> None\n")
-    x = m.Something(1, False)
-    assert x.do_something.__doc__ == doc
+    obj = m.Something(1, False)
+    assert obj.do_something.__doc__ == doc
 
 def test_free_function():
     assert m.some_function.__doc__ == (

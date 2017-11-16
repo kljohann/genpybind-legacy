@@ -6,14 +6,14 @@ def test_tags():
     m.EverywhereInTests()
     m.NamespacedEverywhere()
     with pytest.raises(AttributeError) as excinfo:
-        m.OnlyInA
+        m.OnlyInA # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)
     with pytest.raises(AttributeError) as excinfo:
-        m.OnlyInB
+        m.OnlyInB # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)
     with pytest.raises(AttributeError) as excinfo:
-        m.OnlyInAB
+        m.OnlyInAB # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)
     with pytest.raises(AttributeError) as excinfo:
-        m.NamespacedOnlyInAB
+        m.NamespacedOnlyInAB # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)

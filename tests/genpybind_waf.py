@@ -3,7 +3,7 @@ import pipes
 import subprocess
 import sys
 
-from waflib import Logs, Task, Context, Errors
+from waflib import Logs, Task, Context
 from waflib.Tools.c_preproc import scan as scan_impl
 # ^-- Note: waflib.extras.gccdeps.scan does not work for us,
 # due to its current implementation:
@@ -61,7 +61,7 @@ def generate_genpybind_source(self):
     self.source = [out]
 
 
-class genpybind(Task.Task):
+class genpybind(Task.Task): # pylint: disable=invalid-name
     """
     Runs genpybind on headers provided as input to this task.
     Generated code will be written to the first (and only) output node.
@@ -70,7 +70,8 @@ class genpybind(Task.Task):
     color = "PINK"
     scan = scan_impl
 
-    def keyword(self):
+    @staticmethod
+    def keyword():
         return "Analyzing"
 
     def run(self):
@@ -114,9 +115,9 @@ class genpybind(Task.Task):
     def run_genpybind(self, args):
         bld = self.generator.bld
 
-        tg = bld.get_tgen_by_name("genpybind")
-        assert "py" in tg.features
-        pypath = getattr(tg, "install_from", tg.path).abspath()
+        tgen = bld.get_tgen_by_name("genpybind")
+        assert "py" in tgen.features
+        pypath = getattr(tgen, "install_from", tgen.path).abspath()
 
         env = dict(os.environ)
         env["PYTHONPATH"] = os.pathsep.join(
@@ -154,13 +155,13 @@ class genpybind(Task.Task):
     def _inputs_as_relative_includes(self):
         include_paths = self._include_paths()
         relative_includes = []
-        for n in self.inputs:
+        for node in self.inputs:
             for inc in include_paths:
-                if n.is_child_of(inc):
-                    relative_includes.append(n.path_from(inc))
+                if node.is_child_of(inc):
+                    relative_includes.append(node.path_from(inc))
                     break
             else:
-                self.generator.bld.fatal("could not resolve {}".format(n))
+                self.generator.bld.fatal("could not resolve {}".format(node))
         return relative_includes
 
     def _arguments(self, genpybind_parse=None, resource_dir=None):
@@ -180,7 +181,7 @@ class genpybind(Task.Task):
         args.append("--")
 
         # headers to be processed by genpybind
-        args.extend(n.abspath() for n in self.inputs)
+        args.extend(node.abspath() for node in self.inputs)
 
         args.append("--")
 

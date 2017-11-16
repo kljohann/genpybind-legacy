@@ -21,14 +21,14 @@ class Counter(object):
     def destroyed(self):
         return self.klass.destroyed - self._destroyed
 
-children = Counter(m.Child)
-parents = Counter(m.Parent)
+children = Counter(m.Child) # pylint: disable=invalid-name
+parents = Counter(m.Parent) # pylint: disable=invalid-name
 
 def test_sink_unannotated():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
@@ -37,12 +37,12 @@ def test_sink_unannotated():
     assert children.created == 1
     assert children.destroyed == 1
     assert children.alive == 0
-    p.sink(m.Child())
+    parent.sink(m.Child())
     assert children.created == 2
     assert children.destroyed == 2
     assert children.alive == 0
 
-    del p
+    del parent
     assert parents.alive == 0
 
 def test_ctor_keep_alive():
@@ -53,13 +53,13 @@ def test_ctor_keep_alive():
     assert children.destroyed == 0
     assert children.alive == 0
     assert parents.alive == 0
-    p = m.Parent(m.Child())
+    parent = m.Parent(m.Child())
     assert children.created == 1
     assert children.destroyed == 0
     assert children.alive == 1
     assert parents.alive == 1
 
-    del p
+    del parent
     assert parents.alive == 0
     assert children.created == 1
     assert children.destroyed == 1
@@ -69,18 +69,18 @@ def test_sink_keep_alive():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
     assert children.destroyed == 0
     assert children.alive == 0
-    p.sink_keep_alive(m.Child())
+    parent.sink_keep_alive(m.Child())
     assert children.created == 1
     assert children.destroyed == 0
     assert children.alive == 1
 
-    del p
+    del parent
     assert parents.alive == 0
     assert children.created == 1
     assert children.destroyed == 1
@@ -90,18 +90,18 @@ def test_sink_keep_alive_plain():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
     assert children.destroyed == 0
     assert children.alive == 0
-    p.sink_keep_alive_plain(m.Child())
+    parent.sink_keep_alive_plain(m.Child())
     assert children.created == 1
     assert children.destroyed == 0
     assert children.alive == 1
 
-    del p
+    del parent
     assert parents.alive == 0
     assert children.created == 1
     assert children.destroyed == 1
@@ -111,34 +111,34 @@ def test_source_unannotated():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
     assert children.destroyed == 0
-    p.source()
+    parent.source()
     assert children.created == 1
     assert children.destroyed == 1
     assert children.alive == 0
 
-    del p
+    del parent
     assert parents.alive == 0
 
 def test_source_keep_alive():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
     assert children.destroyed == 0
-    p.source_keep_alive()
+    parent.source_keep_alive()
     assert children.created == 1
     assert children.destroyed == 0
     assert children.alive == 1
 
-    del p
+    del parent
     assert parents.alive == 0
     assert children.created == 1
     assert children.destroyed == 1
@@ -148,20 +148,20 @@ def test_source_keep_alive_parent():
     children.reset()
     parents.reset()
 
-    p = m.Parent()
+    parent = m.Parent()
     assert parents.alive == 1
 
     assert children.created == 0
     assert children.destroyed == 0
-    c = p.source_keep_alive_parent()
+    child = parent.source_keep_alive_parent()
     assert children.created == 1
     assert children.destroyed == 0
     assert children.alive == 1
 
-    del p
+    del parent
     assert parents.alive == 1
     assert children.alive == 1
 
-    del c
+    del child
     assert parents.alive == 0
     assert children.alive == 0
