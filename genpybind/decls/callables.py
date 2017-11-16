@@ -27,20 +27,18 @@ class Callable(Declaration):
         self._keep_alive = self._noconvert = self._required = tuple()
 
     def _argument_index(self, value, prefix=None):
-        arguments = (prefix or []) + list(self.cursor.get_arguments())
-        for index, elem in enumerate(arguments):
+        arguments = []
+        for idx, elem in enumerate((prefix or []) + list(self.cursor.get_arguments())):
             if elem is not None and not utils.is_string(elem):
                 assert elem.kind == CursorKind.PARM_DECL
                 elem = elem.spelling
-            if elem == value:
-                return index
-
-        if isinstance(value, int) and value < len(arguments):
-            return value
+            if value in [elem, idx]:
+                return idx
+            arguments.append(elem)
 
         raise RuntimeError(
-            "{!r} was given invalid argument specifier {!r}".format(
-                self, value))
+            "{!r} was given invalid argument specifier {!r}, expected one of {!r}".format(
+                self, value, arguments))
 
     @property
     def return_value_policy(self):
