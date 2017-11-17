@@ -107,10 +107,9 @@ class Klass(Level):
     def declarations(self):
         declarations = []
         spellings = set()
-        has_constructor = False
 
-        for child in [None] + self.bases():
-            if child is None:
+        for child in [self] + self.bases():
+            if child is self:
                 # First process declarations of the class itself.
                 child_declarations = self.children
             elif isinstance(child, Klass):
@@ -120,24 +119,20 @@ class Klass(Level):
                 # Non-inlined base classes do not directly contribute declarations.
                 assert isinstance(child, cindex.Cursor)
                 continue
+
             child_spellings = set()
-            child_has_constructor = False
             for decl in child_declarations:
                 # If the declaration is hidden or a declaration/overload with the same name
                 # has already been defined by an earlier class, skip this declaration (shadowing).
                 if not decl.visible or decl.spelling in spellings:
                     continue
-                if isinstance(decl, Constructor):
-                    # If we have seen any constructor up to this point (e.g. in the original class
-                    # itself), skip constructors for all remaining inlined base classes.
-                    if has_constructor:
-                        continue
-                    child_has_constructor = True
+                # Only process constructors of the original class itself.
+                if isinstance(decl, Constructor) and child is not self:
+                    continue
                 decl.set_parent_cursor(self.cursor)
                 declarations.append(decl)
                 child_spellings.add(decl.spelling)
             spellings.update(child_spellings)
-            has_constructor |= child_has_constructor
 
         return declarations
 
