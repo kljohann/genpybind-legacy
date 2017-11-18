@@ -85,13 +85,6 @@ class Operator(Callable):
             self._cursor = child
 
     @property
-    def visible(self):
-        if (self.cursor.kind in METHOD_KINDS and
-                self.cursor.access_specifier != AccessSpecifier.PUBLIC):
-            return False
-        return super(Operator, self).visible
-
-    @property
     def friend_cursor(self):
         return self._friend_cursor
 
