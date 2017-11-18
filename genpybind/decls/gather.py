@@ -12,7 +12,7 @@ from .declarations import UNSPECIFIED
 from .manual import Manual
 from .namespaces import Namespace
 
-DECLARATION_TYPES = {}
+DECLARATION_TYPES = {}  # will be populated in genpybind/decls/__init__.py
 UNAVAILABLE_KINDS = frozenset([AvailabilityKind.NOT_AVAILABLE, AvailabilityKind.NOT_ACCESSIBLE])
 
 def gather_declarations(cursors, default_visibility=False):
@@ -23,7 +23,7 @@ def gather_declarations(cursors, default_visibility=False):
         cursors = [cursors]
     queue = [([], cursor, default_visibility) for cursor in cursors]
     while queue:
-        breadcrumbs, cursor, default_visibility = queue.pop(0)
+        parent_declarations, cursor, default_visibility = queue.pop(0)
 
         if cursor.availability in UNAVAILABLE_KINDS:
             # Declaration may be unavailable (e.g. deleted constructor).
@@ -64,8 +64,11 @@ def gather_declarations(cursors, default_visibility=False):
         if cursor.kind == CursorKind.FUNCTION_TEMPLATE:
             for child in cursor.get_children(
                     with_implicit=True, with_template_instantiations=True):
-                if child.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL]:
-                    queue.append((breadcrumbs, child, default_visibility))
+                if child.kind in [
+                        CursorKind.CXX_METHOD,
+                        CursorKind.FUNCTION_DECL,
+                ]:
+                    queue.append((parent_declarations, child, default_visibility))
             continue
         elif cursor.kind == CursorKind.CLASS_TEMPLATE:
             # FIXME: Support explicit instantiation of template classes
@@ -125,10 +128,10 @@ def gather_declarations(cursors, default_visibility=False):
             if not declaration.visible:
                 continue
 
-            for parent in filter(None, breadcrumbs):
+            for parent in filter(None, parent_declarations):
                 declaration.set_tags(*parent.tags)
 
-            for parent in breadcrumbs:
+            for parent in parent_declarations:
                 if parent is not None:
                     parent.add_child(declaration)
                     break
@@ -138,10 +141,10 @@ def gather_declarations(cursors, default_visibility=False):
         if cursor.kind not in SCOPE_CURSOR_KINDS:
             continue
 
-        breadcrumbs = [declaration] + breadcrumbs[:]
+        parent_declarations = [declaration] + parent_declarations[:]
 
         for child in cursor.get_children(
                 with_implicit=True, with_template_instantiations=True):
-            queue.append((breadcrumbs, child, default_visibility))
+            queue.append((parent_declarations, child, default_visibility))
 
     return toplevel_declarations

@@ -16,7 +16,6 @@ from .variables import FieldOrVar
 
 from .gather import DECLARATION_TYPES, gather_declarations
 
-# FIXME: clean up
 DECLARATION_TYPES.update({
     CursorKind.CLASS_DECL: Klass,
     CursorKind.CONSTRUCTOR: Constructor,

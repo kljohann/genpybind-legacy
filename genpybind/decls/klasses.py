@@ -159,14 +159,12 @@ class Klass(Level):
             var = registry.identifier(registry[self.cursor])
         else:
             var = registry.register(self.cursor, self)
-        classes = [self.fully_qualified_name]
-        classes.extend(self.base_specifiers())
 
         yield "" # spacer
 
         yield "auto {var} = py::class_<{classes}>({args});".format(
             var=var,
-            classes=", ".join(classes),
+            classes=", ".join([self.fully_qualified_name] + self.base_specifiers()),
             args=join_arguments(
                 parent,
                 quote(self.expose_as),
@@ -204,9 +202,7 @@ class Klass(Level):
             if writable:
                 declarations.append(accessors["set"])
 
-            for declaration in declarations:
-                typedef_name = registry.register(declaration.cursor, declaration)
-                yield declaration.typedef(typedef_name)
+            # TODO: support overloaded methods for setters/getters
 
             qualifier = "" if writable else "_readonly"
             yield "{var}.def_property{qualifier}({args});".format(
