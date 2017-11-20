@@ -22,7 +22,7 @@ def pythonic_name(name):
 
 BINARY_OPERATORS = "lt le eq ne gt ge sub add mul div mod lshift rshift and or xor".split()
 
-@pytest.mark.parametrize("variant", ["member", "friend"])
+@pytest.mark.parametrize("variant", ["member", "friend", "non_const_member"])
 @pytest.mark.parametrize("name", BINARY_OPERATORS)
 def test_has_binary_operator(variant, name):
     obj = getattr(m, "has_{}_{}".format(variant, name))()
