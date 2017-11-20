@@ -60,6 +60,20 @@ def test_has_unary_operator(name):
         elif key in UNARY_OPERATORS:
             assert val == 0
 
+NULLARY_OPERATORS = "neg pos invert".split()
+
+@pytest.mark.parametrize("name", NULLARY_OPERATORS)
+def test_has_nullary_operator(name):
+    obj = m.has_nullary()
+    pyname = pythonic_name(name)
+    assert hasattr(obj, "__{}__".format(pyname))
+    obj = getattr(operator, pyname)(obj)
+    for key, val in inspect.getmembers(obj):
+        if key == name:
+            assert val is True
+        elif key in NULLARY_OPERATORS:
+            assert val is False
+
 @pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3")
 @pytest.mark.skip(reason="not implemented")
 def test_has_floordiv():

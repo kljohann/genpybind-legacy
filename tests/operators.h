@@ -2,8 +2,6 @@
 
 #include "genpybind.h"
 
-// TODO: Add check for neg, pos, abs, invert
-
 struct GENPYBIND(visible) has_call {
   int operator()(int value) const;
   int operator()(int first, int second) const;
@@ -83,6 +81,22 @@ struct GENPYBIND(visible) has_unary {
 };
 
 #undef TESTCASE_UNARY_OPERATOR
+
+#define TESTCASE_NULLARY_OPERATOR(OPNAME, OPERATOR)                            \
+  has_nullary operator OPERATOR() {                                            \
+    has_nullary tmp;                                                           \
+    tmp.OPNAME = true;                                                         \
+    return tmp;                                                                \
+  }                                                                            \
+  bool OPNAME = false;
+
+struct GENPYBIND(visible) has_nullary {
+  TESTCASE_NULLARY_OPERATOR(neg, -)
+  TESTCASE_NULLARY_OPERATOR(pos, +)
+  TESTCASE_NULLARY_OPERATOR(invert, ~)
+};
+
+#undef TESTCASE_NULLARY_OPERATOR
 
 struct GENPYBIND(visible) has_floordiv {
   // One should be able to explicitly provide a name for operators.
