@@ -132,9 +132,10 @@ class Callable(Declaration):
             ))
         return args
 
-    def statements(self, parent, registry):
-        typedef_name = registry.register(self.cursor, self)
+    def statements(self, parent, _registry):
+        typedef_name = "genpybind_{}_type".format(self.expose_as)
 
+        yield "{"
         yield self.typedef(typedef_name)
         yield "{parent}.def{qualifier}({args});".format(
             parent=parent,
@@ -147,6 +148,7 @@ class Callable(Declaration):
                 self.policies(),
             )
         )
+        yield "}"
 
 
 class Function(Callable):

@@ -23,11 +23,10 @@ public:
   bool overloaded(int value) const;
 };
 
-// TODO: error during generation as from_base is also/already registered by Base
-// class GENPYBIND(inline_base("*Base")) DerivedInline : public Base {
-// public:
-//   bool overloaded(int value) const;
-// };
+class GENPYBIND(inline_base("*Base")) DerivedInline : public Base {
+public:
+  bool overloaded(int value) const;
+};
 
 class GENPYBIND(visible) OtherBase {
 public:

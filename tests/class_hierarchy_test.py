@@ -38,7 +38,6 @@ def test_derived_private():
         obj.base_field # pylint: disable=pointless-statement
     assert "has no attribute 'base_field'" in str(excinfo.value)
 
-@pytest.mark.skip(reason="not working")
 def test_derived_inline():
     obj = m.DerivedInline()
     assert isinstance(obj, m.DerivedInline)

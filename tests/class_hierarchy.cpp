@@ -8,6 +8,6 @@ bool DerivedPublic::overloaded(int value) const { return false; }
 
 bool DerivedPrivate::overloaded(int value) const { return false; }
 
-// bool DerivedInline::overloaded(int value) const { return false; }
+bool DerivedInline::overloaded(int value) const { return false; }
 
 bool OtherBase::from_other_base() const { return true; }
