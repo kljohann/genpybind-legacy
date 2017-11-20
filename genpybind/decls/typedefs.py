@@ -43,7 +43,7 @@ class Typedef(Declaration):
         decl = registry.get(decl_cursor, None)
 
         if self.exposed_elsewhere(registry) or decl is not None:
-            tpl = "pybind_get_type_object<{}>()"
+            tpl = "genpybind_get_type_object<{}>()"
             obj = tpl.format(decl_cursor.type.fully_qualified_name)
             yield "{parent}.attr({name}) = {obj};".format(
                 parent=parent,

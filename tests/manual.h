@@ -23,7 +23,7 @@ public:
     // Note the convoluted syntax necessary for writing a call to a template function:
     parent.def(
         "__str__",
-        parent->template pybind_stringstream_helper<::something::Something>());
+        parent->template genpybind_stringstream_helper<::something::Something>());
   })
 };
 

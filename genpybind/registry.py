@@ -29,7 +29,7 @@ class Registry(collections.Mapping):
         if not isinstance(thing, cindex.Cursor):
             raise TypeError("expected cursor, got {!r}".format(thing))
 
-        prefix = "pybind_{}_{{}}".format(thing.kind.name.lower())
+        prefix = "genpybind_{}_{{}}".format(thing.kind.name.lower())
 
         if thing.mangled_name:
             # Use the mangled name to disambiguate function overloads

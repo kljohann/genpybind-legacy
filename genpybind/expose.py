@@ -20,7 +20,7 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     namespace py = pybind11;
 
     template <typename T>
-    struct pybind_stringstream_helper
+    struct genpybind_stringstream_helper
     {{
         std::string operator()(T const& value) const {{
             std::stringstream tmp;
@@ -30,7 +30,7 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     }};
 
     template <typename T>
-    py::object pybind_get_type_object()
+    py::object genpybind_get_type_object()
     {{
         auto tinfo = py::detail::get_type_info(
             typeid(T), /*throw_if_missing=*/true);

@@ -134,7 +134,7 @@ class Operator(Callable):
                 parent=parent,
                 args=join_arguments(
                     quote(name),
-                    "pybind_stringstream_helper<{}>()".format(
+                    "genpybind_stringstream_helper<{}>()".format(
                         self._record_type().fully_qualified_name),
                 )
             )
