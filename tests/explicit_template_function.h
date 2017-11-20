@@ -2,6 +2,8 @@
 
 #include "genpybind.h"
 
+// TODO: Add explicitly instatiated template constructor
+
 struct GENPYBIND(visible) Klass {
   template <typename T> T increase(const T &val) GENPYBIND(visible);
 }; // Klass
