@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import sys
 
 from clang.cindex import AccessSpecifier, CursorKind
 
@@ -13,16 +14,14 @@ _OPERATORS = {
         (("sub", "rsub"), "operator-", "l - r"),
         (("add", "radd"), "operator+", "l + r"),
         (("mul", "rmul"), "operator*", "l * r"),
-        (("truediv", "rtruediv"), "operator/", "l / r"), # Python 3
-        (("div", "rdiv"), "operator/", "l / r"), # Python 2
         (("mod", "rmod"), "operator%", "l % r"),
         (("lshift", "rlshift"), "operator<<", "l << r"),
         (("rshift", "rrshift"), "operator>>", "l >> r"),
         (("and", "rand"), "operator&", "l & r"),
+        (("or", "ror"), "operator|", "l | r"),
         (("xor", "rxor"), "operator^", "l ^ r"),
         (("eq", "eq"), "operator==", "l == r"),
         (("ne", "ne"), "operator!=", "l != r"),
-        (("or", "ror"), "operator|", "l | r"),
         (("gt", "lt"), "operator>", "l > r"),
         (("ge", "le"), "operator>=", "l >= r"),
         (("lt", "gt"), "operator<", "l < r"),
@@ -30,21 +29,21 @@ _OPERATORS = {
         (("iadd",), "operator+=", "l += r"),
         (("isub",), "operator-=", "l -= r"),
         (("imul",), "operator*=", "l *= r"),
-        (("idiv",), "operator/=", "l /= r"),
         (("imod",), "operator%=", "l %= r"),
         (("ilshift",), "operator<<=", "l <<= r"),
         (("irshift",), "operator>>=", "l >>= r"),
         (("iand",), "operator&=", "l &= r"),
-        (("ixor",), "operator^=", "l ^= r"),
         (("ior",), "operator|=", "l |= r"),
+        (("ixor",), "operator^=", "l ^= r"),
         (("neg",), "operator-", "-l"),
         (("pos",), "operator+", "+l"),
         (("abs",), "abs", "std::abs(l)"),
         (("invert",), "operator~", "(~l)"),
-        (("bool",), "operator!", "!!l"),
-        # __nonzero__
-        (("int",), "int_", "(int) l"),
-        (("float",), "float_", "(double) l"),
+    ] + [
+        ((("truediv", "rtruediv"), "operator/", "l / r") if sys.version_info >= (3,)
+         else (("div", "rdiv"), "operator/", "l / r")),
+        ((("itruediv",), "operator/=", "l /= r") if sys.version_info >= (3,)
+         else (("idiv",), "operator/=", "l /= r")),
     ]
 }
 
@@ -175,7 +174,8 @@ class Operator(Callable):
         names, expr = operator
         _typedef_name = registry.register(self.cursor, self)
 
-        # TODO: Support for call policies
+        # TODO: Add support for call policies
+        # TODO: Handle "r" variant of operators
 
         argument_types = self._argument_types()
 
