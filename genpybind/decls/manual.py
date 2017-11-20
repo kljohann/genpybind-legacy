@@ -18,6 +18,10 @@ class Manual(Declaration):
         self._postamble = False
 
     @property
+    def visible(self):
+        return True
+
+    @property
     def code(self):
         return self._code
 
