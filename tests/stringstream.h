@@ -1,5 +1,12 @@
 #pragma once
 
+#include <iostream>
+
 #include "genpybind.h"
 
-// TODO: Add check for stringstream operators
+struct GENPYBIND(visible) Something {
+  GENPYBIND(stringstream)
+  friend std::ostream &operator<<(std::ostream &os, const Something &) {
+    return os << "uiae";
+  }
+};
