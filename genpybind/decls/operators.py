@@ -37,7 +37,6 @@ _OPERATORS = {
         (("ixor",), "operator^=", "l ^= r"),
         (("neg",), "operator-", "-l"),
         (("pos",), "operator+", "+l"),
-        (("abs",), "abs", "std::abs(l)"),
         (("invert",), "operator~", "(~l)"),
     ] + [
         ((("truediv", "rtruediv"), "operator/", "l / r") if sys.version_info >= (3,)
