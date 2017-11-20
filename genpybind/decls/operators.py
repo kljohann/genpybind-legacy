@@ -185,8 +185,10 @@ class Operator(Callable):
                 quote("__{}__".format(names[0])),
                 "[]({args}) {{ return {expr}; }}".format(
                     args=join_arguments(
-                        "{} const& {}".format(
-                            utils.strip_prefix(tp.fully_qualified_name, "const "), var)
+                        "{} {}& {}".format(
+                            utils.strip_prefix(tp.fully_qualified_name, "const "),
+                            "const" if self.cursor.is_const_method() else "",
+                            var)
                         for tp, var in zip(argument_types, ["l", "r"])),
                     expr=expr,
                 ),
