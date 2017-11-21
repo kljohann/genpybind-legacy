@@ -21,12 +21,18 @@ def test_free_function_invalid():
     assert "incompatible function arguments" in str(excinfo.value)
 
 def test_member_function_int():
-    k = m.Klass()
-    assert k.increase(5) == 6
+    obj = m.Klass()
+    assert obj.increase(5) == 6
 
 def test_member_function_invalid():
-    k = m.Klass()
+    obj = m.Klass()
     with pytest.raises(TypeError) as excinfo:
-        k.increase("uiae")
+        obj.increase("uiae")
 
     assert "incompatible function arguments" in str(excinfo.value)
+
+def test_constructor():
+    obj = m.Something()
+    assert obj.value == 0
+    obj = m.Something(123)
+    assert obj.value == 123

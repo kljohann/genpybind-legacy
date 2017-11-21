@@ -65,6 +65,8 @@ def gather_declarations(cursors, default_visibility=False):
             for child in cursor.get_children(
                     with_implicit=True, with_template_instantiations=True):
                 if child.kind in [
+                        CursorKind.CONSTRUCTOR,
+                        CursorKind.CONVERSION_FUNCTION,
                         CursorKind.CXX_METHOD,
                         CursorKind.FUNCTION_DECL,
                 ]:
