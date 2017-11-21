@@ -66,12 +66,13 @@ class Klass(Level):
         inline_base = utils.compile_globs(self._inline_base)
         for child in cutils.children_by_kind(
                 self.cursor, CursorKind.CXX_BASE_SPECIFIER):
-            if hide_base.match(child.displayname):
+            name = child.type.fully_qualified_name
+            if hide_base.match(name):
                 continue
             if child.access_specifier != AccessSpecifier.PUBLIC:
                 continue
 
-            if inline_base.match(child.displayname):
+            if inline_base.match(name):
                 if child.referenced.kind == CursorKind.NO_DECL_FOUND:
                     # FIXME: Warning?
                     # assert False, child.type.fully_qualified_name

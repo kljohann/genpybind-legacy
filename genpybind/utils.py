@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import glob
+import fnmatch
 import inspect
 import json
 import re
@@ -29,7 +29,7 @@ def convert_none(conversion, value):
 
 
 def compile_globs(patterns):
-    patterns = [glob.fnmatch.translate(pattern) for pattern in patterns]
+    patterns = [fnmatch.translate(pattern) for pattern in patterns]
     regex = re.compile(r"\A({})\Z".format("|".join(patterns)))
     return regex
 
