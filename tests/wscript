@@ -47,20 +47,21 @@ def configure(cfg):
         cfg.find_program("pytest", mandatory=True, var="PYTEST")
 
 
+PYTEST_SUCCESS = 0
+PYTEST_NO_TESTS = 5
+
+
 def test_summary(bld):
     if bld.options.no_tests:
         return
 
-    SUCCESS = 0
-    NO_TESTS = 5
-
     any_failed = False
-    for (f, code, stdout, stderr) in getattr(bld, "utest_results", []):
-        rel = os.path.relpath(f, bld.path.abspath())
+    for (fpath, code, stdout, stderr) in getattr(bld, "utest_results", []):
+        rel = os.path.relpath(fpath, bld.path.abspath())
 
-        color = {SUCCESS: "GREEN"}.get(code, "RED")
+        color = {PYTEST_SUCCESS: "GREEN"}.get(code, "RED")
 
-        if code != SUCCESS:
+        if code != PYTEST_SUCCESS:
             any_failed = True
 
         if not isinstance(stdout, str):
@@ -71,7 +72,7 @@ def test_summary(bld):
         summary = stdout.strip().rsplit("\n", 1)[-1]
         Logs.pprint(color, "{} -> {}".format(rel, summary))
 
-        if code not in [SUCCESS, NO_TESTS]:
+        if code not in [PYTEST_SUCCESS, PYTEST_NO_TESTS]:
             Logs.pprint("NORMAL", stdout)
 
         if stderr.strip():
