@@ -34,7 +34,6 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     {{
         auto tinfo = py::detail::get_type_info(
             typeid(T), /*throw_if_missing=*/true);
-        // auto handle = py::handle((PyObject*)tinfo->type);
         return py::reinterpret_borrow<py::object>((PyObject*)tinfo->type);
     }}
 

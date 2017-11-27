@@ -99,11 +99,6 @@ int main(int Argc, const char **Argv) {
   if (OutputFile.empty())
     return Status;
 
-  // if (llvm::sys::fs::exists(OutputFile)) {
-  //   llvm::errs() << "Output file already exists.\n";
-  //   return 1;
-  // }
-
   AST->Save(OutputFile);
 
   return Status;
