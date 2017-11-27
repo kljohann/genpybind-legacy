@@ -2,12 +2,13 @@ import pytest
 import pyrequired as m
 
 def test_nullptr():
-    p = m.Parent()
-    p.accept(m.Child())
-    p.accept(None)
+    obj = m.Parent()
+    obj.accept(m.Child())
+    obj.accept(None)
 
-@pytest.mark.skip(reason="not implemented")
 def test_required():
-    p = m.Parent()
-    p.required(m.Child())
-    p.required(None)
+    obj = m.Parent()
+    obj.required(m.Child())
+    with pytest.raises(TypeError) as excinfo:
+        obj.required(None)
+    assert "incompatible function arguments" in str(excinfo.value)
