@@ -83,6 +83,9 @@ def test_summary(bld):
 
 
 def build(bld):
+    report_dir = bld.path.get_bld().make_node("reports")
+    junit_option = lambda node: "--junit-xml={}".format(
+        report_dir.find_or_declare(node.change_ext(".xml").name))
     for node in bld.path.ant_glob("*.cpp"):
         target = os.path.splitext(node.name)[0]
         pytarget = "py{0}".format(target)
@@ -111,14 +114,15 @@ def build(bld):
             pytest_source=test,
             features="pytest",
             use=pytarget,
-            ut_str="${PYTEST} -q ${SRC}",
+            ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
         )
 
-    bld(
-        pytest_source=bld.path.ant_glob("*_unit_test.py"),
-        features="pytest",
-        use="genpybind",
-        ut_str="${PYTEST} -q ${SRC}",
-    )
+    for test in bld.path.ant_glob("*_unit_test.py"):
+        bld(
+            pytest_source=test,
+            features="pytest",
+            use="genpybind",
+            ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
+        )
 
     bld.add_post_fun(test_summary)
