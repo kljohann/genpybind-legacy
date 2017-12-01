@@ -37,12 +37,9 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
         return py::reinterpret_borrow<py::object>((PyObject*)tinfo->type);
     }}
 
-    PYBIND11_PLUGIN({module}) {{
-    py::module {var}({name}, {doc});
-
+    PYBIND11_MODULE({module}, {var}) {{
+    {var}.doc() = {doc};
     {statements}
-
-    return {var}.ptr();
     }}
     """).strip()
 
