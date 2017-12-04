@@ -67,7 +67,7 @@ public:
     if (!AST)
       return false;
 
-    return true;
+    return !AST->getDiagnostics().hasErrorOccurred();
   }
 };
 
