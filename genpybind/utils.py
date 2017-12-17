@@ -5,8 +5,15 @@ import inspect
 import json
 import re
 
+if False:  # pylint: disable=using-constant-test
+    from typing import (  # pylint: disable=unused-import
+        Any, Callable, Iterable, List, Optional, Pattern, Text, TypeVar)
+    T = TypeVar("T")
+    U = TypeVar("U")
+
 
 def is_string(text):
+    # type: (Any) -> bool
     try:
         return isinstance(text, (unicode, str))
     except NameError:
@@ -14,6 +21,7 @@ def is_string(text):
 
 
 def quote(text):
+    # type: (Optional[Text]) -> Text
     """Returns a quoted representation of the given string, to be used
     as a C(++) string literal."""
     text = text or ""
@@ -23,12 +31,14 @@ def quote(text):
 
 
 def compile_globs(patterns):
+    # type: (Iterable[Text]) -> Pattern
     patterns = [fnmatch.translate(pattern) for pattern in patterns]
     regex = re.compile(r"\A({})\Z".format("|".join(patterns)))
     return regex
 
 
 def flatten(iterable):
+    # type: (Iterable[Any]) -> List[Any]
     result = []
     stack = [list(iterable)]
     while stack:
@@ -46,10 +56,12 @@ def flatten(iterable):
 
 
 def join_arguments(*arguments):
+    # type: (*Any) -> Text
     return ", ".join([arg for arg in flatten(arguments) if arg is not None])
 
 
 def strip_prefix(text, *prefixes):
+    # type: (Text, *Text) -> Text
     for prefix in prefixes:
         if text.startswith(prefix):
             text = text[len(prefix):]

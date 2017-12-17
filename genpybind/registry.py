@@ -6,7 +6,11 @@ import re
 from clang import cindex
 
 from . import cutils
-from .decls import Declaration
+from .decls.declarations import Declaration
+
+if False:  # pylint: disable=using-constant-test
+    from typing import (  # pylint: disable=unused-import
+        Dict, FrozenSet, Iterable, Iterator, Optional, Text, Union)
 
 
 RE_NON_IDENTIFIER = re.compile(r"[^a-zA-Z0-9_]+")
@@ -14,16 +18,19 @@ RE_NON_IDENTIFIER = re.compile(r"[^a-zA-Z0-9_]+")
 
 class Registry(collections.Mapping):
     def __init__(self, tags=None):
-        self._declarations = {}
-        self._tags = set(tags or [])
+        # type: (Optional[Iterable[Text]]) -> None
+        self._declarations = {}  # type: Dict[Text, Optional[Declaration]]
+        self._tags = frozenset(tags or [])  # type: FrozenSet[Text]
 
     def should_expose(self, declaration):
+        # type: (Declaration) -> bool
         if not self._tags or not declaration.tags:
             return True
         return bool(self._tags.intersection(declaration.tags))
 
     @staticmethod
     def identifier(thing):
+        # type: (Union[Declaration, cindex.Cursor]) -> Text
         if isinstance(thing, Declaration):
             thing = thing.cursor
         if not isinstance(thing, cindex.Cursor):
@@ -47,21 +54,25 @@ class Registry(collections.Mapping):
         parts = filter(None, [fqn, thing.displayname])
         return prefix.format(RE_NON_IDENTIFIER.sub("_", "_".join(parts)))
 
-    def __getitem__(self, key):
-        key = self.identifier(key)
+    def __getitem__(self, thing):
+        # type: (Union[Declaration, cindex.Cursor]) -> Optional[Declaration]
+        key = self.identifier(thing)
         return self._declarations[key]
 
     def __iter__(self):
+        # type: () -> Iterator[Text]
         return iter(self._declarations)
 
     def __len__(self):
+        # type: () -> int
         return len(self._declarations)
 
-    def has(self, key):
-        key = self.identifier(key)
-        return key in self._declarations
+    def has(self, thing):
+        # type: (Union[Declaration, cindex.Cursor]) -> bool
+        return self.identifier(thing) in self._declarations
 
     def register(self, cursor, declaration):
+        # type: (cindex.Cursor, Optional[Declaration]) -> Text
         assert isinstance(cursor, cindex.Cursor)
         assert isinstance(declaration, (Declaration, type(None)))
         key = self.identifier(cursor)

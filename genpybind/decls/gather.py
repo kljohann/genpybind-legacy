@@ -11,12 +11,19 @@ from .level import Level
 from .manual import Manual
 from .namespaces import Namespace
 
-DECLARATION_TYPES = {}  # will be populated in genpybind/decls/__init__.py
+if False:  # pylint: disable=using-constant-test
+    from .declarations import Declaration  # pylint: disable=unused-import
+    from clang.cindex import Cursor  # pylint: disable=unused-import
+    from typing import Dict, Iterable, List, Optional, Tuple, Type, Union  # pylint: disable=unused-import
+
+# will be populated in genpybind/decls/__init__.py
+DECLARATION_TYPES = {}  # type: Dict[CursorKind, Type[Declaration]]
 UNAVAILABLE_KINDS = frozenset([AvailabilityKind.NOT_AVAILABLE, AvailabilityKind.NOT_ACCESSIBLE])
 
 def gather_declarations(cursor, default_visibility=False):
-    toplevel_declarations = []
-    queue = [([], cursor, default_visibility)]
+    # type: (Cursor, bool) -> List[Declaration]
+    toplevel_declarations = []  # type: List[Declaration]
+    queue = [([], cursor, default_visibility)]  # type: List[Tuple[List[Level], Cursor, bool]]
     while queue:
         parent_declarations, cursor, default_visibility = queue.pop(0)
 
@@ -25,7 +32,7 @@ def gather_declarations(cursor, default_visibility=False):
             continue
 
         annotations = Annotations.from_cursor(cursor)
-        declaration = None
+        declaration = None  # type: Optional[Declaration]
 
         # Check for GENPYBIND_MANUAL instructions
         if cursor.kind == CursorKind.VAR_DECL and any(k == "manual" for k, _ in annotations):

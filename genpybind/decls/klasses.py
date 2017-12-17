@@ -11,6 +11,12 @@ from .gather import gather_declarations
 from .level import Level
 from .methods import Method
 
+if False:  # pylint: disable=using-constant-test
+    from ..registry import Registry  # pylint: disable=unused-import
+    from .declarations import Declaration  # pylint: disable=unused-import
+    from typing import (  # pylint: disable=unused-import
+        Any, Dict, FrozenSet, Iterable, List, Optional, Sequence, Set, Text, Tuple, Union)
+
 
 class Klass(Level):
     __slots__ = (
@@ -20,10 +26,11 @@ class Klass(Level):
     )
 
     def __init__(self, *args, **kwargs):
+        # type: (*Any, **Any) -> None
         super(Klass, self).__init__(*args, **kwargs)
         self._dynamic_attr = False
-        self._hide_base = set()
-        self._inline_base = set()
+        self._hide_base = set()  # type: Set[Text]
+        self._inline_base = set()  # type: Set[Text]
 
         if self.cursor.spelling != self.cursor.displayname:
             # most probably a template specialization
@@ -32,36 +39,44 @@ class Klass(Level):
 
     @property
     def fully_qualified_name(self):
+        # type: () -> Text
         assert cutils.is_valid_type(self.cursor.type)
         return self.cursor.type.fully_qualified_name
 
     @property
     def dynamic_attr(self):
+        # type: () -> bool
         return self._dynamic_attr
 
     def set_dynamic_attr(self, value=True):
+        # type: (bool) -> None
         self._dynamic_attr = bool(value)
 
     @property
     def hide_base(self):
+        # type: () -> FrozenSet[Text]
         return frozenset(self._hide_base)
 
     def set_hide_base(self, *patterns):
+        # type: (*Text) -> None
         self._hide_base.update(patterns)
 
     @property
     def inline_base(self):
+        # type: () -> FrozenSet[Text]
         return frozenset(self._inline_base)
 
     def set_inline_base(self, *patterns):
+        # type: (*Text) -> None
         self._inline_base.update(patterns)
 
     def bases(self):
+        # type: () -> List[Union[cindex.Cursor, Klass]]
         """
         Returns mixed list of visible/non-hidden base classes which contains cursors for non-inlined
         base classes and Klass instances for inlined base classes.
         """
-        bases = []
+        bases = []  # type: List[Union[cindex.Cursor, Klass]]
         hide_base = utils.compile_globs(self._hide_base)
         inline_base = utils.compile_globs(self._inline_base)
         for child in cutils.children_by_kind(
@@ -86,6 +101,7 @@ class Klass(Level):
                     raise RuntimeError(
                         "could not load declaration when inlining {}".format(self))
                 declaration = declarations[0]
+                assert isinstance(declaration, Klass)
                 declaration.set_inline_base(*self.inline_base)
                 bases.append(declaration)
             else:
@@ -93,6 +109,7 @@ class Klass(Level):
         return bases
 
     def base_specifiers(self):
+        # type: () -> List[Text]
         bases = []
 
         for child in self.bases():
@@ -106,13 +123,16 @@ class Klass(Level):
         return bases
 
     def declarations(self):
+        # type: () -> List[Declaration]
         declarations = []
-        spellings = set()
+        spellings = set()  # type: Set[Text]
 
-        for child in [self] + self.bases():
+        child = None  # type: Union[None, cindex.Cursor, Klass]
+        for child in [self] + self.bases():  # type: ignore
+            assert child is not None
             if child is self:
                 # First process declarations of the class itself.
-                child_declarations = self.children
+                child_declarations = self.children  # type: Sequence[Declaration]
             elif isinstance(child, Klass):
                 # Process declarations of an inlined base class.
                 child_declarations = child.declarations()
@@ -121,7 +141,7 @@ class Klass(Level):
                 assert isinstance(child, cindex.Cursor)
                 continue
 
-            child_spellings = set()
+            child_spellings = set()  # type: Set[Text]
             for decl in child_declarations:
                 # If the declaration is hidden or a declaration/overload with the same name
                 # has already been defined by an earlier class, skip this declaration (shadowing).
@@ -138,6 +158,7 @@ class Klass(Level):
         return declarations
 
     def expose(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         if not self.visible:
             return
 
@@ -155,9 +176,12 @@ class Klass(Level):
             yield result
 
     def statements(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         # may have already been registered as an opaque typedef
         if registry.has(self.cursor):
-            var = registry.identifier(registry[self.cursor])
+            decl = registry[self.cursor]
+            assert decl is not None
+            var = registry.identifier(decl)
         else:
             var = registry.register(self.cursor, self)
 
@@ -175,7 +199,7 @@ class Klass(Level):
 
         yield "" # spacer
 
-        properties = {}
+        properties = {}  # type: Dict[Text, Dict[Text, Method]]
 
         for declaration in self.declarations():
             if isinstance(declaration, Method) and declaration.accessor_for:

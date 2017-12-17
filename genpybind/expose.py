@@ -7,8 +7,21 @@ from . import utils
 from .registry import Registry
 from .utils import quote
 
+if False:  # pylint: disable=using-constant-test
+    from .decls.declarations import Declaration  # pylint: disable=unused-import
+    from typing import (  # pylint: disable=unused-import
+        List, Optional, Text, Tuple, Union)
 
-def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=None, tags=None):
+
+def expose_as(
+        toplevel_declarations,  # type: List[Declaration]
+        module,  # type: Text
+        doc=None,  # type: Optional[Text]
+        isystem=None,  # type: Optional[List[Text]]
+        includes=None,  # type: Optional[List[Text]]
+        tags=None,  # type: Optional[List[Text]]
+):
+    # type: (...) -> Text
     tpl = textwrap.dedent("""
     #include <sstream>
     #include <pybind11/pybind11.h>
@@ -46,11 +59,12 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     var = "m"
     registry = Registry(tags=tags)
 
-    statements = []
-    pending_declarations = []
-    postamble_declarations = []
+    statements = []  # type: List[Text]
+    pending_declarations = []  # type: List[Tuple[Declaration, Text]]
+    postamble_declarations = []  # type: List[Tuple[Declaration, Text]]
 
     def handle_return(declaration, value, postamble_only=False):
+        # type: (Declaration, Union[None, Text, Tuple[Declaration, Text]], bool) -> None
         """
         expose() may either yield a string containing a statement to be emitted or
         a pair of a declaration and the identifier of the parent scope to use.
@@ -61,7 +75,8 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
         """
         if value is None:
             return
-        elif utils.is_string(value):
+        if not isinstance(value, tuple):
+            assert utils.is_string(value)
             statements.append(value)
             return
         declaration, _ = value

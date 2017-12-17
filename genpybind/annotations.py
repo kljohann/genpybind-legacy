@@ -7,6 +7,19 @@ import collections
 
 from clang.cindex import CursorKind
 
+from . import utils
+
+if False:  # pylint: disable=using-constant-test
+    from .decls.declarations import Declaration  # pylint: disable=unused-import
+    from clang import cindex  # pylint: disable=unused-import
+    from typing import (  # pylint: disable=unused-import
+        cast, Any, Container, Iterable, List, Optional, Text, Tuple, Type, Union)
+    AnnotationArgumentT = Union[int, float, Text, bool, None]  # pylint: disable=invalid-name
+    AnnotationT = Tuple[Text, Tuple[AnnotationArgumentT, ...]]  # pylint: disable=invalid-name
+else:
+    Text = None  # type: ignore # pylint: disable=invalid-name
+    cast = lambda _, x: x  # type: ignore # pylint: disable=invalid-name
+
 
 LOZENGE = u"◊"
 SPECIAL_NAMES = {"true": True, "false": False, "default": None, "none": None}
@@ -14,41 +27,54 @@ SPECIAL_NAMES = {"true": True, "false": False, "default": None, "none": None}
 
 class Annotations(collections.Sequence):
     def __init__(self, annotations=None):
-        self._annotations = []
-        if not isinstance(annotations, list):
-            annotations = [annotations]
+        # type: (Union[None, Text, Iterable[Text]]) -> None
+        self._annotations = []  # type: List[AnnotationT]
+        if utils.is_string(annotations):
+            self.parse(cast(Text, annotations))
+            return
+        if annotations is None:
+            return
         for annotation in annotations:
             self.parse(annotation)
 
     def __len__(self):
+        # type: () -> int
         return len(self._annotations)
 
     def __getitem__(self, index):
-        return self._annotations[index]
+        # type: (Any) -> AnnotationT
+        # FIXME: should be (int) -> AnnotationT
+        return self._annotations[index]  # type: ignore
 
     def extend(self, other):
+        # type: (Annotations) -> None
         assert isinstance(other, Annotations)
         self._annotations.extend(other._annotations) # pylint: disable=protected-access
 
     def parse(self, annotation):
+        # type: (Text) -> None
         if not annotation:
             return
 
         def append(key, arguments):
+            # type: (Text, Iterable[AnnotationArgumentT]) -> None
             self._annotations.append((key, tuple(arguments)))
 
         def recurse_ast(elem):
+            # type: (ast.AST) -> None
             if isinstance(elem, ast.Module):
-                for elem_ in elem.body:
-                    recurse_ast(elem_)
-            elif isinstance(elem, ast.Expr):
-                recurse_ast(elem.value)
-            elif isinstance(elem, ast.Tuple):
-                for elem_ in elem.elts:
-                    recurse_ast(elem_)
-            elif isinstance(elem, ast.Name):
-                append(elem.id, [])
-            elif isinstance(elem, ast.Call):
+                for module_elem in elem.body:
+                    recurse_ast(module_elem)
+                return
+            if isinstance(elem, ast.Expr):
+                return recurse_ast(elem.value)
+            if isinstance(elem, ast.Tuple):
+                for tuple_elem in elem.elts:
+                    recurse_ast(tuple_elem)
+                return
+            if isinstance(elem, ast.Name):
+                return append(elem.id, [])
+            if isinstance(elem, ast.Call):
                 arguments = []
                 if any(getattr(elem, attr, None)
                        for attr in ["keywords", "kwargs", "starargs"]):
@@ -56,29 +82,30 @@ class Annotations(collections.Sequence):
                         "star args and keyword arguments are not supported "
                         "in {!r}".format(annotation))
                 for arg in elem.args:
+                    value = None  # type: AnnotationArgumentT
                     if isinstance(arg, ast.Num):
-                        arg = arg.n
+                        value = arg.n
                     elif isinstance(arg, ast.Str):
-                        arg = arg.s
+                        value = arg.s
                     elif isinstance(arg, ast.Name):
-                        arg = SPECIAL_NAMES.get(arg.id.lower(), arg.id)
-                    elif hasattr(ast, "NameConstant") and isinstance(arg, ast.NameConstant):
+                        value = SPECIAL_NAMES.get(arg.id.lower(), arg.id)
+                    elif hasattr(ast, "NameConstant") and isinstance(arg, ast.NameConstant):  # type: ignore
                         # "True", "False", "None" in Python 3
-                        arg = arg.value
+                        value = arg.value
                     else:
                         raise RuntimeError(
                             "unknown argument type {!r} in {!r}".format(arg, annotation))
-                    arguments.append(arg)
-                append(elem.func.id, arguments)
-            else:
-                raise RuntimeError(
-                    "unknown AST element {!r} in {!r}".format(elem, annotation))
+                    arguments.append(value)
+                return append(elem.func.id, arguments)  # type: ignore
+            raise RuntimeError(
+                "unknown AST element {!r} in {!r}".format(elem, annotation))
 
         module = ast.parse(annotation)
         recurse_ast(module)
 
     @classmethod
     def from_cursor(cls, cursor):
+        # type: (cindex.Cursor) -> Annotations
         annotations = []
         for child in cursor.get_children(
                 with_implicit=True, with_template_instantiations=True):
@@ -87,9 +114,9 @@ class Annotations(collections.Sequence):
             # TODO: .displayname or .spelling ? does it matter?
             text = child.spelling
             try:
-                string_type = unicode # Python 2
-            except NameError:
-                string_type = str # Python 3
+                string_type = unicode  # type: Type[Text]
+            except NameError: # Python 3
+                string_type = str
             if not isinstance(text, string_type):
                 text = text.decode("utf-8")
             if not text.startswith(LOZENGE):
@@ -99,6 +126,7 @@ class Annotations(collections.Sequence):
         return cls(annotations)
 
     def apply_to(self, declaration, quiet=False, exclude=None):
+        # type: (Declaration, bool, Optional[Container[Text]]) -> None
         for name, args in self._annotations:
             if exclude is not None and name in exclude:
                 continue
@@ -106,7 +134,7 @@ class Annotations(collections.Sequence):
             if callable(fun):
                 pass
             elif (callable(getattr(declaration, "set", None)) and
-                  declaration.set(name, *args)):
+                  declaration.set(name, *args)):  # type: ignore
                 continue
             elif not quiet:
                 raise RuntimeError(
@@ -114,7 +142,8 @@ class Annotations(collections.Sequence):
                         declaration.__class__.__name__, name))
             fun(*args)
 
-    def __repr__(self):
+    def __repr__(self):  # type: ignore
+        # type: () -> Text
         return ", ".join([
             "{}({})".format(name, ", ".join(map(repr, args)))
             for name, args in self._annotations

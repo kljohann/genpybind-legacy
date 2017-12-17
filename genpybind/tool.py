@@ -14,6 +14,7 @@ from .decls import gather_declarations
 from .expose import expose_as
 
 def main():
+    # type: () -> None
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--genpybind-module", dest="module", required=True)
@@ -23,7 +24,6 @@ def main():
     parser.add_argument("--genpybind-isystem", nargs="+", dest="isystem")
     parser.add_argument("--genpybind-tag", nargs="+", dest="tags")
     parser.add_argument("--genpybind-from-ast", dest="from_ast")
-    parser.add_argument("--genpybind-ipython", action="store_true", dest="ipython")
     parser.add_argument('rest', nargs=argparse.REMAINDER)
 
     # args, rest_args = parser.parse_known_args()
@@ -57,10 +57,6 @@ def main():
                 print("//", "  ", diag_.format())
 
     toplevel_declarations = gather_declarations(translation_unit.cursor)
-
-    if args.ipython:
-        from IPython import embed
-        embed()
 
     print(expose_as(
         toplevel_declarations,

@@ -6,6 +6,10 @@ from .. import cutils
 from .declarations import Declaration
 from ..utils import join_arguments, quote
 
+if False:  # pylint: disable=using-constant-test
+    from ..registry import Registry  # pylint: disable=unused-import
+    from typing import Any, Iterable, Optional, Text, Tuple, Union  # pylint: disable=unused-import
+
 
 class Enum(Declaration):
     __slots__ = (
@@ -14,22 +18,27 @@ class Enum(Declaration):
     )
 
     def __init__(self, *args, **kwargs):
+        # type: (*Any, **Any) -> None
         super(Enum, self).__init__(*args, **kwargs)
         self._arithmetic = False
-        self._export_values = None
+        self._export_values = None  # type: Optional[bool]
 
     @property
     def arithmetic(self):
+        # type: () -> bool
         return self._arithmetic
 
     def set_arithmetic(self, value=True):
+        # type: (bool) -> None
         self._arithmetic = bool(value)
 
     @property
     def export_values(self):
+        # type: () -> Optional[bool]
         return self._export_values
 
     def set_export_values(self, value=True):
+        # type: (Optional[bool]) -> None
         if value not in [True, False, None]:
             raise ValueError(
                 "unexpected argument {!r}, "
@@ -37,6 +46,7 @@ class Enum(Declaration):
         self._export_values = value
 
     def statements(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         var = registry.register(self.cursor, self)
         is_scoped = self.cursor.is_scoped_enum()
 

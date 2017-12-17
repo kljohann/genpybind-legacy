@@ -1,3 +1,4 @@
+/.mypy_cache
 /.waf*
 /.lock-waf_linux_build
 /build

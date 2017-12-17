@@ -1,8 +1,13 @@
 from __future__ import unicode_literals
 
-from clang.cindex import Cursor, CursorKind, TypeKind, TokenGroup, TokenKind
+from clang.cindex import Cursor, CursorKind, TypeKind, Token, TokenGroup, TokenKind
 
 from . import utils
+
+if False:  # pylint: disable=using-constant-test
+    from clang import cindex  # pylint: disable=unused-import
+    from typing import (  # pylint: disable=unused-import
+        Container, Iterator, List, Optional, Text, Union)
 
 
 EXPRESSION_KINDS = frozenset({
@@ -33,12 +38,15 @@ SCOPE_CURSOR_KINDS = frozenset([
 
 
 def is_valid_type(type_):
+    # type: (cindex.Type) -> bool
     return type_.kind != TypeKind.INVALID
 
 
 def is_same_type(lhs, rhs):
+    # type: (cindex.Type, cindex.Type) -> bool
     # TODO: Retrieve non-const-qualified type instead
     def qualify(type_):
+        # type: (cindex.Type) -> Text
         name = type_.fully_qualified_name
         name = utils.strip_prefix(name, "const ")
         return name
@@ -46,10 +54,12 @@ def is_same_type(lhs, rhs):
 
 
 def get_tokens_with_whitespace(cursor):
+    # type: (Cursor) -> Iterator[Token]
     return cursor.get_tokens(TokenGroup.TOKENIZE_KEEP_WHITESPACE)
 
 
 def typedef_underlying_declaration(cursor):
+    # type: (Cursor) -> Cursor
     while cursor.kind == CursorKind.TYPEDEF_DECL:
         underlying_type = cursor.underlying_typedef_type
         cursor_ = underlying_type.get_declaration()
@@ -62,6 +72,7 @@ def typedef_underlying_declaration(cursor):
 
 
 def fully_qualified_name(thing, parent_cursor=None):
+    # type: (Union[Cursor, Token, cindex.Type], Optional[Cursor]) -> Text
     if thing.kind == CursorKind.TRANSLATION_UNIT:
         # Happens e.g. for unscoped enums, which pass their parent_cursor
         return ""
@@ -96,8 +107,9 @@ def fully_qualified_name(thing, parent_cursor=None):
 
 
 def fully_qualified_expression(cursor):
+    # type: (Cursor) -> Text
     output = []
-    current = [""]
+    current = [""]  # type: List[Union[Text, Token]]
     for token in get_tokens_with_whitespace(cursor):
         # FIXME: Handle leading token.spelling == "::"
         if token.kind == TokenKind.IDENTIFIER:
@@ -112,14 +124,16 @@ def fully_qualified_expression(cursor):
 
     for tokens in output:
         assert tokens
-        if not utils.is_string(tokens[0]):
+        if isinstance(tokens[0], Token):
             tokens[0] = fully_qualified_name(tokens[0])
+        assert utils.is_string(tokens[0])
 
     return "".join(utils.flatten(output))
 
 
 def first_by_kind_bfs(cursor, kinds):
-    if not isinstance(kinds, (frozenset, set, list, tuple)):
+    # type: (Cursor, Union[CursorKind, Container[CursorKind]]) -> Optional[Cursor]
+    if isinstance(kinds, CursorKind):
         kinds = [kinds]
 
     queue = [cursor]
@@ -137,7 +151,8 @@ def first_by_kind_bfs(cursor, kinds):
 
 
 def first_parent_by_kind(cursor, kinds):
-    if not isinstance(kinds, (frozenset, set, list, tuple)):
+    # type: (Cursor, Union[CursorKind, Container[CursorKind]]) -> Optional[Cursor]
+    if isinstance(kinds, CursorKind):
         kinds = [kinds]
 
     while cursor:
@@ -148,7 +163,8 @@ def first_parent_by_kind(cursor, kinds):
 
 
 def children_by_kind(cursor, kinds):
-    if not isinstance(kinds, (frozenset, set, list, tuple)):
+    # type: (Cursor, Union[CursorKind, Container[CursorKind]]) -> Iterator[Cursor]
+    if isinstance(kinds, CursorKind):
         kinds = [kinds]
 
     for child in cursor.get_children(

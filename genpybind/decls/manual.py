@@ -5,6 +5,11 @@ from clang.cindex import TokenKind
 from .. import cutils
 from .declarations import Declaration
 
+if False:  # pylint: disable=using-constant-test
+    from clang import cindex  # pylint: disable=unused-import
+    from ..registry import Registry  # pylint: disable=unused-import
+    from typing import Any, Iterable, List, Optional, Text, Tuple, Union  # pylint: disable=unused-import
+
 
 class Manual(Declaration):
     __slots__ = (
@@ -12,37 +17,46 @@ class Manual(Declaration):
         "_postamble",
     )
 
-    def __init__(self, *args, **kwargs):
-        self._code = kwargs.pop("code", None)
-        super(Manual, self).__init__(*args, **kwargs)
+    def __init__(self, cursor, code=None, **kwargs):
+        # type: (cindex.Cursor, Optional[cindex.Cursor], **Any) -> None
+        assert code is not None
+        self._code = code
+        super(Manual, self).__init__(cursor, **kwargs)
         self._postamble = False
 
     @property
     def visible(self):
+        # type: () -> bool
         return True
 
     @property
     def code(self):
+        # type: () -> cindex.Cursor
         return self._code
 
     @property
     def postamble(self):
+        # type: () -> bool
         return self._postamble
 
     def set_postamble(self):
+        # type: () -> None
         self._postamble = True
 
     def set_manual(self):
+        # type: () -> None
         pass
 
     def statements(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         if self.postamble:
             yield (self, parent)
         else:
-            for result in self.expose_later(None, parent, registry):
+            for result in self.expose_later("", parent, registry):
                 yield result
 
-    def expose_later(self, _, parent, _registry):
+    def expose_later(self, _toplevel, parent, _registry):
+        # type: (Text, Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         output = []
         tokens = list(cutils.get_tokens_with_whitespace(self.code))
 

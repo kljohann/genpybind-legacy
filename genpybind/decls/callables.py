@@ -1,10 +1,14 @@
 from __future__ import unicode_literals
 
-from clang.cindex import CursorKind
+from clang.cindex import Cursor, CursorKind
 
 from .. import cutils, utils
 from ..utils import join_arguments, quote
 from .declarations import Declaration
+
+if False:  # pylint: disable=using-constant-test
+    from ..registry import Registry  # pylint: disable=unused-import
+    from typing import Any, Iterable, List, Optional, Text, Tuple, Union  # pylint: disable=unused-import
 
 
 METHOD_KINDS = frozenset([
@@ -22,14 +26,18 @@ class Callable(Declaration):
     )
 
     def __init__(self, *args, **kwargs):
+        # type: (*Any, **Any) -> None
         super(Callable, self).__init__(*args, **kwargs)
-        self._return_value_policy = None
-        self._keep_alive = self._noconvert = self._required = tuple()
+        self._return_value_policy = None  # type: Optional[Text]
+        self._keep_alive = self._noconvert = self._required = ()  # type: Union[Tuple[()], List[int]]
 
     def _argument_index(self, value, prefix=None):
+        # type: (Union[int, Text], Optional[List[Text]]) -> int
         arguments = []
-        for idx, elem in enumerate((prefix or []) + list(self.cursor.get_arguments())):
-            if elem is not None and not utils.is_string(elem):
+        candidates = list(prefix or [])  # type: List[Union[Text, Cursor]]
+        candidates.extend(self.cursor.get_arguments())
+        for idx, elem in enumerate(candidates):
+            if isinstance(elem, Cursor):
                 assert elem.kind == CursorKind.PARM_DECL
                 elem = elem.spelling
             if value in [elem, idx]:
@@ -42,40 +50,49 @@ class Callable(Declaration):
 
     @property
     def return_value_policy(self):
+        # type: () -> Optional[Text]
         return self._return_value_policy
 
     def set_return_value_policy(self, value):
+        # type: (Optional[Text]) -> None
         self._return_value_policy = value
 
     @property
     def keep_alive(self):
+        # type: () -> Tuple[int, ...]
         return tuple(self._keep_alive)
 
     def set_keep_alive(self, *values):
-        # [return value, self reference, arguments...]
-        prefix = ["return", "this"]
+        # type: (*Union[int, str]) -> None
+        prefix = ["return", "this"]  # [return value, self reference, arguments...]
         self._keep_alive = [
             self._argument_index(value, prefix=prefix) for value in values
         ]
 
     @property
     def noconvert(self):
+        # type: () -> Tuple[int, ...]
         return tuple(self._noconvert)
 
     def set_noconvert(self, *values):
+        # type: (*Union[int, str]) -> None
         self._noconvert = [self._argument_index(val) for val in values]
 
     @property
     def required(self):
+        # type: () -> Tuple[int, ...]
         return tuple(self._required)
 
     def set_required(self, *values):
+        # type: (*Union[int, str]) -> None
         self._required = [self._argument_index(val) for val in values]
 
     def argument_types(self):
+        # type: () -> List[Text]
         return [tp.fully_qualified_name for tp in self.cursor.type.argument_types()]
 
     def typedef(self, name):
+        # type: (Text) -> Text
         qualifiers = []
         namespace = ""
         if self.cursor.kind in METHOD_KINDS and not self.cursor.is_static_method():
@@ -92,20 +109,21 @@ class Callable(Declaration):
         )
 
     def policies(self):
-        return [
-            ("py::return_value_policy::{}".format(self.return_value_policy)
-             if self.return_value_policy else None),
-            ("py::keep_alive<{}>()".format(", ".join(str(idx) for idx in self.keep_alive))
-             if self.keep_alive else None),
-        ]
+        # type: () -> Iterable[Text]
+        if self.return_value_policy:
+            yield "py::return_value_policy::{}".format(self.return_value_policy)
+        if self.keep_alive:
+            yield "py::keep_alive<{}>()".format(", ".join(str(idx) for idx in self.keep_alive))
 
     def function_pointer(self, cast_type=None):
+        # type: (Optional[Text]) -> Text
         return "{cast}&{field}".format(
             cast="({})".format(cast_type) if cast_type is not None else "",
             field=self.fully_qualified_name,
         )
 
     def function_object(self, cast_type=None):
+        # type: (Optional[Text]) -> Text
         return "py::cpp_function({})".format(
             join_arguments(
                 self.function_pointer(cast_type),
@@ -114,6 +132,7 @@ class Callable(Declaration):
         )
 
     def arguments(self):
+        # type: () -> List[Text]
         args = []
         for idx, child in enumerate(
                 cutils.children_by_kind(self.cursor, CursorKind.PARM_DECL)):
@@ -133,6 +152,7 @@ class Callable(Declaration):
         return args
 
     def statements(self, parent, _registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         typedef_name = "genpybind_{}_type".format(self.expose_as)
 
         yield "{"
@@ -153,6 +173,7 @@ class Callable(Declaration):
 
 class Function(Callable):
     def set_stringstream(self, *args):
+        # type: (*Any) -> None
         # As annotations can not be attached to a friend declaration, we need to
         # ignore annotations applicable to operator friend declarations here.
         pass

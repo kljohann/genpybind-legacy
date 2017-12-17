@@ -1,9 +1,16 @@
 from __future__ import unicode_literals
 
-from ..utils import quote
 from .. import cutils
+from ..utils import quote
 from .declarations import Declaration
 from .gather import gather_declarations
+
+if False:  # pylint: disable=using-constant-test
+    from clang import cindex  # pylint: disable=unused-import
+    from ..annotations import Annotations  # pylint: disable=unused-import
+    from ..registry import Registry  # pylint: disable=unused-import
+    from typing import (  # pylint: disable=unused-import
+        Any, Iterable, Optional, Text, Tuple, Union)
 
 
 class Typedef(Declaration):
@@ -12,31 +19,40 @@ class Typedef(Declaration):
         "_opaque",
     )
 
-    def __init__(self, *args, **kwargs):
-        super(Typedef, self).__init__(*args, **kwargs)
-        self._annotations = kwargs["annotations"]
-        self._opaque = None # expose as alias
+    def __init__(self, cursor, annotations=None, **kwargs):
+        # type: (cindex.Cursor, Optional[Annotations], **Any) -> None
+        super(Typedef, self).__init__(cursor, annotations=annotations, **kwargs)
+        assert annotations is not None
+        self._annotations = annotations
+        # expose as alias
+        self._opaque = None  # type: Optional[bool]
 
     @property
     def default_visibility(self):
+        # type: () -> bool
         # Typedefs have to be made visible explicitly.
         return False
 
     @property
     def opaque(self):
+        # type: () -> Optional[bool]
         return self._opaque
 
     def set_opaque(self, value=True):
+        # type: (Optional[bool]) -> None
         self._opaque = bool(value)
 
-    def set(self, _name, *_args):
+    def set(self, _name, *_args):  # pylint: disable=no-self-use
+        # type: (Text, *Any) -> bool
         # We already capture annotations in the ctor.
         return True
 
     def underlying_cursor(self):
+        # type: () -> cindex.Cursor
         return cutils.typedef_underlying_declaration(self.cursor)
 
     def expose_later(self, toplevel, parent, registry):
+        # type: (Text, Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         assert not self.opaque
 
         decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
@@ -73,10 +89,12 @@ class Typedef(Declaration):
         yield (self, parent)
 
     def exposed_elsewhere(self, registry):
+        # type: (Registry) -> bool
         decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
         return registry.get(decl_cursor, True) is None
 
     def expose(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         if not self.visible:
             return
 
@@ -91,6 +109,7 @@ class Typedef(Declaration):
             yield result
 
     def statements(self, parent, registry):
+        # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         if not self.opaque:
             yield (self, parent)
             return
