@@ -6,7 +6,7 @@ from clang.cindex import AvailabilityKind, CursorKind
 from .. import cutils
 from ..annotations import Annotations
 from ..cutils import RECORD_KINDS, SCOPE_CURSOR_KINDS
-from .declarations import UNSPECIFIED
+from .declarations import Visibility
 from .level import Level
 from .manual import Manual
 from .namespaces import Namespace
@@ -99,7 +99,7 @@ def gather_declarations(cursor, default_visibility=False):
                     cursor.location.column))
                 raise
 
-            has_explicit_visibility = declaration.visibility != UNSPECIFIED
+            has_explicit_visibility = declaration.visibility != Visibility.UNSPECIFIED
 
             if not isinstance(declaration, Namespace):
                 if annotations and not has_explicit_visibility:
