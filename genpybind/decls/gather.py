@@ -1,27 +1,22 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import collections
-
 from clang.cindex import AvailabilityKind, CursorKind
 
 from .. import cutils
 from ..annotations import Annotations
 from ..cutils import RECORD_KINDS, SCOPE_CURSOR_KINDS
 from .declarations import UNSPECIFIED
+from .level import Level
 from .manual import Manual
 from .namespaces import Namespace
 
 DECLARATION_TYPES = {}  # will be populated in genpybind/decls/__init__.py
 UNAVAILABLE_KINDS = frozenset([AvailabilityKind.NOT_AVAILABLE, AvailabilityKind.NOT_ACCESSIBLE])
 
-def gather_declarations(cursors, default_visibility=False):
+def gather_declarations(cursor, default_visibility=False):
     toplevel_declarations = []
-    if isinstance(cursors, collections.Iterable):
-        cursors = list(cursors)
-    if not isinstance(cursors, (list, tuple)):
-        cursors = [cursors]
-    queue = [([], cursor, default_visibility) for cursor in cursors]
+    queue = [([], cursor, default_visibility)]
     while queue:
         parent_declarations, cursor, default_visibility = queue.pop(0)
 
@@ -30,7 +25,6 @@ def gather_declarations(cursors, default_visibility=False):
             continue
 
         annotations = Annotations.from_cursor(cursor)
-        ctor = None
         declaration = None
 
         # Check for GENPYBIND_MANUAL instructions
@@ -76,11 +70,8 @@ def gather_declarations(cursors, default_visibility=False):
             # FIXME: Support explicit instantiation of template classes
             continue
 
-        if declaration is None:
-            ctor = DECLARATION_TYPES.get(cursor.kind, None)
-
-        if ctor is not None:
-            declaration = ctor(
+        if declaration is None and cursor.kind in DECLARATION_TYPES:
+            declaration = DECLARATION_TYPES[cursor.kind](
                 cursor, default_visibility=default_visibility,
                 annotations=annotations)
 
@@ -130,20 +121,20 @@ def gather_declarations(cursors, default_visibility=False):
             if not declaration.visible:
                 continue
 
-            for parent in filter(None, parent_declarations):
+            for parent in parent_declarations:
                 declaration.set_tags(*parent.tags)
 
-            for parent in parent_declarations:
-                if parent is not None:
-                    parent.add_child(declaration)
-                    break
+            if parent_declarations:
+                parent_declarations[0].add_child(declaration)
             else:
                 toplevel_declarations.append(declaration)
 
         if cursor.kind not in SCOPE_CURSOR_KINDS:
             continue
 
-        parent_declarations = [declaration] + parent_declarations[:]
+        if declaration is not None:
+            assert isinstance(declaration, Level)
+            parent_declarations = [declaration] + parent_declarations[:]
 
         for child in cursor.get_children(
                 with_implicit=True, with_template_instantiations=True):
