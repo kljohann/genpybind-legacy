@@ -51,6 +51,14 @@ def expose_as(toplevel_declarations, module, doc=None, isystem=None, includes=No
     postamble_declarations = []
 
     def handle_return(declaration, value, postamble_only=False):
+        """
+        expose() may either yield a string containing a statement to be emitted or
+        a pair of a declaration and the identifier of the parent scope to use.
+        In the latter case it will be added to a list of pending declarations on which
+        expose_later() is called after all other normal declarations have been processed.
+        If in addition the returned declaration has a truthy "postamble" attribute, it
+        will be processed even later.
+        """
         if value is None:
             return
         elif utils.is_string(value):
