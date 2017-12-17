@@ -22,12 +22,6 @@ def quote(text):
     return json.dumps(text)
 
 
-def convert_none(conversion, value):
-    if value is None:
-        return
-    return conversion(value)
-
-
 def compile_globs(patterns):
     patterns = [fnmatch.translate(pattern) for pattern in patterns]
     regex = re.compile(r"\A({})\Z".format("|".join(patterns)))

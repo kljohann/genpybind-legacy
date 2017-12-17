@@ -92,7 +92,9 @@ class Declaration(object):
         return self._expose_as or self.spelling
 
     def set_expose_as(self, name):
-        self._expose_as = utils.convert_none(str, name)
+        if name is not None:
+            name = str(name)
+        self._expose_as = name
 
     @property
     def tags(self):

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from clang.cindex import CursorKind
 
-from .. import cutils, utils
+from .. import cutils
 from .declarations import Declaration
 from ..utils import join_arguments, quote
 
@@ -30,7 +30,11 @@ class Enum(Declaration):
         return self._export_values
 
     def set_export_values(self, value=True):
-        self._export_values = utils.convert_none(bool, value)
+        if value not in [True, False, None]:
+            raise ValueError(
+                "unexpected argument {!r}, "
+                "expected one of True, False, None".format(value))
+        self._export_values = value
 
     def statements(self, parent, registry):
         var = registry.register(self.cursor, self)
