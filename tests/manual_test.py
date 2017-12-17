@@ -7,7 +7,7 @@ def test_function_pointer():
 
 def test_lambda():
     obj = m.Something()
-    assert obj[42] == 42
+    assert obj[42] == 42 + obj.offset
 
 def test_template():
     obj = m.Something()
