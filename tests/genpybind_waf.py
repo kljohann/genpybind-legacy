@@ -116,7 +116,7 @@ class genpybind(Task.Task):
 
         tg = bld.get_tgen_by_name("genpybind")
         assert "py" in tg.features
-        pypath = getattr(tg, "install_from", tg.path).get_bld().abspath()
+        pypath = getattr(tg, "install_from", tg.path).abspath()
 
         env = dict(os.environ)
         env["PYTHONPATH"] = os.pathsep.join(
