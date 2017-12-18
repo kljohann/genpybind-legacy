@@ -59,7 +59,7 @@ class Registry(collections.Mapping):
 
     def has(self, key):
         key = self.identifier(key)
-        return self._declarations.has_key(key)
+        return key in self._declarations
 
     def register(self, cursor, declaration):
         assert isinstance(cursor, cindex.Cursor)
