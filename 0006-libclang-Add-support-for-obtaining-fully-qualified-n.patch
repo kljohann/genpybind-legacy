@@ -1,0 +1,136 @@
+From a24d66fca11152dbd9b8abb246dfa340e2d6843b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <dev@jklaehn.de>
+Date: Mon, 10 Jul 2017 13:53:25 +0200
+Subject: [PATCH 06/12] [libclang] Add support for obtaining fully qualified
+ names of types
+
+This patch allows retrieving the fully qualified names of types
+through libclang and clang.cindex (Python).
+---
+ bindings/python/clang/cindex.py             | 13 +++++++++++++
+ bindings/python/tests/cindex/test_cursor.py |  8 ++++++++
+ include/clang-c/Index.h                     |  8 ++++++++
+ tools/libclang/CXType.cpp                   | 18 ++++++++++++++++++
+ tools/libclang/libclang.exports             |  1 +
+ 5 files changed, 48 insertions(+)
+
+diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
+index ecff13f7a5..496e1089ad 100644
+--- a/bindings/python/clang/cindex.py
++++ b/bindings/python/clang/cindex.py
+@@ -2314,6 +2314,14 @@ class Type(Structure):
+         """Retrieve the spelling of this Type."""
+         return conf.lib.clang_getTypeSpelling(self)
+ 
++    @property
++    def fully_qualified_name(self):
++        """Retrieve the fully qualified name of this Type."""
++        if not hasattr(self, '_fully_qualified_name'):
++            self._fully_qualified_name = conf.lib.clang_getFullyQualifiedTypeName(self)
++
++        return self._fully_qualified_name
++
+     def __eq__(self, other):
+         if type(other) != type(self):
+             return False
+@@ -3750,6 +3758,11 @@ functionList = [
+    _CXString,
+    _CXString.from_result),
+ 
++  ("clang_getFullyQualifiedTypeName",
++   [Type],
++   _CXString,
++   _CXString.from_result),
++
+   ("clang_hashCursor",
+    [Cursor],
+    c_uint),
+diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
+index 87fd76ed0e..3cd499ea11 100644
+--- a/bindings/python/tests/cindex/test_cursor.py
++++ b/bindings/python/tests/cindex/test_cursor.py
+@@ -291,6 +291,14 @@ def test_underlying_type():
+     underlying = typedef.underlying_typedef_type
+     assert underlying.kind == TypeKind.INT
+ 
++def test_fully_qualified_type_name():
++    source = 'namespace uiae { struct X { typedef int sometype; }; }'
++    tu = get_tu(source, lang='cpp')
++
++    cls = get_cursor(tu, 'sometype')
++    assert cls.type.fully_qualified_name.endswith(
++        "uiae::X::sometype")
++
+ kParentTest = """\
+         class C {
+             void f();
+diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
+index 89957e8526..402ca9a436 100644
+--- a/include/clang-c/Index.h
++++ b/include/clang-c/Index.h
+@@ -3241,6 +3241,14 @@ CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
+ CINDEX_LINKAGE CXString clang_getTypeSpelling(CXType CT);
+ 
+ /**
++ * \brief Retrieve the fully qualified name of the underlying type.
++ * This includes full qualification of all template parameters etc.
++ *
++ * If the type is invalid, an empty string is returned.
++ */
++CINDEX_LINKAGE CXString clang_getFullyQualifiedTypeName(CXType CT);
++
++/**
+  * \brief Retrieve the underlying type of a typedef declaration.
+  *
+  * If the cursor does not reference a typedef declaration, an invalid type is
+diff --git a/tools/libclang/CXType.cpp b/tools/libclang/CXType.cpp
+index d2cb509059..e99f513d13 100644
+--- a/tools/libclang/CXType.cpp
++++ b/tools/libclang/CXType.cpp
+@@ -23,6 +23,7 @@
+ #include "clang/AST/Type.h"
+ #include "clang/Basic/AddressSpaces.h"
+ #include "clang/Frontend/ASTUnit.h"
++#include "clang/Tooling/Core/QualTypeNames.h"
+ 
+ using namespace clang;
+ 
+@@ -282,6 +283,23 @@ CXString clang_getTypeSpelling(CXType CT) {
+   return cxstring::createDup(OS.str());
+ }
+ 
++CXString clang_getFullyQualifiedTypeName(CXType CT) {
++  QualType T = GetQualType(CT);
++  if (T.isNull())
++    return cxstring::createEmpty();
++
++  // For builtin types (but not typedefs pointing to builtin types) return their
++  // spelling.  Otherwise "bool" will be turned into "_Bool".
++  const Type *TP = T.getTypePtrOrNull();
++  if (TP && TP->isBuiltinType() && T->getAs<TypedefType>() == nullptr)
++    return clang_getTypeSpelling(CT);
++
++  CXTranslationUnit TU = GetTU(CT);
++  ASTContext &Ctx = cxtu::getASTUnit(TU)->getASTContext();
++  std::string name = TypeName::getFullyQualifiedName(T, Ctx, /*WithGlobalNsPrefix=*/true);
++  return cxstring::createDup(name.c_str());
++}
++
+ CXType clang_getTypedefDeclUnderlyingType(CXCursor C) {
+   using namespace cxcursor;
+   CXTranslationUnit TU = cxcursor::getCursorTU(C);
+diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
+index 9ddc055125..9c56e88052 100644
+--- a/tools/libclang/libclang.exports
++++ b/tools/libclang/libclang.exports
+@@ -221,6 +221,7 @@ clang_getFileLocation
+ clang_getFileName
+ clang_getFileTime
+ clang_getFileUniqueID
++clang_getFullyQualifiedTypeName
+ clang_getFunctionTypeCallingConv
+ clang_getIBOutletCollectionType
+ clang_getIncludedFile
+-- 
+2.13.0
+

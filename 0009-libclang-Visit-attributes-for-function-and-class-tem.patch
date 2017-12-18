@@ -1,0 +1,97 @@
+From 2d3c0e5f3e3e6da701f3a5010a9700253deec16d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <dev@jklaehn.de>
+Date: Fri, 21 Jul 2017 10:16:45 +0200
+Subject: [PATCH 09/12] [libclang] Visit attributes for function and class
+ templates
+
+---
+ bindings/python/tests/cindex/test_cursor.py | 20 ++++++++++++++++++++
+ test/Index/annotate-attribute.cpp           | 12 ++++++++++++
+ tools/libclang/CIndex.cpp                   |  6 ++++--
+ 3 files changed, 36 insertions(+), 2 deletions(-)
+
+diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
+index 2d50ec5901..863919e4c5 100644
+--- a/bindings/python/tests/cindex/test_cursor.py
++++ b/bindings/python/tests/cindex/test_cursor.py
+@@ -397,6 +397,26 @@ def test_annotation_attribute():
+     else:
+         assert False, "Couldn't find annotation"
+ 
++def test_annotation_template():
++    annotation = '__attribute__ ((annotate("annotation")))'
++    for source, kind in [
++            ('int foo (T value) %s;', CursorKind.FUNCTION_TEMPLATE),
++            ('class %s foo {};', CursorKind.CLASS_TEMPLATE),
++    ]:
++        source = 'template<typename T> ' + (source % annotation)
++        tu = get_tu(source, lang="cpp")
++
++        foo = get_cursor(tu, 'foo')
++        assert foo is not None
++        assert foo.kind == kind
++
++        for c in foo.get_children():
++            if c.kind == CursorKind.ANNOTATE_ATTR:
++                assert c.displayname == "annotation"
++                break
++        else:
++            assert False, "Couldn't find annotation for {}".format(kind)
++
+ def test_result_type():
+     tu = get_tu('int foo();')
+     foo = get_cursor(tu, 'foo')
+diff --git a/test/Index/annotate-attribute.cpp b/test/Index/annotate-attribute.cpp
+index d822210e49..bf415fc8fe 100644
+--- a/test/Index/annotate-attribute.cpp
++++ b/test/Index/annotate-attribute.cpp
+@@ -16,6 +16,12 @@ protected:
+   void methodWithoutAttribute();
+ };
+ 
++template <typename T>
++class __attribute__((annotate("works"))) TemplateTest {};
++
++template <typename T>
++int templateFunction(T value) __attribute__((annotate("works")));
++
+ // CHECK: ClassDecl=Test:3:7 (Definition) Extent=[3:1 - 17:2]
+ // CHECK-NEXT: CXXAccessSpecifier=:4:1 (Definition) Extent=[4:1 - 4:8]
+ // CHECK-NEXT: CXXMethod=aMethod:5:51 Extent=[5:3 - 5:60]
+@@ -31,3 +37,9 @@ protected:
+ // CHECK-NEXT: CompoundStmt= Extent=[12:23 - 12:25]
+ // CHECK-NEXT: CXXAccessSpecifier=:14:1 (Definition) Extent=[14:1 - 14:11]
+ // CHECK-NEXT: CXXMethod=methodWithoutAttribute:16:8 Extent=[16:3 - 16:32]
++// CHECK: ClassTemplate=TemplateTest:20:42 (Definition) Extent=[19:1 - 20:57]
++// CHECK-NEXT: TemplateTypeParameter=T:19:20 (Definition) Extent=[19:11 - 19:21] [access=public]
++// CHECK-NEXT: attribute(annotate)=works Extent=[20:22 - 20:39]
++// CHECK: FunctionTemplate=templateFunction:23:5 Extent=[22:1 - 23:65]
++// CHECK-NEXT: TemplateTypeParameter=T:22:20 (Definition) Extent=[22:11 - 22:21] [access=public]
++// CHECK-NEXT: attribute(annotate)=works Extent=[23:46 - 23:63]
+diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
+index 04fd775fb0..27f74b2aa2 100644
+--- a/tools/libclang/CIndex.cpp
++++ b/tools/libclang/CIndex.cpp
+@@ -907,7 +907,8 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
+   if (VisitTemplateParameters(D->getTemplateParameters()))
+     return true;
+   
+-  return VisitFunctionDecl(D->getTemplatedDecl());
++  auto* FD = D->getTemplatedDecl();
++  return VisitAttributes(FD) || VisitFunctionDecl(FD);
+ }
+ 
+ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+@@ -916,7 +917,8 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+   if (VisitTemplateParameters(D->getTemplateParameters()))
+     return true;
+   
+-  return VisitCXXRecordDecl(D->getTemplatedDecl());
++  auto* CD = D->getTemplatedDecl();
++  return VisitAttributes(CD) || VisitCXXRecordDecl(CD);
+ }
+ 
+ bool CursorVisitor::VisitTemplateTemplateParmDecl(TemplateTemplateParmDecl *D) {
+-- 
+2.13.0
+

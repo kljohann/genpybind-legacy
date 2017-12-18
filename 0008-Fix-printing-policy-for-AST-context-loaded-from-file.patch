@@ -1,0 +1,137 @@
+From f612539aaee3a46abbbc8fa30d0263d9b49dca86 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <dev@jklaehn.de>
+Date: Mon, 10 Jul 2017 12:34:10 +0200
+Subject: [PATCH 08/12] Fix printing policy for AST context loaded from file
+
+In ASTUnit::LoadFromASTFile, the context object is set up using default-constructed
+LangOptions (which only later get populated).  As the language options are used in the constructor
+of PrintingPolicy, this needs to be updated explicitly after the language options are available.
+---
+ lib/Frontend/ASTUnit.cpp           |  3 ++
+ unittests/Frontend/ASTUnitTest.cpp | 87 ++++++++++++++++++++++++++++++++++++++
+ unittests/Frontend/CMakeLists.txt  |  1 +
+ 3 files changed, 91 insertions(+)
+ create mode 100644 unittests/Frontend/ASTUnitTest.cpp
+
+diff --git a/lib/Frontend/ASTUnit.cpp b/lib/Frontend/ASTUnit.cpp
+index 875f21d69a..bb1ea6c4f8 100644
+--- a/lib/Frontend/ASTUnit.cpp
++++ b/lib/Frontend/ASTUnit.cpp
+@@ -546,6 +546,9 @@ private:
+     // Initialize the ASTContext
+     Context->InitBuiltinTypes(*Target);
+ 
++    // Adjust printing policy based on language options.
++    Context->setPrintingPolicy(PrintingPolicy(LangOpt));
++
+     // We didn't have access to the comment options when the ASTContext was
+     // constructed, so register them now.
+     Context->getCommentCommandTraits().registerCommentOptions(
+diff --git a/unittests/Frontend/ASTUnitTest.cpp b/unittests/Frontend/ASTUnitTest.cpp
+new file mode 100644
+index 0000000000..a7d08a992f
+--- /dev/null
++++ b/unittests/Frontend/ASTUnitTest.cpp
+@@ -0,0 +1,87 @@
++//===- unittests/Frontend/ASTUnitTest.cpp - ASTUnit tests -----------------===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++
++#include <fstream>
++
++#include "clang/Frontend/ASTUnit.h"
++#include "clang/Frontend/CompilerInstance.h"
++#include "clang/Frontend/CompilerInvocation.h"
++#include "clang/Frontend/PCHContainerOperations.h"
++#include "llvm/Support/FileSystem.h"
++#include "llvm/Support/Path.h"
++#include "llvm/Support/ToolOutputFile.h"
++#include "gtest/gtest.h"
++
++using namespace llvm;
++using namespace clang;
++
++namespace {
++
++TEST(ASTUnit, SaveLoadPreservesLangOptionsInPrintingPolicy) {
++  // Check that the printing policy is restored with the correct language
++  // options when loading an ASTUnit from a file.  To this end, an ASTUnit
++  // for a C++ translation unit is set up and written to a temporary file.
++
++  // By default `UseVoidForZeroParams` is true for non-C++ language options,
++  // thus we can check this field after loading the ASTUnit to deduce whether
++  // the correct (C++) language options were used when setting up the printing
++  // policy.
++
++  {
++    PrintingPolicy PolicyWithDefaultLangOpt(LangOptions{});
++    EXPECT_TRUE(PolicyWithDefaultLangOpt.UseVoidForZeroParams);
++  }
++
++  int FD;
++  llvm::SmallString<256> InputFileName;
++  ASSERT_FALSE(llvm::sys::fs::createTemporaryFile("ast-unit", "cpp", FD, InputFileName));
++  tool_output_file input_file(InputFileName, FD);
++  input_file.os() << "";
++
++  const char* Args[] = {"clang", "-xc++", InputFileName.c_str()};
++
++  IntrusiveRefCntPtr<DiagnosticsEngine> Diags =
++      CompilerInstance::createDiagnostics(new DiagnosticOptions());
++
++  std::shared_ptr<CompilerInvocation> CInvok =
++      createInvocationFromCommandLine(Args, Diags);
++
++  if (!CInvok)
++    FAIL() << "could not create compiler invocation";
++
++  FileManager *FileMgr =
++      new FileManager(FileSystemOptions(), vfs::getRealFileSystem());
++  auto PCHContainerOps = std::make_shared<PCHContainerOperations>();
++
++  std::unique_ptr<ASTUnit> AST = ASTUnit::LoadFromCompilerInvocation(
++      CInvok, PCHContainerOps, Diags, FileMgr);
++
++  if (!AST)
++    FAIL() << "failed to create ASTUnit";
++
++  EXPECT_FALSE(AST->getASTContext().getPrintingPolicy().UseVoidForZeroParams);
++
++  llvm::SmallString<256> ASTFileName;
++  ASSERT_FALSE(llvm::sys::fs::createTemporaryFile("ast-unit", "ast", FD, ASTFileName));
++  tool_output_file ast_file(ASTFileName, FD);
++  AST->Save(ASTFileName.str());
++
++  EXPECT_TRUE(llvm::sys::fs::exists(ASTFileName));
++
++  std::unique_ptr<ASTUnit> AU = ASTUnit::LoadFromASTFile(
++      ASTFileName.str(), PCHContainerOps->getRawReader(), ASTUnit::LoadEverything, Diags,
++      FileSystemOptions(), /*UseDebugInfo=*/false);
++
++  if (!AU)
++    FAIL() << "failed to load ASTUnit";
++
++  EXPECT_FALSE(AU->getASTContext().getPrintingPolicy().UseVoidForZeroParams);
++}
++
++} // anonymous namespace
+diff --git a/unittests/Frontend/CMakeLists.txt b/unittests/Frontend/CMakeLists.txt
+index 674f77bd01..4312151c04 100644
+--- a/unittests/Frontend/CMakeLists.txt
++++ b/unittests/Frontend/CMakeLists.txt
+@@ -3,6 +3,7 @@ set(LLVM_LINK_COMPONENTS
+   )
+ 
+ add_clang_unittest(FrontendTests
++  ASTUnitTest.cpp
+   FrontendActionTest.cpp
+   CodeGenActionTest.cpp
+   )
+-- 
+2.13.0
+
