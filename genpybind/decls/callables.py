@@ -67,14 +67,14 @@ class Callable(Declaration):
         return tuple(self._noconvert)
 
     def set_noconvert(self, *values):
-        self._noconvert = map(self._argument_index, values)
+        self._noconvert = [self._argument_index(val) for val in values]
 
     @property
     def required(self):
         return tuple(self._required)
 
     def set_required(self, *values):
-        self._required = map(self._argument_index, values)
+        self._required = [self._argument_index(val) for val in values]
 
     def argument_types(self):
         return [tp.fully_qualified_name for tp in self.cursor.type.argument_types()]
