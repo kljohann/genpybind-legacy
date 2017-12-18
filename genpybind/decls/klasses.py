@@ -169,7 +169,7 @@ class Klass(Level):
 
         for declaration in self.declarations():
             if isinstance(declaration, Method) and declaration.accessor_for:
-                for name, access_type in declaration.accessor_for.iteritems():
+                for name, access_type in declaration.accessor_for.items():
                     accessors = properties.setdefault(name, {})
                     if access_type in accessors:
                         existing = accessors[access_type]
@@ -183,7 +183,7 @@ class Klass(Level):
                 yield result
 
         # TODO: check registry.should_expose(...)
-        for name, accessors in properties.iteritems():
+        for name, accessors in properties.items():
             if "get" not in accessors:
                 raise RuntimeError(
                     "missing getter for property {} of {}".format(name, self))
