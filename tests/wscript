@@ -108,6 +108,7 @@ def build(bld):
             genpybind_tags=["all_tests", target],
             use=[target, "PYBIND11"],
             install_path=None,
+            pytest_path=[bld.path.get_bld()],
         )
 
         bld(
