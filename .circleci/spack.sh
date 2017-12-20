@@ -1,0 +1,10 @@
+export PATH=/home/spack/spack/spackview/bin:$PATH
+export PYTHONPATH=/home/spack/spack/spackview/lib/python2.7/site-packages
+export MANPATH=/home/spack/spack/spackview/man:/home/spack/spack/spackview/share/man:$MANPATH
+export LIBRARY_PATH=/home/spack/spack/spackview/lib:/home/spack/spack/spackview/lib64:LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/spack/spack/spackview/lib:/home/spack/spack/spackview/lib64:LD_LIBRARY_PATH
+export CPATH=/home/spack/spack/spackview/include
+export C_INCLUDE_PATH=/home/spack/spack/spackview/include
+export CPLUS_INCLUDE_PATH=/home/spack/spack/spackview/include
+export PKG_CONFIG_PATH=/home/spack/spack/spackview/lib/pkgconfig:/home/spack/spack/spackview/lib64/pkgconfig:PKG_CONFIG_PATH
+export CMAKE_PREFIX_PATH=/home/spack/spack/spackview

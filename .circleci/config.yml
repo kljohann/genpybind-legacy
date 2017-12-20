@@ -1,0 +1,17 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: kljohann/genpybind-ci:0.0.4
+    steps:
+      - checkout
+      - run: cat .circleci/spack.sh >> $BASH_ENV
+      - run:
+          name: Configure
+          command: ./waf configure
+      - run:
+          name: Build
+          command: ./waf build --notests
+      - run:
+          name: Test
+          command: ./waf build --alltests
