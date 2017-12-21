@@ -11,7 +11,7 @@ jobs:
           command: ./waf configure
       - run:
           name: Build
-          command: ./waf build --notests
+          command: ./waf build --notests -j4
       - run:
           name: Test
           command: ./waf build --alltests
