@@ -5,13 +5,17 @@ jobs:
       - image: kljohann/genpybind-ci:0.0.4
     steps:
       - checkout
-      - run: cat .circleci/spack.sh >> $BASH_ENV
+      - run:
+          name: Set up environment
+          command: cat .circleci/spack.sh >> $BASH_ENV
       - run:
           name: Configure
-          command: ./waf configure
+          command: |
+            ./waf configure
+            cat ./build/config.log
       - run:
           name: Build
-          command: ./waf build --notests -j4
+          command: ./waf build --notests -v -j4
       - run:
           name: Test
           command: ./waf build --alltests
