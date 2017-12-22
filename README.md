@@ -1,4 +1,4 @@
-# genpybind
+# genpybind [![CircleCI](https://circleci.com/gh/kljohann/genpybind.svg?style=svg)](https://circleci.com/gh/kljohann/genpybind)
 
 *Autogeneration of Python bindings from manually annotated C++ headers*
 
