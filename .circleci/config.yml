@@ -19,3 +19,12 @@ jobs:
       - run:
           name: Test
           command: ./waf build --alltests
+      - run:
+          name: Clean up build directory
+          when: always
+          command: |
+            du -sh ./build
+            rm -v ./build/genpybind-parse ./build/**/*.o ./build/**/*.so || true
+            du -sh ./build
+      - store_test_results:
+          path: ./build/tests/reports
