@@ -189,8 +189,7 @@ class genpybind(Task.Task): # pylint: disable=invalid-name
         args.append("-D__GENPYBIND__")
         args.append("-xc++" if is_cxx else "-xc")
         args.extend(
-            flag.replace("-std=gnu", "-std=c")
-            .replace("-std=c++11", "-std=c++14") # FIXME: move to genpybind-parse tool
+            flag.replace("-std=c++11", "-std=c++17") # FIXME: move to genpybind-parse tool
             for flag in self.env["CXXFLAGS" if is_cxx else "CFLAGS"])
         args.extend("-I{}".format(n.abspath()) for n in self._include_paths())
         args.extend("-D{}".format(p) for p in self.env.DEFINES)

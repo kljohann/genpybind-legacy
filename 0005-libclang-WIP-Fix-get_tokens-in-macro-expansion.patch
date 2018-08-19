@@ -1,0 +1,52 @@
+From 40ddcbc8dd69324bb4c97fd808924c5ee967f3d5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
+Date: Mon, 31 Jul 2017 14:09:52 +0200
+Subject: [PATCH 5/5] [libclang] WIP: Fix get_tokens in macro expansion
+
+---
+ bindings/python/tests/cindex/test_cursor.py | 15 +++++++++++++++
+ tools/libclang/CIndex.cpp                   |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
+index 5a4eee4377..a275d6b8cf 100644
+--- a/bindings/python/tests/cindex/test_cursor.py
++++ b/bindings/python/tests/cindex/test_cursor.py
+@@ -547,6 +547,21 @@ class TestCursor(unittest.TestCase):
+         r_cursor = t_cursor.referenced # should not raise an exception
+         self.assertEqual(r_cursor.kind, CursorKind.CLASS_DECL)
+ 
++    def test_get_tokens_in_macro_expansion(self):
++        """regression test"""
++        source = "#define IMPL(name) struct name { name(int v = 123); }; \n IMPL(X)"
++        tu = get_tu(source, lang="cpp")
++        ctor = get_cursors(tu, "X")[1]
++        self.assertEqual(ctor.kind, CursorKind.CONSTRUCTOR)
++        p = next(ctor.get_children())
++        self.assertEqual(p.kind, CursorKind.PARM_DECL, (p.kind, p.spelling))
++        children = list(p.get_children())
++        self.assertEqual(len(children), 1, [(c.kind, c.spelling) for c in children])
++        expr = children[0]
++        tokens = list(expr.get_tokens())
++        self.assertEqual(len(tokens), 1, [t.spelling for t in tokens])
++        self.assertEqual(tokens[0].spelling, "123")
++
+     def test_get_arguments(self):
+         tu = get_tu('void foo(int i, int j);')
+         foo = get_cursor(tu, 'foo')
+diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
+index 6e0a208d55..2ba96653ff 100644
+--- a/tools/libclang/CIndex.cpp
++++ b/tools/libclang/CIndex.cpp
+@@ -148,7 +148,7 @@ CXSourceRange cxloc::translateSourceRange(const SourceManager &SM,
+   // location accordingly.
+   SourceLocation EndLoc = R.getEnd();
+   bool IsTokenRange = R.isTokenRange();
+-  if (EndLoc.isValid() && EndLoc.isMacroID() && !SM.isMacroArgExpansion(EndLoc)) {
++  if (false /*FIXME*/ && EndLoc.isValid() && EndLoc.isMacroID() && !SM.isMacroArgExpansion(EndLoc)) {
+     CharSourceRange Expansion = SM.getExpansionRange(EndLoc);
+     EndLoc = Expansion.getEnd();
+     IsTokenRange = Expansion.isTokenRange();
+-- 
+2.18.0
+

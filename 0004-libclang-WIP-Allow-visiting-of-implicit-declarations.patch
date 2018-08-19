@@ -1,23 +1,23 @@
-From c7701fe91022a116e0a37f410e70fe8906f56441 Mon Sep 17 00:00:00 2001
+From e11c5d12937f1483ab4b0b509ec4a11ba5789de0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
 Date: Mon, 17 Jul 2017 12:25:49 +0200
-Subject: [PATCH 11/12] [libclang] Allow visiting of implicit declarations and
- template instantiations
+Subject: [PATCH 4/5] [libclang] WIP: Allow visiting of implicit declarations
+ and template instantiations
 
 ---
- bindings/python/clang/cindex.py             |  45 +++++++++--
- bindings/python/tests/cindex/test_cursor.py |  33 ++++++++
- include/clang-c/Index.h                     |  31 ++++++++
- tools/libclang/CIndex.cpp                   | 112 ++++++++++++++++++++++++++--
+ bindings/python/clang/cindex.py             |  45 ++++++--
+ bindings/python/tests/cindex/test_cursor.py |  33 ++++++
+ include/clang-c/Index.h                     |  31 ++++++
+ tools/libclang/CIndex.cpp                   | 112 ++++++++++++++++++--
  tools/libclang/CursorVisitor.h              |  12 ++-
  tools/libclang/libclang.exports             |   2 +
  6 files changed, 219 insertions(+), 16 deletions(-)
 
 diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
-index b21f2b75f2..2416fd1803 100644
+index a43fcff150..027f2d7f71 100644
 --- a/bindings/python/clang/cindex.py
 +++ b/bindings/python/clang/cindex.py
-@@ -1407,6 +1407,15 @@ class Cursor(Structure):
+@@ -1408,6 +1408,15 @@ class Cursor(Structure):
      """
      _fields_ = [("_kind_id", c_int), ("xdata", c_int), ("data", c_void_p * 3)]
  
@@ -33,7 +33,7 @@ index b21f2b75f2..2416fd1803 100644
      @staticmethod
      def from_location(tu, location):
          # We store a reference to the TU in the instance so the TU won't get
-@@ -1496,6 +1505,10 @@ class Cursor(Structure):
+@@ -1497,6 +1506,10 @@ class Cursor(Structure):
          """
          return conf.lib.clang_EnumDecl_isScoped(self)
  
@@ -44,7 +44,7 @@ index b21f2b75f2..2416fd1803 100644
      def get_definition(self):
          """
          If the cursor is a reference to a declaration or a declaration of
-@@ -1790,8 +1803,12 @@ class Cursor(Structure):
+@@ -1813,8 +1826,12 @@ class Cursor(Structure):
          """Returns the value of the indicated arg as an unsigned 64b integer."""
          return conf.lib.clang_Cursor_getTemplateArgumentUnsignedValue(self, num)
  
@@ -59,7 +59,7 @@ index b21f2b75f2..2416fd1803 100644
  
          # FIXME: Expose iteration from CIndex, PR6125.
          def visitor(child, parent, children):
-@@ -1804,18 +1821,24 @@ class Cursor(Structure):
+@@ -1827,18 +1844,24 @@ class Cursor(Structure):
              children.append(child)
              return 1 # continue
          children = []
@@ -89,7 +89,7 @@ index b21f2b75f2..2416fd1803 100644
                  yield descendant
  
      def get_tokens(self, options=0):
-@@ -3840,6 +3863,10 @@ functionList = [
+@@ -3905,6 +3928,10 @@ functionList = [
     [Type],
     bool),
  
@@ -100,7 +100,7 @@ index b21f2b75f2..2416fd1803 100644
    ("clang_isInvalid",
     [CursorKind],
     bool),
-@@ -3903,6 +3930,10 @@ functionList = [
+@@ -3968,6 +3995,10 @@ functionList = [
     [Cursor, callbacks['cursor_visit'], py_object],
     c_uint),
  
@@ -112,54 +112,54 @@ index b21f2b75f2..2416fd1803 100644
     [Cursor],
     c_int),
 diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index 6c20577302..43606b605c 100644
+index d7ddf83130..5a4eee4377 100644
 --- a/bindings/python/tests/cindex/test_cursor.py
 +++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -70,6 +70,39 @@ def test_get_children():
-     assert tu_nodes[2].displayname == 'f0(int, int)'
-     assert tu_nodes[2].is_definition() == True
+@@ -89,6 +89,39 @@ class TestCursor(unittest.TestCase):
+         self.assertEqual(tu_nodes[2].displayname, 'f0(int, int)')
+         self.assertEqual(tu_nodes[2].is_definition(), True)
  
-+def test_get_children_with_implicit():
-+    tu = get_tu('struct X {}; X x;', lang='cpp')
-+    cursor = get_cursor(tu, 'X')
++    def test_get_children_with_implicit():
++        tu = get_tu('struct X {}; X x;', lang='cpp')
++        cursor = get_cursor(tu, 'X')
 +
-+    children = list(cursor.get_children())
-+    assert len(children) == 0
++        children = list(cursor.get_children())
++        self.assertEqual(len(children), 0, [(c.kind, c.spelling) for c in children])
 +
-+    children = list(cursor.get_children(with_implicit=True))
-+    assert len(children) > 0
-+    for child in children:
-+        assert child.is_implicit()
-+        assert child.spelling == "X"
-+        assert child.kind in [CursorKind.CONSTRUCTOR, CursorKind.STRUCT_DECL]
++        children = list(cursor.get_children(with_implicit=True))
++        self.assertNotEqual(len(children), 0)
++        for child in children:
++            self.assertTrue(child.is_implicit())
++            self.assertEqual(child.spelling, "X")
++            self.assertIn(child.kind, [CursorKind.CONSTRUCTOR, CursorKind.STRUCT_DECL])
 +
-+def test_get_children_with_template_instantiations():
-+    tu = get_tu(
-+        'template <typename T> T frobnicate(T val);'
-+        'extern template int frobnicate<int>(int);',
-+        lang='cpp')
-+    cursor = get_cursor(tu, 'frobnicate')
-+    assert cursor.kind == CursorKind.FUNCTION_TEMPLATE
++    def test_get_children_with_template_instantiations():
++        tu = get_tu(
++            'template <typename T> T frobnicate(T val);'
++            'extern template int frobnicate<int>(int);',
++            lang='cpp')
++        cursor = get_cursor(tu, 'frobnicate')
++        self.assertEqual(cursor.kind, CursorKind.FUNCTION_TEMPLATE)
 +
-+    for child in cursor.get_children():
-+        # should not return an instantiation:
-+        assert child.kind != CursorKind.FUNCTION_DECL
++        for child in cursor.get_children():
++            # should not return an instantiation:
++            self.assertNotEqual(child.kind, CursorKind.FUNCTION_DECL)
 +
-+    for child in cursor.get_children(with_template_instantiations=True):
-+        if child.kind == CursorKind.FUNCTION_DECL:
-+            assert child.spelling == 'frobnicate'
-+            break
-+    else:
-+        assert False, "Couldn't find template instantiation"
++        for child in cursor.get_children(with_template_instantiations=True):
++            if child.kind == CursorKind.FUNCTION_DECL:
++                self.assertEqual(child.spelling, 'frobnicate')
++                break
++        else:
++            self.fail("Couldn't find template instantiation")
 +
- def test_references():
-     """Ensure that references to TranslationUnit are kept."""
-     tu = get_tu('int x;')
+     def test_references(self):
+         """Ensure that references to TranslationUnit are kept."""
+         tu = get_tu('int x;')
 diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
-index 7fd17366ee..abe70e9566 100644
+index b77483f5a9..e5a47c0fca 100644
 --- a/include/clang-c/Index.h
 +++ b/include/clang-c/Index.h
-@@ -2670,6 +2670,11 @@ CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
+@@ -2725,6 +2725,11 @@ CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
   */
  CINDEX_LINKAGE unsigned clang_isUnexposed(enum CXCursorKind);
  
@@ -169,9 +169,9 @@ index 7fd17366ee..abe70e9566 100644
 +CINDEX_LINKAGE unsigned clang_isImplicit(CXCursor);
 +
  /**
-  * \brief Describe the linkage of the entity referred to by a cursor.
+  * Describe the linkage of the entity referred to by a cursor.
   */
-@@ -3961,6 +3966,32 @@ CINDEX_LINKAGE unsigned clang_visitChildrenWithBlock(CXCursor parent,
+@@ -4041,6 +4046,32 @@ CINDEX_LINKAGE unsigned clang_visitChildrenWithBlock(CXCursor parent,
  #  endif
  #endif
  
@@ -205,10 +205,10 @@ index 7fd17366ee..abe70e9566 100644
   * @}
   */
 diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
-index 27f74b2aa2..f32611b8d7 100644
+index bbc29af346..6e0a208d55 100644
 --- a/tools/libclang/CIndex.cpp
 +++ b/tools/libclang/CIndex.cpp
-@@ -192,10 +192,11 @@ bool CursorVisitor::Visit(CXCursor Cursor, bool CheckedRegionOfInterest) {
+@@ -199,10 +199,11 @@ bool CursorVisitor::Visit(CXCursor Cursor, bool CheckedRegionOfInterest) {
        assert(0 && "Invalid declaration cursor");
        return true; // abort.
      }
@@ -224,7 +224,7 @@ index 27f74b2aa2..f32611b8d7 100644
        return false;
    }
  
-@@ -700,10 +701,13 @@ bool CursorVisitor::VisitTagDecl(TagDecl *D) {
+@@ -707,10 +708,13 @@ bool CursorVisitor::VisitTagDecl(TagDecl *D) {
  
  bool CursorVisitor::VisitClassTemplateSpecializationDecl(
                                            ClassTemplateSpecializationDecl *D) {
@@ -240,7 +240,7 @@ index 27f74b2aa2..f32611b8d7 100644
      // Nothing to visit
      return false;
        
-@@ -712,6 +716,7 @@ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
+@@ -719,6 +723,7 @@ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
      break;
        
    case TSK_ExplicitSpecialization:
@@ -248,7 +248,7 @@ index 27f74b2aa2..f32611b8d7 100644
      ShouldVisitBody = true;
      break;
    }
-@@ -908,7 +913,31 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
+@@ -934,7 +939,31 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
      return true;
    
    auto* FD = D->getTemplatedDecl();
@@ -281,7 +281,7 @@ index 27f74b2aa2..f32611b8d7 100644
  }
  
  bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
-@@ -918,7 +947,40 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+@@ -944,7 +973,40 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
      return true;
    
    auto* CD = D->getTemplatedDecl();
@@ -323,7 +323,7 @@ index 27f74b2aa2..f32611b8d7 100644
  }
  
  bool CursorVisitor::VisitTemplateTemplateParmDecl(TemplateTemplateParmDecl *D) {
-@@ -4314,6 +4376,24 @@ unsigned clang_visitChildrenWithBlock(CXCursor parent,
+@@ -4391,6 +4453,24 @@ unsigned clang_visitChildrenWithBlock(CXCursor parent,
    return clang_visitChildren(parent, visitWithBlock, block);
  }
  
@@ -348,7 +348,7 @@ index 27f74b2aa2..f32611b8d7 100644
  static CXString getDeclSpelling(const Decl *D) {
    if (!D)
      return cxstring::createEmpty();
-@@ -5402,6 +5482,22 @@ unsigned clang_isUnexposed(enum CXCursorKind K) {
+@@ -5693,6 +5773,22 @@ unsigned clang_isUnexposed(enum CXCursorKind K) {
    }
  }
  
@@ -372,7 +372,7 @@ index 27f74b2aa2..f32611b8d7 100644
    return C.kind;
  }
 diff --git a/tools/libclang/CursorVisitor.h b/tools/libclang/CursorVisitor.h
-index 82f251a348..c659e866ef 100644
+index f2fb68fab9..02085b1783 100644
 --- a/tools/libclang/CursorVisitor.h
 +++ b/tools/libclang/CursorVisitor.h
 @@ -96,6 +96,12 @@ private:
@@ -409,10 +409,10 @@ index 82f251a348..c659e866ef 100644
    {
      Parent.kind = CXCursor_NoDeclFound;
 diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
-index b8e3df23ef..59c46ae09e 100644
+index d185e26a2e..1376f29509 100644
 --- a/tools/libclang/libclang.exports
 +++ b/tools/libclang/libclang.exports
-@@ -291,6 +291,7 @@ clang_isDeclaration
+@@ -302,6 +302,7 @@ clang_isInvalidDeclaration
  clang_isExpression
  clang_isFileMultipleIncludeGuarded
  clang_isFunctionTypeVariadic
@@ -420,7 +420,7 @@ index b8e3df23ef..59c46ae09e 100644
  clang_isInvalid
  clang_isPODType
  clang_isPreprocessing
-@@ -332,6 +333,7 @@ clang_CompileCommand_getNumArgs
+@@ -343,6 +344,7 @@ clang_CompileCommand_getNumArgs
  clang_CompileCommand_getArg
  clang_visitChildren
  clang_visitChildrenWithBlock
@@ -429,5 +429,5 @@ index b8e3df23ef..59c46ae09e 100644
  clang_ModuleMapDescriptor_dispose
  clang_ModuleMapDescriptor_setFrameworkModuleName
 -- 
-2.13.0
+2.18.0
 

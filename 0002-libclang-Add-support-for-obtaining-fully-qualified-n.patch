@@ -1,24 +1,25 @@
-From a24d66fca11152dbd9b8abb246dfa340e2d6843b Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <dev@jklaehn.de>
-Date: Mon, 10 Jul 2017 13:53:25 +0200
-Subject: [PATCH 06/12] [libclang] Add support for obtaining fully qualified
+From 18b47d781d631667a40a543383cf2510968440e3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann@jklaehn.de>
+Date: Fri, 3 Nov 2017 11:17:59 +0100
+Subject: [PATCH 2/5] [libclang] Add support for obtaining fully qualified
  names of types
 
 This patch allows retrieving the fully qualified names of types
 through libclang and clang.cindex (Python).
 ---
- bindings/python/clang/cindex.py             | 13 +++++++++++++
+ bindings/python/clang/cindex.py             | 13 ++++++++++++
  bindings/python/tests/cindex/test_cursor.py |  8 ++++++++
  include/clang-c/Index.h                     |  8 ++++++++
- tools/libclang/CXType.cpp                   | 18 ++++++++++++++++++
+ tools/libclang/CMakeLists.txt               |  1 +
+ tools/libclang/CXType.cpp                   | 22 +++++++++++++++++++++
  tools/libclang/libclang.exports             |  1 +
- 5 files changed, 48 insertions(+)
+ 6 files changed, 53 insertions(+)
 
 diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
-index ecff13f7a5..496e1089ad 100644
+index 56fcc78763..becf745040 100644
 --- a/bindings/python/clang/cindex.py
 +++ b/bindings/python/clang/cindex.py
-@@ -2314,6 +2314,14 @@ class Type(Structure):
+@@ -2401,6 +2401,14 @@ class Type(Structure):
          """Retrieve the spelling of this Type."""
          return conf.lib.clang_getTypeSpelling(self)
  
@@ -33,7 +34,7 @@ index ecff13f7a5..496e1089ad 100644
      def __eq__(self, other):
          if type(other) != type(self):
              return False
-@@ -3750,6 +3758,11 @@ functionList = [
+@@ -3847,6 +3855,11 @@ functionList = [
     _CXString,
     _CXString.from_result),
  
@@ -46,56 +47,68 @@ index ecff13f7a5..496e1089ad 100644
     [Cursor],
     c_uint),
 diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index 87fd76ed0e..3cd499ea11 100644
+index f5733fd158..26d5f01b23 100644
 --- a/bindings/python/tests/cindex/test_cursor.py
 +++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -291,6 +291,14 @@ def test_underlying_type():
-     underlying = typedef.underlying_typedef_type
-     assert underlying.kind == TypeKind.INT
+@@ -311,6 +311,14 @@ class TestCursor(unittest.TestCase):
+         underlying = typedef.underlying_typedef_type
+         self.assertEqual(underlying.kind, TypeKind.INT)
  
-+def test_fully_qualified_type_name():
-+    source = 'namespace uiae { struct X { typedef int sometype; }; }'
-+    tu = get_tu(source, lang='cpp')
++    def test_fully_qualified_type_name():
++        source = 'namespace uiae { struct X { typedef int sometype; }; }'
++        tu = get_tu(source, lang='cpp')
 +
-+    cls = get_cursor(tu, 'sometype')
-+    assert cls.type.fully_qualified_name.endswith(
-+        "uiae::X::sometype")
++        cls = get_cursor(tu, 'sometype')
++        fqn = cls.type.fully_qualified_name
++        self.assertTrue(fqn.endswith("uiae::X::sometype"), fqn)
 +
- kParentTest = """\
-         class C {
-             void f();
+     def test_semantic_parent(self):
+         tu = get_tu(kParentTest, 'cpp')
+         curs = get_cursors(tu, 'f')
 diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
-index 89957e8526..402ca9a436 100644
+index 65dada38b0..a9bd6f4ebf 100644
 --- a/include/clang-c/Index.h
 +++ b/include/clang-c/Index.h
-@@ -3241,6 +3241,14 @@ CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
+@@ -3318,6 +3318,14 @@ CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
+  */
  CINDEX_LINKAGE CXString clang_getTypeSpelling(CXType CT);
  
- /**
-+ * \brief Retrieve the fully qualified name of the underlying type.
++/**
++ * Retrieve the fully qualified name of the underlying type.
 + * This includes full qualification of all template parameters etc.
 + *
 + * If the type is invalid, an empty string is returned.
 + */
 +CINDEX_LINKAGE CXString clang_getFullyQualifiedTypeName(CXType CT);
 +
-+/**
-  * \brief Retrieve the underlying type of a typedef declaration.
+ /**
+  * Retrieve the underlying type of a typedef declaration.
   *
-  * If the cursor does not reference a typedef declaration, an invalid type is
+diff --git a/tools/libclang/CMakeLists.txt b/tools/libclang/CMakeLists.txt
+index e539c8308e..336a5c2e98 100644
+--- a/tools/libclang/CMakeLists.txt
++++ b/tools/libclang/CMakeLists.txt
+@@ -41,6 +41,7 @@ set(LIBS
+   clangLex
+   clangSema
+   clangTooling
++  clangToolingCore
+ )
+ 
+ if (CLANG_ENABLE_ARCMT)
 diff --git a/tools/libclang/CXType.cpp b/tools/libclang/CXType.cpp
-index d2cb509059..e99f513d13 100644
+index 7c0f307944..9651c3a84a 100644
 --- a/tools/libclang/CXType.cpp
 +++ b/tools/libclang/CXType.cpp
-@@ -23,6 +23,7 @@
+@@ -20,6 +20,7 @@
+ #include "clang/AST/DeclObjC.h"
+ #include "clang/AST/DeclTemplate.h"
+ #include "clang/AST/Expr.h"
++#include "clang/AST/QualTypeNames.h"
  #include "clang/AST/Type.h"
  #include "clang/Basic/AddressSpaces.h"
  #include "clang/Frontend/ASTUnit.h"
-+#include "clang/Tooling/Core/QualTypeNames.h"
- 
- using namespace clang;
- 
-@@ -282,6 +283,23 @@ CXString clang_getTypeSpelling(CXType CT) {
+@@ -293,6 +294,27 @@ CXString clang_getTypeSpelling(CXType CT) {
    return cxstring::createDup(OS.str());
  }
  
@@ -112,7 +125,11 @@ index d2cb509059..e99f513d13 100644
 +
 +  CXTranslationUnit TU = GetTU(CT);
 +  ASTContext &Ctx = cxtu::getASTUnit(TU)->getASTContext();
-+  std::string name = TypeName::getFullyQualifiedName(T, Ctx, /*WithGlobalNsPrefix=*/true);
++  PrintingPolicy Policy(Ctx.getPrintingPolicy());
++  Policy.SuppressScope = false;
++  Policy.AnonymousTagLocations = false;
++  Policy.PolishForDeclaration = true;
++  std::string name = TypeName::getFullyQualifiedName(T, Ctx, Policy, /*WithGlobalNsPrefix=*/true);
 +  return cxstring::createDup(name.c_str());
 +}
 +
@@ -120,10 +137,10 @@ index d2cb509059..e99f513d13 100644
    using namespace cxcursor;
    CXTranslationUnit TU = cxcursor::getCursorTU(C);
 diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
-index 9ddc055125..9c56e88052 100644
+index 95a42712c4..87773b9036 100644
 --- a/tools/libclang/libclang.exports
 +++ b/tools/libclang/libclang.exports
-@@ -221,6 +221,7 @@ clang_getFileLocation
+@@ -230,6 +230,7 @@ clang_getFileLocation
  clang_getFileName
  clang_getFileTime
  clang_getFileUniqueID
@@ -132,5 +149,5 @@ index 9ddc055125..9c56e88052 100644
  clang_getIBOutletCollectionType
  clang_getIncludedFile
 -- 
-2.13.0
+2.18.0
 
