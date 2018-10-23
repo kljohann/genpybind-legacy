@@ -23,14 +23,18 @@ class Klass(Level):
         "_dynamic_attr",
         "_hide_base",
         "_inline_base",
+        "_holder_type",
     )
+
+    filter_bases = ['*std::enable_shared_from_this*']
 
     def __init__(self, *args, **kwargs):
         # type: (*Any, **Any) -> None
         super(Klass, self).__init__(*args, **kwargs)
         self._dynamic_attr = False
-        self._hide_base = set()  # type: Set[Text]
+        self._hide_base = set(Klass.filter_bases)  # type: Set[Text]
         self._inline_base = set()  # type: Set[Text]
+        self._holder_type = None  # type: Optional[Text]
 
         if self.cursor.spelling != self.cursor.displayname:
             # most probably a template specialization
@@ -69,6 +73,15 @@ class Klass(Level):
     def set_inline_base(self, *patterns):
         # type: (*Text) -> None
         self._inline_base.update(patterns)
+
+    @property
+    def holder_type(self):
+        # type: () -> Optional[Text]
+        return self._holder_type
+
+    def set_holder_type(self, holder_type):
+        # type: (Optional[Text]) -> None
+        self._holder_type = holder_type
 
     def bases(self):
         # type: () -> List[Union[cindex.Cursor, Klass]]
@@ -184,12 +197,15 @@ class Klass(Level):
             var = registry.identifier(decl)
         else:
             var = registry.register(self.cursor, self)
+        options = [self.fully_qualified_name] + self.base_specifiers()
+        if self.holder_type is not None:
+            options.append(self.holder_type)
 
         yield "" # spacer
 
         yield "auto {var} = py::class_<{classes}>({args});".format(
             var=var,
-            classes=", ".join([self.fully_qualified_name] + self.base_specifiers()),
+            classes=", ".join(options),
             args=join_arguments(
                 parent,
                 quote(self.expose_as),
