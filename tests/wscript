@@ -37,7 +37,7 @@ def configure(cfg):
         uselib_store="PYBIND11",
         mandatory=True,
         header_name="pybind11/pybind11.h",
-        cxxflags="-std=c++11",
+        cxxflags="-std=c++17",
         includes=cfg.options.pybind11_includes,
     )
 
@@ -97,7 +97,7 @@ def build(bld):
             source=node,
             features="cxx cxxshlib",
             export_includes=".",
-            cxxflags="-std=c++11",
+            cxxflags="-std=c++17",
             install_path=None,
         )
 
