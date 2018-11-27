@@ -5,14 +5,14 @@ Subject: [PATCH 1/5] [Tooling] Fully qualify template parameters of nested
  name specifier in getFullyQualifiedName
 
 ---
- lib/AST/QualTypeNames.cpp               | 18 ++++++++++++++----
- unittests/Tooling/QualTypeNamesTest.cpp |  8 +++++++-
+ tools/clang/lib/AST/QualTypeNames.cpp               | 18 ++++++++++++++----
+ tools/clang/unittests/Tooling/QualTypeNamesTest.cpp |  8 +++++++-
  2 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/lib/AST/QualTypeNames.cpp b/lib/AST/QualTypeNames.cpp
+diff --git a/tools/clang/lib/AST/QualTypeNames.cpp b/tools/clang/lib/AST/QualTypeNames.cpp
 index 8b605ef295..8fcedccf48 100644
---- a/lib/AST/QualTypeNames.cpp
-+++ b/lib/AST/QualTypeNames.cpp
+--- a/tools/clang/lib/AST/QualTypeNames.cpp
++++ b/tools/clang/lib/AST/QualTypeNames.cpp
 @@ -359,11 +359,21 @@ NestedNameSpecifier *createNestedNameSpecifier(const ASTContext &Ctx,
                                                 const TypeDecl *TD,
                                                 bool FullyQualify,
@@ -39,10 +39,10 @@ index 8b605ef295..8fcedccf48 100644
  }
  
  /// Return the fully qualified type, including fully-qualified
-diff --git a/unittests/Tooling/QualTypeNamesTest.cpp b/unittests/Tooling/QualTypeNamesTest.cpp
+diff --git a/tools/clang/unittests/Tooling/QualTypeNamesTest.cpp b/tools/clang/unittests/Tooling/QualTypeNamesTest.cpp
 index b4c56f7bd5..e9ab495098 100644
---- a/unittests/Tooling/QualTypeNamesTest.cpp
-+++ b/unittests/Tooling/QualTypeNamesTest.cpp
+--- a/tools/clang/unittests/Tooling/QualTypeNamesTest.cpp
++++ b/tools/clang/unittests/Tooling/QualTypeNamesTest.cpp
 @@ -67,6 +67,10 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
    // Template parameter expansion.
    Visitor.ExpectedQualTypeNames["CheckC"] =

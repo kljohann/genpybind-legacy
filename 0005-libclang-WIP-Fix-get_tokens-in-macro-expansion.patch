@@ -10,8 +10,8 @@ Subject: [PATCH 5/5] [libclang] WIP: Fix get_tokens in macro expansion
 
 diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
 index 5a4eee4377..a275d6b8cf 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
+--- a/tools/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/tools/clang/bindings/python/tests/cindex/test_cursor.py
 @@ -547,6 +547,21 @@ class TestCursor(unittest.TestCase):
          r_cursor = t_cursor.referenced # should not raise an exception
          self.assertEqual(r_cursor.kind, CursorKind.CLASS_DECL)
@@ -36,8 +36,8 @@ index 5a4eee4377..a275d6b8cf 100644
          foo = get_cursor(tu, 'foo')
 diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
 index 6e0a208d55..2ba96653ff 100644
---- a/tools/libclang/CIndex.cpp
-+++ b/tools/libclang/CIndex.cpp
+--- a/tools/clang/tools/libclang/CIndex.cpp
++++ b/tools/clang/tools/libclang/CIndex.cpp
 @@ -148,7 +148,7 @@ CXSourceRange cxloc::translateSourceRange(const SourceManager &SM,
    // location accordingly.
    SourceLocation EndLoc = R.getEnd();

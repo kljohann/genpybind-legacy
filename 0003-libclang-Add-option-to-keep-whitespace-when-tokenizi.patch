@@ -13,10 +13,10 @@ tokenization behavior.  `clang_tokenize` is kept for backwards compatibility.
  tools/libclang/libclang.exports             |  1 +
  5 files changed, 75 insertions(+), 13 deletions(-)
 
-diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
+diff --git a/tools/clang/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
 index becf745040..a43fcff150 100644
---- a/bindings/python/clang/cindex.py
-+++ b/bindings/python/clang/cindex.py
+--- a/tools/clang/bindings/python/clang/cindex.py
++++ b/tools/clang/bindings/python/clang/cindex.py
 @@ -515,6 +515,13 @@ class TokenGroup(object):
  
      You should not instantiate this class outside of this module.
@@ -105,10 +105,10 @@ index becf745040..a43fcff150 100644
    ("clang_visitChildren",
     [Cursor, callbacks['cursor_visit'], py_object],
     c_uint),
-diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
+diff --git a/tools/clang/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
 index 26d5f01b23..d7ddf83130 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
+--- a/tools/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/tools/clang/bindings/python/tests/cindex/test_cursor.py
 @@ -5,6 +5,7 @@ import unittest
  from clang.cindex import AvailabilityKind
  from clang.cindex import CursorKind
@@ -132,10 +132,10 @@ index 26d5f01b23..d7ddf83130 100644
      def test_get_token_cursor(self):
          """Ensure we can map tokens to cursors."""
          tu = get_tu('class A {}; int foo(A var = A());', lang='cpp')
-diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
+diff --git a/tools/clang/include/clang-c/Index.h b/include/clang-c/Index.h
 index a9bd6f4ebf..b77483f5a9 100644
---- a/include/clang-c/Index.h
-+++ b/include/clang-c/Index.h
+--- a/tools/clang/include/clang-c/Index.h
++++ b/tools/clang/include/clang-c/Index.h
 @@ -32,7 +32,7 @@
   * compatible, thus CINDEX_VERSION_MAJOR is expected to remain stable.
   */
@@ -190,10 +190,10 @@ index a9bd6f4ebf..b77483f5a9 100644
  
  /**
   * Annotate the given set of tokens by providing cursors for each token
-diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
+diff --git a/tools/clang/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
 index 499d9abf9a..bbc29af346 100644
---- a/tools/libclang/CIndex.cpp
-+++ b/tools/libclang/CIndex.cpp
+--- a/tools/clang/tools/libclang/CIndex.cpp
++++ b/tools/clang/tools/libclang/CIndex.cpp
 @@ -6585,7 +6585,7 @@ CXSourceRange clang_getTokenExtent(CXTranslationUnit TU, CXToken CXTok) {
  }
  
@@ -244,10 +244,10 @@ index 499d9abf9a..bbc29af346 100644
  
    if (CXTokens.empty())
      return;
-diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
+diff --git a/tools/clang/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
 index 87773b9036..d185e26a2e 100644
---- a/tools/libclang/libclang.exports
-+++ b/tools/libclang/libclang.exports
+--- a/tools/clang/tools/libclang/libclang.exports
++++ b/tools/clang/tools/libclang/libclang.exports
 @@ -327,6 +327,7 @@ clang_suspendTranslationUnit
  clang_sortCodeCompletionResults
  clang_toggleCrashRecovery
