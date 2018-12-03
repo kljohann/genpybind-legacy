@@ -95,7 +95,7 @@ def build(bld):
         bld(
             target=target,
             source=node,
-            features="cxx cxxshlib",
+            features="cxx cxxshlib pyembed",
             export_includes=".",
             cxxflags="-std=c++17",
             install_path=None,
@@ -108,6 +108,7 @@ def build(bld):
             genpybind_tags=["all_tests", target],
             use=[target, "PYBIND11"],
             install_path=None,
+            linkflags='-Wl,-z,defs',
             pytest_path=[bld.path.get_bld()],
         )
 

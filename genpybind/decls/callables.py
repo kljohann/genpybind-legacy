@@ -134,8 +134,15 @@ class Callable(Declaration):
     def arguments(self):
         # type: () -> List[Text]
         args = []
+        is_after_args_or_kwargs = False
         for idx, child in enumerate(
                 cutils.children_by_kind(self.cursor, CursorKind.PARM_DECL)):
+            # according to pybind11 docs do not use pybind11::arg for pybind11::{args,kwargs} types
+            if child.type.fully_qualified_name in ['::pybind11::args', '::pybind11::kwargs']:
+                is_after_args_or_kwargs = True
+                continue
+            if is_after_args_or_kwargs:
+                 raise RuntimeError("py::args / py::kwargs cannot be followed by other arguments")
             default_value = ""
             expr = next(cutils.children_by_kind(child, cutils.EXPRESSION_KINDS), None)
             if expr:
