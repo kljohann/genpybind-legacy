@@ -74,6 +74,11 @@ def build(bld):
         chmod=0o755,
     )
 
+    bld.install_files(
+        dest="${PREFIX}/include",
+        files='genpybind.h',
+    )
+
     bld(
         target="genpybind",
         features="py",
