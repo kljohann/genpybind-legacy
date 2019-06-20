@@ -156,7 +156,7 @@ a single C++ tool based on the internal `libtooling` API.  I eventually plan to 
 
 # License
 
-To be decided.
+See [License](LICENSE).
 
 ---
 
