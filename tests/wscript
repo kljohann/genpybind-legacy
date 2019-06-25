@@ -107,7 +107,7 @@ def build(bld):
             source=header,
             features="genpybind cxx cxxshlib pyext pyembed",
             genpybind_tags=["all_tests", target],
-            use=[target, "PYBIND11"],
+            use=[target, "PYBIND11"] + (["pytypedef_b"] if target == "typedef_a" else []),
             install_path=None,
             linkflags='-Wl,-z,defs',
             pytest_path=[bld.path.get_bld()],
