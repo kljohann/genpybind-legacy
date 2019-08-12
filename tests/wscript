@@ -33,7 +33,7 @@ def configure(cfg):
 
     cfg.check(
         compiler="cxx",
-        features="cxx pyext",
+        features="cxx cxxshlib pyext",
         uselib_store="PYBIND11",
         mandatory=True,
         header_name="pybind11/pybind11.h",
