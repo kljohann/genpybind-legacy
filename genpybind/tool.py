@@ -17,14 +17,22 @@ def main():
     # type: () -> None
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--genpybind-module", dest="module", required=True)
-    parser.add_argument("--genpybind-parse", dest="executable", default="genpybind-parse")
-    parser.add_argument("--genpybind-docstring", dest="docstring")
-    parser.add_argument("--genpybind-include", nargs="+", dest="includes")
-    parser.add_argument("--genpybind-isystem", nargs="+", dest="isystem")
-    parser.add_argument("--genpybind-tag", nargs="+", dest="tags")
-    parser.add_argument("--genpybind-from-ast", dest="from_ast")
-    parser.add_argument('rest', nargs=argparse.REMAINDER)
+    parser.add_argument("--genpybind-module", dest="module", required=True,
+                        help="name of the extension module (cf. PYBIND11_MODULE)")
+    parser.add_argument("--genpybind-parse", dest="executable", default="genpybind-parse",
+                        help="name of the tool used to extend/amend the abstract syntax tree")
+    parser.add_argument("--genpybind-docstring", dest="docstring",
+                        help="docstring of the extension module (cf. PYBIND11_MODULE)")
+    parser.add_argument("--genpybind-include", nargs="+", dest="includes",
+                        help="includes to add to the generated bindings file (added in \"\"")
+    parser.add_argument("--genpybind-isystem", nargs="+", dest="isystem",
+                        help="includes to add to the generated bindings file (added in <>)")
+    parser.add_argument("--genpybind-tag", nargs="+", dest="tags",
+                        help="generate bindings for tagged parts; otherwise tagged parts will be omitted from binding generation")
+    parser.add_argument("--genpybind-from-ast", dest="from_ast",
+                        help="read from already generated abstract syntax tree instead of calling genpybind-parse")
+    parser.add_argument('rest', nargs=argparse.REMAINDER,
+                        help="arguments to genpybind-parse; also including compiler flags for the regular processing of the translation unit corresponding to the header file")
 
     # args, rest_args = parser.parse_known_args()
     args = parser.parse_args()
