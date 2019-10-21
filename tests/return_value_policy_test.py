@@ -36,4 +36,4 @@ def test_reference_internal():
     ref = obj.cref_as_ref_int()
     assert ref.value == 5
     ref.value = 12
-    assert obj.value() == 12 # changed!
+    assert obj.value() == 12 # not changed!
