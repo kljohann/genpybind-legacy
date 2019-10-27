@@ -108,11 +108,10 @@ a single C++ tool based on the internal `libtooling` API.  I eventually plan to 
 
 # Installation
 
-1. Build and install llvm/clang 5.0.0 with the provided patches.  You can use a different prefix
-   when installing, to prevent the patched clang from interfering with the version provided by your
-   distribution.
-   Let's assume you unpacked the source code to `$HOME/llvm-src` and used
-   `-DCMAKE_INSTALL_PREFIX=$HOME/llvm`.
+1. Build and install llvm/clang 9.0.0 with the patches provided in `llvm-patches`.  You can use a
+   different prefix when installing, to prevent the patched clang from interfering with the version
+   provided by your distribution.  Let's assume you unpacked the source code to `$HOME/llvm-src` and
+   used `-DCMAKE_INSTALL_PREFIX=$HOME/llvm`.
 2. Make sure genpybind can find the the libclang Python bindings:
    ```bash
    export PYTHONPATH=$HOME/llvm-src/tools/clang/bindings/python \

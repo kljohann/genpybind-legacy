@@ -1,18 +1,18 @@
-From 40ddcbc8dd69324bb4c97fd808924c5ee967f3d5 Mon Sep 17 00:00:00 2001
+From 0fa84bbd8c6f8eb8eb6a3bc30e4efe3f2cf4c283 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
 Date: Mon, 31 Jul 2017 14:09:52 +0200
 Subject: [PATCH 5/5] [libclang] WIP: Fix get_tokens in macro expansion
 
 ---
- bindings/python/tests/cindex/test_cursor.py | 15 +++++++++++++++
- tools/libclang/CIndex.cpp                   |  2 +-
+ clang/bindings/python/tests/cindex/test_cursor.py | 15 +++++++++++++++
+ clang/tools/libclang/CIndex.cpp                   |  2 +-
  2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index 5a4eee4377..a275d6b8cf 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -547,6 +547,21 @@ class TestCursor(unittest.TestCase):
+diff --git a/clang/bindings/python/tests/cindex/test_cursor.py b/clang/bindings/python/tests/cindex/test_cursor.py
+index d061f37c25c..38702df74f2 100644
+--- a/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/clang/bindings/python/tests/cindex/test_cursor.py
+@@ -552,6 +552,21 @@ class TestCursor(unittest.TestCase):
          r_cursor = t_cursor.referenced # should not raise an exception
          self.assertEqual(r_cursor.kind, CursorKind.CLASS_DECL)
  
@@ -34,11 +34,11 @@ index 5a4eee4377..a275d6b8cf 100644
      def test_get_arguments(self):
          tu = get_tu('void foo(int i, int j);')
          foo = get_cursor(tu, 'foo')
-diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
-index 6e0a208d55..2ba96653ff 100644
---- a/tools/libclang/CIndex.cpp
-+++ b/tools/libclang/CIndex.cpp
-@@ -148,7 +148,7 @@ CXSourceRange cxloc::translateSourceRange(const SourceManager &SM,
+diff --git a/clang/tools/libclang/CIndex.cpp b/clang/tools/libclang/CIndex.cpp
+index 7ee6b704647..e4b95436704 100644
+--- a/clang/tools/libclang/CIndex.cpp
++++ b/clang/tools/libclang/CIndex.cpp
+@@ -145,7 +145,7 @@ CXSourceRange cxloc::translateSourceRange(const SourceManager &SM,
    // location accordingly.
    SourceLocation EndLoc = R.getEnd();
    bool IsTokenRange = R.isTokenRange();
@@ -48,5 +48,5 @@ index 6e0a208d55..2ba96653ff 100644
      EndLoc = Expansion.getEnd();
      IsTokenRange = Expansion.isTokenRange();
 -- 
-2.18.0
+2.23.0
 

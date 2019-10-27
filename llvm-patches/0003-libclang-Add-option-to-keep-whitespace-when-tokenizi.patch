@@ -1,4 +1,4 @@
-From b0c94bdd15d06359177609cd204da718844bb4d8 Mon Sep 17 00:00:00 2001
+From 075a7a3e667fe3d923de6d7a6929e61922c8b139 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann@jklaehn.de>
 Date: Fri, 3 Nov 2017 21:19:51 +0100
 Subject: [PATCH 3/5] [libclang] Add option to keep whitespace when tokenizing
@@ -6,18 +6,18 @@ Subject: [PATCH 3/5] [libclang] Add option to keep whitespace when tokenizing
 Introduces new `clang_tokenizeRange` function which accepts options to control
 tokenization behavior.  `clang_tokenize` is kept for backwards compatibility.
 ---
- bindings/python/clang/cindex.py             | 31 +++++++++++++++-----
- bindings/python/tests/cindex/test_cursor.py |  9 ++++++
- include/clang-c/Index.h                     | 32 +++++++++++++++++++--
- tools/libclang/CIndex.cpp                   | 15 ++++++++--
- tools/libclang/libclang.exports             |  1 +
+ clang/bindings/python/clang/cindex.py         | 31 ++++++++++++++----
+ .../python/tests/cindex/test_cursor.py        |  9 ++++++
+ clang/include/clang-c/Index.h                 | 32 +++++++++++++++++--
+ clang/tools/libclang/CIndex.cpp               | 15 +++++++--
+ clang/tools/libclang/libclang.exports         |  1 +
  5 files changed, 75 insertions(+), 13 deletions(-)
 
-diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
-index becf745040..a43fcff150 100644
---- a/bindings/python/clang/cindex.py
-+++ b/bindings/python/clang/cindex.py
-@@ -515,6 +515,13 @@ class TokenGroup(object):
+diff --git a/clang/bindings/python/clang/cindex.py b/clang/bindings/python/clang/cindex.py
+index c309f7017b2..1589acc9e7e 100644
+--- a/clang/bindings/python/clang/cindex.py
++++ b/clang/bindings/python/clang/cindex.py
+@@ -529,6 +529,13 @@ class TokenGroup(object):
  
      You should not instantiate this class outside of this module.
      """
@@ -31,7 +31,7 @@ index becf745040..a43fcff150 100644
      def __init__(self, tu, memory, count):
          self._tu = tu
          self._memory = memory
-@@ -524,7 +531,7 @@ class TokenGroup(object):
+@@ -538,7 +545,7 @@ class TokenGroup(object):
          conf.lib.clang_disposeTokens(self._tu, self._memory, self._count)
  
      @staticmethod
@@ -40,7 +40,7 @@ index becf745040..a43fcff150 100644
          """Helper method to return all tokens in an extent.
  
          This functionality is needed multiple places in this module. We define
-@@ -533,8 +540,8 @@ class TokenGroup(object):
+@@ -547,8 +554,8 @@ class TokenGroup(object):
          tokens_memory = POINTER(Token)()
          tokens_count = c_uint()
  
@@ -51,7 +51,7 @@ index becf745040..a43fcff150 100644
  
          count = int(tokens_count.value)
  
-@@ -1834,13 +1841,16 @@ class Cursor(Structure):
+@@ -1852,13 +1859,16 @@ class Cursor(Structure):
              for descendant in child.walk_preorder():
                  yield descendant
  
@@ -70,7 +70,7 @@ index becf745040..a43fcff150 100644
  
      def get_field_offsetof(self):
          """Returns the offsetof the FIELD_DECL pointed by this Cursor."""
-@@ -3058,18 +3068,21 @@ class TranslationUnit(ClangObject):
+@@ -3080,18 +3090,21 @@ class TranslationUnit(ClangObject):
              return CodeCompletionResults(ptr)
          return None
  
@@ -94,7 +94,7 @@ index becf745040..a43fcff150 100644
  
  class File(ClangObject):
      """
-@@ -3947,6 +3960,10 @@ functionList = [
+@@ -3969,6 +3982,10 @@ functionList = [
    ("clang_tokenize",
     [TranslationUnit, SourceRange, POINTER(POINTER(Token)), POINTER(c_uint)]),
  
@@ -105,11 +105,11 @@ index becf745040..a43fcff150 100644
    ("clang_visitChildren",
     [Cursor, callbacks['cursor_visit'], py_object],
     c_uint),
-diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index 26d5f01b23..d7ddf83130 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -5,6 +5,7 @@ import unittest
+diff --git a/clang/bindings/python/tests/cindex/test_cursor.py b/clang/bindings/python/tests/cindex/test_cursor.py
+index 6a53c7205df..0965c1f4ae1 100644
+--- a/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/clang/bindings/python/tests/cindex/test_cursor.py
+@@ -10,6 +10,7 @@ import unittest
  from clang.cindex import AvailabilityKind
  from clang.cindex import CursorKind
  from clang.cindex import TemplateArgumentKind
@@ -117,7 +117,7 @@ index 26d5f01b23..d7ddf83130 100644
  from clang.cindex import TranslationUnit
  from clang.cindex import TypeKind
  from .util import get_cursor
-@@ -483,6 +484,14 @@ class TestCursor(unittest.TestCase):
+@@ -488,6 +489,14 @@ class TestCursor(unittest.TestCase):
          self.assertEqual(tokens[0].spelling, 'int')
          self.assertEqual(tokens[1].spelling, 'foo')
  
@@ -132,20 +132,20 @@ index 26d5f01b23..d7ddf83130 100644
      def test_get_token_cursor(self):
          """Ensure we can map tokens to cursors."""
          tu = get_tu('class A {}; int foo(A var = A());', lang='cpp')
-diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
-index a9bd6f4ebf..b77483f5a9 100644
---- a/include/clang-c/Index.h
-+++ b/include/clang-c/Index.h
+diff --git a/clang/include/clang-c/Index.h b/clang/include/clang-c/Index.h
+index b0c62fe948e..84ed03b8920 100644
+--- a/clang/include/clang-c/Index.h
++++ b/clang/include/clang-c/Index.h
 @@ -32,7 +32,7 @@
   * compatible, thus CINDEX_VERSION_MAJOR is expected to remain stable.
   */
  #define CINDEX_VERSION_MAJOR 0
--#define CINDEX_VERSION_MINOR 49
-+#define CINDEX_VERSION_MINOR 50
+-#define CINDEX_VERSION_MINOR 60
++#define CINDEX_VERSION_MINOR 61
  
  #define CINDEX_VERSION_ENCODE(major, minor) ( \
        ((major) * 10000)                       \
-@@ -4799,6 +4799,28 @@ CINDEX_LINKAGE CXSourceLocation clang_getTokenLocation(CXTranslationUnit,
+@@ -4969,6 +4969,28 @@ CINDEX_LINKAGE CXSourceLocation clang_getTokenLocation(CXTranslationUnit,
   */
  CINDEX_LINKAGE CXSourceRange clang_getTokenExtent(CXTranslationUnit, CXToken);
  
@@ -174,7 +174,7 @@ index a9bd6f4ebf..b77483f5a9 100644
  /**
   * Tokenize the source code described by the given range into raw
   * lexical tokens.
-@@ -4815,9 +4837,13 @@ CINDEX_LINKAGE CXSourceRange clang_getTokenExtent(CXTranslationUnit, CXToken);
+@@ -4985,9 +5007,13 @@ CINDEX_LINKAGE CXSourceRange clang_getTokenExtent(CXTranslationUnit, CXToken);
   * \param NumTokens will be set to the number of tokens in the \c *Tokens
   * array.
   *
@@ -190,11 +190,11 @@ index a9bd6f4ebf..b77483f5a9 100644
  
  /**
   * Annotate the given set of tokens by providing cursors for each token
-diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
-index 499d9abf9a..bbc29af346 100644
---- a/tools/libclang/CIndex.cpp
-+++ b/tools/libclang/CIndex.cpp
-@@ -6585,7 +6585,7 @@ CXSourceRange clang_getTokenExtent(CXTranslationUnit TU, CXToken CXTok) {
+diff --git a/clang/tools/libclang/CIndex.cpp b/clang/tools/libclang/CIndex.cpp
+index 1dc961f58a2..3a283e76ed8 100644
+--- a/clang/tools/libclang/CIndex.cpp
++++ b/clang/tools/libclang/CIndex.cpp
+@@ -6670,7 +6670,7 @@ CXSourceRange clang_getTokenExtent(CXTranslationUnit TU, CXToken CXTok) {
  }
  
  static void getTokens(ASTUnit *CXXUnit, SourceRange Range,
@@ -203,7 +203,7 @@ index 499d9abf9a..bbc29af346 100644
    SourceManager &SourceMgr = CXXUnit->getSourceManager();
    std::pair<FileID, unsigned> BeginLocInfo
      = SourceMgr.getDecomposedSpellingLoc(Range.getBegin());
-@@ -6607,6 +6607,9 @@ static void getTokens(ASTUnit *CXXUnit, SourceRange Range,
+@@ -6692,6 +6692,9 @@ static void getTokens(ASTUnit *CXXUnit, SourceRange Range,
              CXXUnit->getASTContext().getLangOpts(),
              Buffer.begin(), Buffer.data() + BeginLocInfo.second, Buffer.end());
    Lex.SetCommentRetentionState(true);
@@ -213,7 +213,7 @@ index 499d9abf9a..bbc29af346 100644
  
    // Lex tokens until we hit the end of the range.
    const char *EffectiveBufferEnd = Buffer.data() + EndLocInfo.second;
-@@ -6680,7 +6683,7 @@ CXToken *clang_getToken(CXTranslationUnit TU, CXSourceLocation Location) {
+@@ -6765,7 +6768,7 @@ CXToken *clang_getToken(CXTranslationUnit TU, CXSourceLocation Location) {
    SourceLocation End = SM.getComposedLoc(DecomposedEnd.first, DecomposedEnd.second);
  
    SmallVector<CXToken, 32> CXTokens;
@@ -222,7 +222,7 @@ index 499d9abf9a..bbc29af346 100644
  
    if (CXTokens.empty())
      return NULL;
-@@ -6694,6 +6697,12 @@ CXToken *clang_getToken(CXTranslationUnit TU, CXSourceLocation Location) {
+@@ -6779,6 +6782,12 @@ CXToken *clang_getToken(CXTranslationUnit TU, CXSourceLocation Location) {
  
  void clang_tokenize(CXTranslationUnit TU, CXSourceRange Range,
                      CXToken **Tokens, unsigned *NumTokens) {
@@ -235,7 +235,7 @@ index 499d9abf9a..bbc29af346 100644
    LOG_FUNC_SECTION {
      *Log << TU << ' ' << Range;
    }
-@@ -6719,7 +6728,7 @@ void clang_tokenize(CXTranslationUnit TU, CXSourceRange Range,
+@@ -6804,7 +6813,7 @@ void clang_tokenize(CXTranslationUnit TU, CXSourceRange Range,
      return;
  
    SmallVector<CXToken, 32> CXTokens;
@@ -244,11 +244,11 @@ index 499d9abf9a..bbc29af346 100644
  
    if (CXTokens.empty())
      return;
-diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
-index 87773b9036..d185e26a2e 100644
---- a/tools/libclang/libclang.exports
-+++ b/tools/libclang/libclang.exports
-@@ -327,6 +327,7 @@ clang_suspendTranslationUnit
+diff --git a/clang/tools/libclang/libclang.exports b/clang/tools/libclang/libclang.exports
+index 6e860e7263e..6af6c0ca3e8 100644
+--- a/clang/tools/libclang/libclang.exports
++++ b/clang/tools/libclang/libclang.exports
+@@ -338,6 +338,7 @@ clang_suspendTranslationUnit
  clang_sortCodeCompletionResults
  clang_toggleCrashRecovery
  clang_tokenize
@@ -257,5 +257,5 @@ index 87773b9036..d185e26a2e 100644
  clang_CompilationDatabase_dispose
  clang_CompilationDatabase_getCompileCommands
 -- 
-2.18.0
+2.23.0
 

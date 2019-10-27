@@ -1,4 +1,4 @@
-From 18b47d781d631667a40a543383cf2510968440e3 Mon Sep 17 00:00:00 2001
+From e673a5527dd2df322884eb2498736483df05957d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann@jklaehn.de>
 Date: Fri, 3 Nov 2017 11:17:59 +0100
 Subject: [PATCH 2/5] [libclang] Add support for obtaining fully qualified
@@ -7,19 +7,19 @@ Subject: [PATCH 2/5] [libclang] Add support for obtaining fully qualified
 This patch allows retrieving the fully qualified names of types
 through libclang and clang.cindex (Python).
 ---
- bindings/python/clang/cindex.py             | 13 ++++++++++++
- bindings/python/tests/cindex/test_cursor.py |  8 ++++++++
- include/clang-c/Index.h                     |  8 ++++++++
- tools/libclang/CMakeLists.txt               |  1 +
- tools/libclang/CXType.cpp                   | 22 +++++++++++++++++++++
- tools/libclang/libclang.exports             |  1 +
- 6 files changed, 53 insertions(+)
+ clang/bindings/python/clang/cindex.py         | 13 +++++++++++
+ .../python/tests/cindex/test_cursor.py        |  8 +++++++
+ clang/include/clang-c/Index.h                 | 10 ++++++++-
+ clang/tools/libclang/CMakeLists.txt           |  1 +
+ clang/tools/libclang/CXType.cpp               | 22 +++++++++++++++++++
+ clang/tools/libclang/libclang.exports         |  1 +
+ 6 files changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
-index 56fcc78763..becf745040 100644
---- a/bindings/python/clang/cindex.py
-+++ b/bindings/python/clang/cindex.py
-@@ -2401,6 +2401,14 @@ class Type(Structure):
+diff --git a/clang/bindings/python/clang/cindex.py b/clang/bindings/python/clang/cindex.py
+index 8e5a9fe0068..c309f7017b2 100644
+--- a/clang/bindings/python/clang/cindex.py
++++ b/clang/bindings/python/clang/cindex.py
+@@ -2427,6 +2427,14 @@ class Type(Structure):
          """Retrieve the spelling of this Type."""
          return conf.lib.clang_getTypeSpelling(self)
  
@@ -34,7 +34,7 @@ index 56fcc78763..becf745040 100644
      def __eq__(self, other):
          if type(other) != type(self):
              return False
-@@ -3847,6 +3855,11 @@ functionList = [
+@@ -3869,6 +3877,11 @@ functionList = [
     _CXString,
     _CXString.from_result),
  
@@ -46,11 +46,11 @@ index 56fcc78763..becf745040 100644
    ("clang_hashCursor",
     [Cursor],
     c_uint),
-diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index f5733fd158..26d5f01b23 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -311,6 +311,14 @@ class TestCursor(unittest.TestCase):
+diff --git a/clang/bindings/python/tests/cindex/test_cursor.py b/clang/bindings/python/tests/cindex/test_cursor.py
+index ef875e97247..6a53c7205df 100644
+--- a/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/clang/bindings/python/tests/cindex/test_cursor.py
+@@ -316,6 +316,14 @@ class TestCursor(unittest.TestCase):
          underlying = typedef.underlying_typedef_type
          self.assertEqual(underlying.kind, TypeKind.INT)
  
@@ -65,11 +65,20 @@ index f5733fd158..26d5f01b23 100644
      def test_semantic_parent(self):
          tu = get_tu(kParentTest, 'cpp')
          curs = get_cursors(tu, 'f')
-diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
-index 65dada38b0..a9bd6f4ebf 100644
---- a/include/clang-c/Index.h
-+++ b/include/clang-c/Index.h
-@@ -3318,6 +3318,14 @@ CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
+diff --git a/clang/include/clang-c/Index.h b/clang/include/clang-c/Index.h
+index 74badac740b..b0c62fe948e 100644
+--- a/clang/include/clang-c/Index.h
++++ b/clang/include/clang-c/Index.h
+@@ -32,7 +32,7 @@
+  * compatible, thus CINDEX_VERSION_MAJOR is expected to remain stable.
+  */
+ #define CINDEX_VERSION_MAJOR 0
+-#define CINDEX_VERSION_MINOR 59
++#define CINDEX_VERSION_MINOR 60
+ 
+ #define CINDEX_VERSION_ENCODE(major, minor) ( \
+       ((major) * 10000)                       \
+@@ -3389,6 +3389,14 @@ CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
   */
  CINDEX_LINKAGE CXString clang_getTypeSpelling(CXType CT);
  
@@ -84,23 +93,23 @@ index 65dada38b0..a9bd6f4ebf 100644
  /**
   * Retrieve the underlying type of a typedef declaration.
   *
-diff --git a/tools/libclang/CMakeLists.txt b/tools/libclang/CMakeLists.txt
-index e539c8308e..336a5c2e98 100644
---- a/tools/libclang/CMakeLists.txt
-+++ b/tools/libclang/CMakeLists.txt
-@@ -41,6 +41,7 @@ set(LIBS
-   clangLex
+diff --git a/clang/tools/libclang/CMakeLists.txt b/clang/tools/libclang/CMakeLists.txt
+index 613ead1a36b..a583fa206d1 100644
+--- a/clang/tools/libclang/CMakeLists.txt
++++ b/clang/tools/libclang/CMakeLists.txt
+@@ -43,6 +43,7 @@ set(LIBS
    clangSema
+   clangSerialization
    clangTooling
 +  clangToolingCore
  )
  
  if (CLANG_ENABLE_ARCMT)
-diff --git a/tools/libclang/CXType.cpp b/tools/libclang/CXType.cpp
-index 7c0f307944..9651c3a84a 100644
---- a/tools/libclang/CXType.cpp
-+++ b/tools/libclang/CXType.cpp
-@@ -20,6 +20,7 @@
+diff --git a/clang/tools/libclang/CXType.cpp b/clang/tools/libclang/CXType.cpp
+index acecf87d0cd..afdeb467769 100644
+--- a/clang/tools/libclang/CXType.cpp
++++ b/clang/tools/libclang/CXType.cpp
+@@ -19,6 +19,7 @@
  #include "clang/AST/DeclObjC.h"
  #include "clang/AST/DeclTemplate.h"
  #include "clang/AST/Expr.h"
@@ -108,7 +117,7 @@ index 7c0f307944..9651c3a84a 100644
  #include "clang/AST/Type.h"
  #include "clang/Basic/AddressSpaces.h"
  #include "clang/Frontend/ASTUnit.h"
-@@ -293,6 +294,27 @@ CXString clang_getTypeSpelling(CXType CT) {
+@@ -302,6 +303,27 @@ CXString clang_getTypeSpelling(CXType CT) {
    return cxstring::createDup(OS.str());
  }
  
@@ -136,11 +145,11 @@ index 7c0f307944..9651c3a84a 100644
  CXType clang_getTypedefDeclUnderlyingType(CXCursor C) {
    using namespace cxcursor;
    CXTranslationUnit TU = cxcursor::getCursorTU(C);
-diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
-index 95a42712c4..87773b9036 100644
---- a/tools/libclang/libclang.exports
-+++ b/tools/libclang/libclang.exports
-@@ -230,6 +230,7 @@ clang_getFileLocation
+diff --git a/clang/tools/libclang/libclang.exports b/clang/tools/libclang/libclang.exports
+index 3c76090d64f..6e860e7263e 100644
+--- a/clang/tools/libclang/libclang.exports
++++ b/clang/tools/libclang/libclang.exports
+@@ -241,6 +241,7 @@ clang_getFileLocation
  clang_getFileName
  clang_getFileTime
  clang_getFileUniqueID
@@ -149,5 +158,5 @@ index 95a42712c4..87773b9036 100644
  clang_getIBOutletCollectionType
  clang_getIncludedFile
 -- 
-2.18.0
+2.23.0
 

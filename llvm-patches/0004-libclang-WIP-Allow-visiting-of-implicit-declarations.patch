@@ -1,23 +1,23 @@
-From e11c5d12937f1483ab4b0b509ec4a11ba5789de0 Mon Sep 17 00:00:00 2001
+From d10d66b8e762c1dd1329d5920f9ef952cf4f6940 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
 Date: Mon, 17 Jul 2017 12:25:49 +0200
 Subject: [PATCH 4/5] [libclang] WIP: Allow visiting of implicit declarations
  and template instantiations
 
 ---
- bindings/python/clang/cindex.py             |  45 ++++++--
- bindings/python/tests/cindex/test_cursor.py |  33 ++++++
- include/clang-c/Index.h                     |  31 ++++++
- tools/libclang/CIndex.cpp                   | 112 ++++++++++++++++++--
- tools/libclang/CursorVisitor.h              |  12 ++-
- tools/libclang/libclang.exports             |   2 +
- 6 files changed, 219 insertions(+), 16 deletions(-)
+ clang/bindings/python/clang/cindex.py         |  45 +++++--
+ .../python/tests/cindex/test_cursor.py        |  33 ++++++
+ clang/include/clang-c/Index.h                 |  33 +++++-
+ clang/tools/libclang/CIndex.cpp               | 112 ++++++++++++++++--
+ clang/tools/libclang/CursorVisitor.h          |  12 +-
+ clang/tools/libclang/libclang.exports         |   2 +
+ 6 files changed, 220 insertions(+), 17 deletions(-)
 
-diff --git a/bindings/python/clang/cindex.py b/bindings/python/clang/cindex.py
-index a43fcff150..027f2d7f71 100644
---- a/bindings/python/clang/cindex.py
-+++ b/bindings/python/clang/cindex.py
-@@ -1408,6 +1408,15 @@ class Cursor(Structure):
+diff --git a/clang/bindings/python/clang/cindex.py b/clang/bindings/python/clang/cindex.py
+index 1589acc9e7e..b023be6cdc8 100644
+--- a/clang/bindings/python/clang/cindex.py
++++ b/clang/bindings/python/clang/cindex.py
+@@ -1426,6 +1426,15 @@ class Cursor(Structure):
      """
      _fields_ = [("_kind_id", c_int), ("xdata", c_int), ("data", c_void_p * 3)]
  
@@ -33,7 +33,7 @@ index a43fcff150..027f2d7f71 100644
      @staticmethod
      def from_location(tu, location):
          # We store a reference to the TU in the instance so the TU won't get
-@@ -1497,6 +1506,10 @@ class Cursor(Structure):
+@@ -1515,6 +1524,10 @@ class Cursor(Structure):
          """
          return conf.lib.clang_EnumDecl_isScoped(self)
  
@@ -44,7 +44,7 @@ index a43fcff150..027f2d7f71 100644
      def get_definition(self):
          """
          If the cursor is a reference to a declaration or a declaration of
-@@ -1813,8 +1826,12 @@ class Cursor(Structure):
+@@ -1831,8 +1844,12 @@ class Cursor(Structure):
          """Returns the value of the indicated arg as an unsigned 64b integer."""
          return conf.lib.clang_Cursor_getTemplateArgumentUnsignedValue(self, num)
  
@@ -59,7 +59,7 @@ index a43fcff150..027f2d7f71 100644
  
          # FIXME: Expose iteration from CIndex, PR6125.
          def visitor(child, parent, children):
-@@ -1827,18 +1844,24 @@ class Cursor(Structure):
+@@ -1845,18 +1862,24 @@ class Cursor(Structure):
              children.append(child)
              return 1 # continue
          children = []
@@ -89,7 +89,7 @@ index a43fcff150..027f2d7f71 100644
                  yield descendant
  
      def get_tokens(self, options=0):
-@@ -3905,6 +3928,10 @@ functionList = [
+@@ -3927,6 +3950,10 @@ functionList = [
     [Type],
     bool),
  
@@ -100,7 +100,7 @@ index a43fcff150..027f2d7f71 100644
    ("clang_isInvalid",
     [CursorKind],
     bool),
-@@ -3968,6 +3995,10 @@ functionList = [
+@@ -3990,6 +4017,10 @@ functionList = [
     [Cursor, callbacks['cursor_visit'], py_object],
     c_uint),
  
@@ -111,11 +111,11 @@ index a43fcff150..027f2d7f71 100644
    ("clang_Cursor_getNumArguments",
     [Cursor],
     c_int),
-diff --git a/bindings/python/tests/cindex/test_cursor.py b/bindings/python/tests/cindex/test_cursor.py
-index d7ddf83130..5a4eee4377 100644
---- a/bindings/python/tests/cindex/test_cursor.py
-+++ b/bindings/python/tests/cindex/test_cursor.py
-@@ -89,6 +89,39 @@ class TestCursor(unittest.TestCase):
+diff --git a/clang/bindings/python/tests/cindex/test_cursor.py b/clang/bindings/python/tests/cindex/test_cursor.py
+index 0965c1f4ae1..d061f37c25c 100644
+--- a/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/clang/bindings/python/tests/cindex/test_cursor.py
+@@ -94,6 +94,39 @@ class TestCursor(unittest.TestCase):
          self.assertEqual(tu_nodes[2].displayname, 'f0(int, int)')
          self.assertEqual(tu_nodes[2].is_definition(), True)
  
@@ -155,11 +155,20 @@ index d7ddf83130..5a4eee4377 100644
      def test_references(self):
          """Ensure that references to TranslationUnit are kept."""
          tu = get_tu('int x;')
-diff --git a/include/clang-c/Index.h b/include/clang-c/Index.h
-index b77483f5a9..e5a47c0fca 100644
---- a/include/clang-c/Index.h
-+++ b/include/clang-c/Index.h
-@@ -2725,6 +2725,11 @@ CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
+diff --git a/clang/include/clang-c/Index.h b/clang/include/clang-c/Index.h
+index 84ed03b8920..57acbcba143 100644
+--- a/clang/include/clang-c/Index.h
++++ b/clang/include/clang-c/Index.h
+@@ -32,7 +32,7 @@
+  * compatible, thus CINDEX_VERSION_MAJOR is expected to remain stable.
+  */
+ #define CINDEX_VERSION_MAJOR 0
+-#define CINDEX_VERSION_MINOR 61
++#define CINDEX_VERSION_MINOR 62
+ 
+ #define CINDEX_VERSION_ENCODE(major, minor) ( \
+       ((major) * 10000)                       \
+@@ -2775,6 +2775,11 @@ CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
   */
  CINDEX_LINKAGE unsigned clang_isUnexposed(enum CXCursorKind);
  
@@ -171,7 +180,7 @@ index b77483f5a9..e5a47c0fca 100644
  /**
   * Describe the linkage of the entity referred to by a cursor.
   */
-@@ -4041,6 +4046,32 @@ CINDEX_LINKAGE unsigned clang_visitChildrenWithBlock(CXCursor parent,
+@@ -4199,6 +4204,32 @@ CINDEX_LINKAGE unsigned clang_visitChildrenWithBlock(CXCursor parent,
  #  endif
  #endif
  
@@ -204,11 +213,11 @@ index b77483f5a9..e5a47c0fca 100644
  /**
   * @}
   */
-diff --git a/tools/libclang/CIndex.cpp b/tools/libclang/CIndex.cpp
-index bbc29af346..6e0a208d55 100644
---- a/tools/libclang/CIndex.cpp
-+++ b/tools/libclang/CIndex.cpp
-@@ -199,10 +199,11 @@ bool CursorVisitor::Visit(CXCursor Cursor, bool CheckedRegionOfInterest) {
+diff --git a/clang/tools/libclang/CIndex.cpp b/clang/tools/libclang/CIndex.cpp
+index 3a283e76ed8..7ee6b704647 100644
+--- a/clang/tools/libclang/CIndex.cpp
++++ b/clang/tools/libclang/CIndex.cpp
+@@ -195,10 +195,11 @@ bool CursorVisitor::Visit(CXCursor Cursor, bool CheckedRegionOfInterest) {
        assert(0 && "Invalid declaration cursor");
        return true; // abort.
      }
@@ -224,7 +233,7 @@ index bbc29af346..6e0a208d55 100644
        return false;
    }
  
-@@ -707,10 +708,13 @@ bool CursorVisitor::VisitTagDecl(TagDecl *D) {
+@@ -703,10 +704,13 @@ bool CursorVisitor::VisitTagDecl(TagDecl *D) {
  
  bool CursorVisitor::VisitClassTemplateSpecializationDecl(
                                            ClassTemplateSpecializationDecl *D) {
@@ -240,7 +249,7 @@ index bbc29af346..6e0a208d55 100644
      // Nothing to visit
      return false;
        
-@@ -719,6 +723,7 @@ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
+@@ -715,6 +719,7 @@ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
      break;
        
    case TSK_ExplicitSpecialization:
@@ -248,7 +257,7 @@ index bbc29af346..6e0a208d55 100644
      ShouldVisitBody = true;
      break;
    }
-@@ -934,7 +939,31 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
+@@ -930,7 +935,31 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
      return true;
    
    auto* FD = D->getTemplatedDecl();
@@ -281,7 +290,7 @@ index bbc29af346..6e0a208d55 100644
  }
  
  bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
-@@ -944,7 +973,40 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+@@ -940,7 +969,40 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
      return true;
    
    auto* CD = D->getTemplatedDecl();
@@ -323,7 +332,7 @@ index bbc29af346..6e0a208d55 100644
  }
  
  bool CursorVisitor::VisitTemplateTemplateParmDecl(TemplateTemplateParmDecl *D) {
-@@ -4391,6 +4453,24 @@ unsigned clang_visitChildrenWithBlock(CXCursor parent,
+@@ -4426,6 +4488,24 @@ unsigned clang_visitChildrenWithBlock(CXCursor parent,
    return clang_visitChildren(parent, visitWithBlock, block);
  }
  
@@ -348,7 +357,7 @@ index bbc29af346..6e0a208d55 100644
  static CXString getDeclSpelling(const Decl *D) {
    if (!D)
      return cxstring::createEmpty();
-@@ -5693,6 +5773,22 @@ unsigned clang_isUnexposed(enum CXCursorKind K) {
+@@ -5774,6 +5854,22 @@ unsigned clang_isUnexposed(enum CXCursorKind K) {
    }
  }
  
@@ -371,11 +380,11 @@ index bbc29af346..6e0a208d55 100644
  CXCursorKind clang_getCursorKind(CXCursor C) {
    return C.kind;
  }
-diff --git a/tools/libclang/CursorVisitor.h b/tools/libclang/CursorVisitor.h
-index f2fb68fab9..02085b1783 100644
---- a/tools/libclang/CursorVisitor.h
-+++ b/tools/libclang/CursorVisitor.h
-@@ -96,6 +96,12 @@ private:
+diff --git a/clang/tools/libclang/CursorVisitor.h b/clang/tools/libclang/CursorVisitor.h
+index b0afa5a0b59..94f4596d5fa 100644
+--- a/clang/tools/libclang/CursorVisitor.h
++++ b/clang/tools/libclang/CursorVisitor.h
+@@ -95,6 +95,12 @@ private:
    /// record entries.
    bool VisitDeclsOnly;
  
@@ -388,7 +397,7 @@ index f2fb68fab9..02085b1783 100644
    // FIXME: Eventually remove.  This part of a hack to support proper
    // iteration over all Decls contained lexically within an ObjC container.
    DeclContext::decl_iterator *DI_current;
-@@ -147,7 +153,9 @@ public:
+@@ -146,7 +152,9 @@ public:
                  bool VisitIncludedPreprocessingEntries = false,
                  SourceRange RegionOfInterest = SourceRange(),
                  bool VisitDeclsOnly = false,
@@ -399,7 +408,7 @@ index f2fb68fab9..02085b1783 100644
      : TU(TU), AU(cxtu::getASTUnit(TU)),
        Visitor(Visitor), PostChildrenVisitor(PostChildrenVisitor),
        ClientData(ClientData),
-@@ -155,6 +163,8 @@ public:
+@@ -154,6 +162,8 @@ public:
        VisitIncludedEntities(VisitIncludedPreprocessingEntries),
        RegionOfInterest(RegionOfInterest),
        VisitDeclsOnly(VisitDeclsOnly),
@@ -408,11 +417,11 @@ index f2fb68fab9..02085b1783 100644
        DI_current(nullptr), FileDI_current(nullptr)
    {
      Parent.kind = CXCursor_NoDeclFound;
-diff --git a/tools/libclang/libclang.exports b/tools/libclang/libclang.exports
-index d185e26a2e..1376f29509 100644
---- a/tools/libclang/libclang.exports
-+++ b/tools/libclang/libclang.exports
-@@ -302,6 +302,7 @@ clang_isInvalidDeclaration
+diff --git a/clang/tools/libclang/libclang.exports b/clang/tools/libclang/libclang.exports
+index 6af6c0ca3e8..d17eb83187d 100644
+--- a/clang/tools/libclang/libclang.exports
++++ b/clang/tools/libclang/libclang.exports
+@@ -313,6 +313,7 @@ clang_isInvalidDeclaration
  clang_isExpression
  clang_isFileMultipleIncludeGuarded
  clang_isFunctionTypeVariadic
@@ -420,7 +429,7 @@ index d185e26a2e..1376f29509 100644
  clang_isInvalid
  clang_isPODType
  clang_isPreprocessing
-@@ -343,6 +344,7 @@ clang_CompileCommand_getNumArgs
+@@ -354,6 +355,7 @@ clang_CompileCommand_getNumArgs
  clang_CompileCommand_getArg
  clang_visitChildren
  clang_visitChildrenWithBlock
@@ -429,5 +438,5 @@ index d185e26a2e..1376f29509 100644
  clang_ModuleMapDescriptor_dispose
  clang_ModuleMapDescriptor_setFrameworkModuleName
 -- 
-2.18.0
+2.23.0
 

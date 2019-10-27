@@ -1,19 +1,19 @@
-From 5916da23627103563e38702de2d3bcff65d60406 Mon Sep 17 00:00:00 2001
+From 33d7d68cb694613dfa836cf506d8af012563b9c2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
 Date: Wed, 26 Jul 2017 15:06:10 +0200
 Subject: [PATCH 1/5] [Tooling] Fully qualify template parameters of nested
  name specifier in getFullyQualifiedName
 
 ---
- lib/AST/QualTypeNames.cpp               | 18 ++++++++++++++----
- unittests/Tooling/QualTypeNamesTest.cpp |  8 +++++++-
+ clang/lib/AST/QualTypeNames.cpp               | 18 ++++++++++++++----
+ clang/unittests/Tooling/QualTypeNamesTest.cpp |  8 +++++++-
  2 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/lib/AST/QualTypeNames.cpp b/lib/AST/QualTypeNames.cpp
-index 8b605ef295..8fcedccf48 100644
---- a/lib/AST/QualTypeNames.cpp
-+++ b/lib/AST/QualTypeNames.cpp
-@@ -359,11 +359,21 @@ NestedNameSpecifier *createNestedNameSpecifier(const ASTContext &Ctx,
+diff --git a/clang/lib/AST/QualTypeNames.cpp b/clang/lib/AST/QualTypeNames.cpp
+index f28f00171cc..ecfef57566e 100644
+--- a/clang/lib/AST/QualTypeNames.cpp
++++ b/clang/lib/AST/QualTypeNames.cpp
+@@ -356,11 +356,21 @@ NestedNameSpecifier *createNestedNameSpecifier(const ASTContext &Ctx,
                                                 const TypeDecl *TD,
                                                 bool FullyQualify,
                                                 bool WithGlobalNsPrefix) {
@@ -39,11 +39,11 @@ index 8b605ef295..8fcedccf48 100644
  }
  
  /// Return the fully qualified type, including fully-qualified
-diff --git a/unittests/Tooling/QualTypeNamesTest.cpp b/unittests/Tooling/QualTypeNamesTest.cpp
-index b4c56f7bd5..e9ab495098 100644
---- a/unittests/Tooling/QualTypeNamesTest.cpp
-+++ b/unittests/Tooling/QualTypeNamesTest.cpp
-@@ -67,6 +67,10 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
+diff --git a/clang/unittests/Tooling/QualTypeNamesTest.cpp b/clang/unittests/Tooling/QualTypeNamesTest.cpp
+index b6c30297787..e93a0475812 100644
+--- a/clang/unittests/Tooling/QualTypeNamesTest.cpp
++++ b/clang/unittests/Tooling/QualTypeNamesTest.cpp
+@@ -66,6 +66,10 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
    // Template parameter expansion.
    Visitor.ExpectedQualTypeNames["CheckC"] =
        "A::B::Template0<A::B::C::MyInt, A::B::AnotherClass>";
@@ -54,7 +54,7 @@ index b4c56f7bd5..e9ab495098 100644
    // Recursive template parameter expansion.
    Visitor.ExpectedQualTypeNames["CheckD"] =
        "A::B::Template0<A::B::Template1<A::B::C::MyInt, A::B::AnotherClass>, "
-@@ -109,7 +113,7 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
+@@ -108,7 +112,7 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
        "     using InnerAlias = OuterTemplateClass<T>;\n"
        "     InnerAlias<int> AliasTypeVal;\n"
        "   }\n"
@@ -63,7 +63,7 @@ index b4c56f7bd5..e9ab495098 100644
        "   template<class X, class Y> class Template1;"
        "   typedef B::Class0 AnotherClass;\n"
        "   void Function1(Template0<C::MyInt,\n"
-@@ -117,6 +121,8 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
+@@ -116,6 +120,8 @@ TEST(QualTypeNameTest, getFullyQualifiedName) {
        "   void Function2(Template0<Template1<C::MyInt, AnotherClass>,\n"
        "                            Template0<int, long> > CheckD);\n"
        "   void Function3(const B::Class0* CheckM);\n"
@@ -73,5 +73,5 @@ index b4c56f7bd5..e9ab495098 100644
        "template<typename... Values> class Variadic {};\n"
        "Variadic<int, B::Template0<int, char>, "
 -- 
-2.18.0
+2.23.0
 
