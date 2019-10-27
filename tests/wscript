@@ -96,6 +96,7 @@ def build(bld):
             target=target,
             source=node,
             features="cxx cxxshlib pyembed",
+            use=["PYBIND11"],
             export_includes=".",
             cxxflags="-std=c++17",
             install_path=None,
