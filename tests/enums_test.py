@@ -25,12 +25,37 @@ def test_arithmetic_enum():
     assert (state & m.Access.Execute) == 0
 
 def test_scoped_enum():
+    assert m.Color(2) == m.Color.blue
     assert m.test_enum(m.Color.red) == "red"
     assert m.test_enum(m.Color.green) == "green"
     assert m.test_enum(m.Color.blue) == "blue"
 
     with pytest.raises(TypeError):
+        m.test_enum(2)
+
+    with pytest.raises(TypeError) as excinfo:
         m.Color.blue == 0 # pylint: disable=pointless-statement
+    assert "incompatible function arguments" in str(excinfo.value)
+
+    with pytest.raises(TypeError) as excinfo:
+        0 == m.Color.blue # pylint: disable=pointless-statement
+    assert "incompatible function arguments" in str(excinfo.value)
+
+    with pytest.raises(TypeError) as excinfo:
+        m.Color.blue == "uiae" # pylint: disable=pointless-statement
+    assert "incompatible function arguments" in str(excinfo.value)
+
+    with pytest.raises(TypeError) as excinfo:
+        "uiae" == m.Color.blue # pylint: disable=pointless-statement
+    assert "incompatible function arguments" in str(excinfo.value)
+
+    with pytest.raises(TypeError) as excinfo:
+        m.Color.blue < 0 # pylint: disable=pointless-statement
+    assert "not supported between instances of" in str(excinfo.value)
+
+    with pytest.raises(TypeError) as excinfo:
+        0 < m.Color.blue # pylint: disable=pointless-statement
+    assert "not supported between instances of" in str(excinfo.value)
 
     with pytest.raises(AttributeError):
         m.blue # pylint: disable=pointless-statement
