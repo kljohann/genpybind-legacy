@@ -7,7 +7,7 @@ def options(opt):
     opt.load("python")
     opt.load("compiler_cxx")
     opt.add_option(
-        "--disable-tests", action="store_true", default=False,
+        "--genpybind-disable-tests", action="store_true", default=False,
         dest="tests_disabled", help="Disable building and execution of tests")
     opt.add_option(
         "--clang-use-shared", action="store_true", default=False,
