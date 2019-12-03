@@ -1,0 +1,53 @@
+@Library("jenlib") _
+
+apps = ["visionary-dls", "visionary-wafer"]
+
+try {
+	runOnSlave(label: "frontend") {
+		wafSetup(projects: ["genpybind"])
+	}
+
+	for (app in apps) {
+		stage("Build & Test for " + app) {
+			onSlurmResource([partition: "jenkins", "cpus-per-task": 8]) {
+				dir("genpybind") {
+					inSingularity(app: app) {
+						jesh "PREFIX=$PWD/install ./waf configure install"
+					}
+				}
+			}
+		}
+
+		stage("Test Evaluation for " + app) {
+			runOnSlave(label: "frontend") {
+				String xmlResultPattern = "genpybind/build/tests/reports/*.xml"
+
+				// Always keep the plain results
+				archiveArtifacts xmlResultPattern
+
+				// Parse test results
+				step([$class       : 'XUnitBuilder',
+				      thresholdMode: 1,
+				      thresholds   : [[$class           : 'FailedThreshold',
+				                       unstableThreshold: '0'],
+				      ],
+				      tools        : [[$class               : 'GoogleTestType',
+				                       deleteOutputFiles    : true,
+				                       failIfNotNew         : true,
+				                       pattern              : xmlResultPattern,
+				                       skipNoTestFiles      : false,
+				                       stopProcessingIfError: true]
+				      ]
+				])
+			}
+		}
+	}
+} catch (Throwable t) {
+	notifyFailure(mattermostChannel: "#softies")
+	throw t
+}
+
+// Some Jenkins steps fail a build without raising (e.g. archiveArtifacts)
+if (currentBuild.currentResult != "SUCCESS") {
+	notifyFailure(mattermostChannel: "#softies")
+}
