@@ -287,7 +287,10 @@ See [noconvert.h](./tests/noconvert.h) and [noconvert_test.py](./tests/noconvert
 
 ## `opaque`
 
-Cf. [pybind11's][pybind11] `PYBIND11_MAKE_OPAQUE`.
+Allows to "inline" the underlying type at the location of a typedef, as if it was defined
+there.  As the name of this feature may lead to confusion with [pybind11's][pybind11]
+`PYBIND11_MAKE_OPAQUE`, it will likely be renamed or redesigned in an upcoming release.
+More details can be found in [issue #24](https://github.com/kljohann/genpybind/issues/24).
 
 See [expose_as.h](./tests/expose_as.h) and [expose_as_test.py](./tests/expose_as_test.py).
 
