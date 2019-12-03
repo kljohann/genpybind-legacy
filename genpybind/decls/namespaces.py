@@ -33,13 +33,23 @@ class Namespace(Level):
         if self.visible is False:
             return
 
+        # Only expose module if there is a matching tag.
+        # TODO: Consider applying this check for all namespaces here, this
+        # would amount to not descending to the nested declarations at all.
+        if self.module is not None and not registry.should_expose(self):
+            registry.register(self.cursor, None)
+            return
+
         for result in self.statements(parent, registry):
             yield result
 
     def statements(self, parent, registry):
         # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         scope = parent
-        if self.module is not None:
+
+        # Only expose module if there is a matching tag.
+        # Else nested declarations will be put in the parent namespace.
+        if self.module is not None and registry.should_expose(self):
             yield "" # spacer
             # Namespaces may be redeclared.
             if registry.has(self.cursor.canonical):

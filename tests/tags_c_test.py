@@ -17,3 +17,9 @@ def test_tags():
     with pytest.raises(AttributeError) as excinfo:
         m.NamespacedOnlyInAB # pylint: disable=pointless-statement
     assert "has no attribute" in str(excinfo.value)
+    with pytest.raises(AttributeError) as excinfo:
+        m.NestedSubmoduleOnlyInAB # pylint: disable=pointless-statement
+    assert "has no attribute" in str(excinfo.value)
+    with pytest.raises(AttributeError) as excinfo:
+        m.AlsoOnlyInAB # pylint: disable=pointless-statement
+    assert "has no attribute" in str(excinfo.value)
