@@ -28,5 +28,6 @@ DECLARATION_TYPES.update({
     CursorKind.NAMESPACE: Namespace,
     CursorKind.STRUCT_DECL: Klass,
     CursorKind.TYPEDEF_DECL: Typedef,
+    CursorKind.TYPE_ALIAS_DECL: Typedef,
     CursorKind.VAR_DECL: FieldOrVar,
 })

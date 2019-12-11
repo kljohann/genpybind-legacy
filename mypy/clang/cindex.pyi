@@ -73,6 +73,7 @@ class CursorKind(object):
     STRUCT_DECL: CursorKind
     TRANSLATION_UNIT: CursorKind
     TYPEDEF_DECL: CursorKind
+    TYPE_ALIAS_DECL: CursorKind
     TYPE_REF: CursorKind
     VAR_DECL: CursorKind
 
