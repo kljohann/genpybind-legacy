@@ -73,7 +73,8 @@ def gather_declarations(cursor, default_visibility=False):
                 ]:
                     queue.append((parent_declarations, child, default_visibility))
             continue
-        elif cursor.kind == CursorKind.CLASS_TEMPLATE:
+
+        if cursor.kind == CursorKind.CLASS_TEMPLATE:
             # FIXME: Support explicit instantiation of template classes
             continue
 

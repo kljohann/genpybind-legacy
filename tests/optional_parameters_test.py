@@ -1,4 +1,3 @@
-import pytest
 import pyoptional_parameters as m
 
 def test_optional_parameters():

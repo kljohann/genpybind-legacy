@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import sys
 
-from clang.cindex import AccessSpecifier, CursorKind
+from clang.cindex import CursorKind
 
 from .. import cutils, utils
 from ..utils import join_arguments, quote
@@ -79,7 +79,7 @@ class Operator(Callable):
                     # Skip implicit move or copy assignment operators
                     return None
                 return cls(cursor, **kwargs)
-            elif other_cls is not None:
+            if other_cls is not None:
                 return other_cls(cursor, **kwargs)
             return None
         return wrapper
@@ -168,7 +168,8 @@ class Operator(Callable):
 
         if self.spelling == "operator=":
             return
-        elif self.stringstream is not None:
+
+        if self.stringstream is not None:
             for result in self.expose_stringstream(parent, registry):
                 yield result
             return

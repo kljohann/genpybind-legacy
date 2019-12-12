@@ -8,8 +8,6 @@ import re
 if False:  # pylint: disable=using-constant-test
     from typing import (  # pylint: disable=unused-import
         Any, Callable, Iterable, List, Optional, Pattern, Text, TypeVar)
-    T = TypeVar("T")
-    U = TypeVar("U")
 
 
 def is_string(text):

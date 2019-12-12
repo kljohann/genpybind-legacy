@@ -1,4 +1,3 @@
-import pytest
 import pyvariant_parameters as m
 
 def test_variant_parameters():

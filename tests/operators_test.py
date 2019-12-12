@@ -35,7 +35,8 @@ def test_has_binary_operator(variant, name):
 def test_has_no_binary_operator(variant, name):
     obj = getattr(m, "has_{}_{}".format(variant, name))()
     if name in ["eq", "ne"]:
-        # TODO: sadly, Python 3 seems to synthesize a default function in the absence of __eq__ or __ne__ :(
+        # TODO: sadly, Python 3 seems to synthesize a default function in the
+        # absence of __eq__ or __ne__ :(
         return
     if sys.version_info < (3,):
         # TODO: Python 2 always synthesizes default versions
