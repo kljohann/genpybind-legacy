@@ -44,3 +44,16 @@ def test_readonly_property():
     with pytest.raises(AttributeError) as excinfo:
         obj.readonly = 5
     assert "can't set attribute" in str(excinfo.value)
+
+def test_property_based_on_overloaded_functions():
+    obj = m.Something()
+    assert not hasattr(obj, "get_overloaded")
+    assert not hasattr(obj, "set_overloaded")
+
+    assert obj.overloaded == 0
+    obj.overloaded = 123
+    assert obj.overloaded == 123
+
+    arg = m.Argument()
+    with pytest.raises(TypeError, match="incompatible function arguments"):
+        obj.overloaded = arg

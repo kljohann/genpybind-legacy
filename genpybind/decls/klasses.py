@@ -243,7 +243,17 @@ class Klass(Level):
             if writable:
                 declarations.append(accessors["set"])
 
-            # TODO: support overloaded methods for setters/getters
+            # TODO: Only emit typedef if there are multiple overloads?
+            typedef_names = [
+                "genpybind_{}_type".format(decl.expose_as)
+                for decl in declarations
+            ]
+
+            yield "{"
+            function_objects = []
+            for decl, typedef_name in zip(declarations, typedef_names):
+                yield decl.typedef(typedef_name)
+                function_objects.append(decl.function_object(typedef_name))
 
             qualifier = "" if writable else "_readonly"
             yield "{var}.def_property{qualifier}({args});".format(
@@ -251,8 +261,9 @@ class Klass(Level):
                 qualifier=qualifier,
                 args=join_arguments(
                     quote(name),
-                    [decl.function_object() for decl in declarations]
+                    function_objects,
                 ),
             )
+            yield "}"
 
         yield "" # spacer
