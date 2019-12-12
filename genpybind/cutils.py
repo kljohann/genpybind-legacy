@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from clang.cindex import Cursor, CursorKind, TypeKind, Token, TokenGroup, TokenKind
 
 from . import utils
@@ -114,7 +112,7 @@ def fully_qualified_expression(cursor):
     for token in get_tokens_with_whitespace(cursor):
         # FIXME: Handle leading token.spelling == "::"
         if token.kind == TokenKind.IDENTIFIER:
-            if utils.is_string(current[0]):
+            if isinstance(current[0], str):
                 output.append(current)
                 current = [token]
             else:
@@ -127,7 +125,7 @@ def fully_qualified_expression(cursor):
         assert tokens
         if isinstance(tokens[0], Token):
             tokens[0] = fully_qualified_name(tokens[0])
-        assert utils.is_string(tokens[0])
+        assert isinstance(tokens[0], str)
 
     return "".join(utils.flatten(output))
 

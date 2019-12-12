@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from clang.cindex import CursorKind
 
 from .declarations import Declaration

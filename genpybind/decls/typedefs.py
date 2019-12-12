@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from .. import cutils
 from ..utils import quote
 from .declarations import Declaration

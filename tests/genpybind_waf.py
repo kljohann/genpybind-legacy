@@ -23,7 +23,7 @@ def join_args(args):
 def configure(cfg):
     cfg.load("compiler_cxx")
     cfg.load("python")
-    cfg.check_python_version(minver=(2, 7))
+    cfg.check_python_version(minver=(3, 7))
     if not cfg.env.LLVM_CONFIG:
         cfg.find_program("llvm-config", var="LLVM_CONFIG")
 

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import fnmatch
 import inspect
 import json
@@ -10,21 +8,12 @@ if False:  # pylint: disable=using-constant-test
         Any, Callable, Iterable, List, Optional, Pattern, Text, TypeVar)
 
 
-def is_string(text):
-    # type: (Any) -> bool
-    try:
-        return isinstance(text, (unicode, str))
-    except NameError:
-        return isinstance(text, str)
-
-
 def quote(text):
     # type: (Optional[Text]) -> Text
     """Returns a quoted representation of the given string, to be used
     as a C(++) string literal."""
     text = text or ""
-    if not is_string(text):
-        raise TypeError("expected string")
+    assert isinstance(text, str)
     return json.dumps(text)
 
 

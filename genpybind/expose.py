@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import textwrap
 
 
@@ -84,7 +82,7 @@ def expose_as(
         if value is None:
             return
         if not isinstance(value, tuple):
-            assert utils.is_string(value)
+            assert isinstance(value, str)
             statements.append(value)
             return
         declaration, _ = value

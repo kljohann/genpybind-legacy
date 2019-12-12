@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from clang import cindex
 from clang.cindex import AccessSpecifier, CursorKind
 

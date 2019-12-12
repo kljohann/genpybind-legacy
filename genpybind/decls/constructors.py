@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from .. import cutils, utils
 from ..utils import join_arguments, quote
 from .methods import Method

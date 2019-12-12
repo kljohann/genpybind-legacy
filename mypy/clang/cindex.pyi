@@ -2,28 +2,28 @@
 import typing
 # TODO: Check that each use of typing.Text in this file is correct
 
-class File(object):
+class File:
     name: typing.Text
 
-class SourceLocation(object):
+class SourceLocation:
     column: int
     file: File
     line: int
 
-class TokenKind(object):
+class TokenKind:
     IDENTIFIER: TokenKind
 
-class Token(object):
+class Token:
     kind: TokenKind
     spelling: typing.Text
 
-class TokenGroup(object):
+class TokenGroup:
     TOKENIZE_KEEP_WHITESPACE: int
 
-class TypeKind(object):
+class TypeKind:
     INVALID: TypeKind
 
-class Type(object):
+class Type:
     fully_qualified_name: typing.Text
     kind: TypeKind
     spelling: typing.Text
@@ -34,16 +34,16 @@ class Type(object):
     def get_result(self) -> Type: ...
     def is_const_qualified(self) -> bool: ...
 
-class AvailabilityKind(object):
+class AvailabilityKind:
     NOT_ACCESSIBLE: AvailabilityKind
     NOT_AVAILABLE: AvailabilityKind
 
-class AccessSpecifier(object):
+class AccessSpecifier:
     PRIVATE: AccessSpecifier
     PROTECTED: AccessSpecifier
     PUBLIC: AccessSpecifier
 
-class CursorKind(object):
+class CursorKind:
     name: typing.Text
     @staticmethod
     def get_all_kinds() -> typing.List[CursorKind]: ...
@@ -77,7 +77,7 @@ class CursorKind(object):
     TYPE_REF: CursorKind
     VAR_DECL: CursorKind
 
-class Cursor(object):
+class Cursor:
     access_specifier: AccessSpecifier
     availability: AvailabilityKind
     brief_comment: typing.Text
@@ -102,14 +102,14 @@ class Cursor(object):
     def is_scoped_enum(self) -> bool: ...
     def is_static_method(self) -> bool: ...
 
-class Index(object):
+class Index:
     pass
 
-class Diagnostic(object):
+class Diagnostic:
     children: typing.Iterator[Diagnostic]
     def format(self, options: typing.Optional[int]=None) -> typing.Text: ...
 
-class TranslationUnit(object):
+class TranslationUnit:
     cursor: Cursor
     diagnostics: typing.Iterator[Diagnostic]
     @classmethod

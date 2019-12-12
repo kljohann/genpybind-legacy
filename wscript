@@ -18,7 +18,7 @@ def options(opt):
 def configure(cfg):
     cfg.load("python")
     cfg.load("compiler_cxx")
-    cfg.check_python_version((2, 7))
+    cfg.check_python_version((3, 7))
 
     if not cfg.env.LLVM_CONFIG:
         cfg.find_program("llvm-config", var="LLVM_CONFIG")

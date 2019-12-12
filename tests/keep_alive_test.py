@@ -1,6 +1,6 @@
 import pykeep_alive as m
 
-class Counter(object):
+class Counter:
     def __init__(self, klass):
         self.klass = klass
         self.reset()

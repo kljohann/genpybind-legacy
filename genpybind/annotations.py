@@ -1,7 +1,5 @@
 # -*- coding: utf-8; -*-
 
-from __future__ import unicode_literals
-
 import ast
 import collections
 
@@ -21,7 +19,7 @@ else:
     cast = lambda _, x: x  # type: ignore # pylint: disable=invalid-name
 
 
-LOZENGE = u"◊"
+LOZENGE = "◊"
 SPECIAL_NAMES = {"true": True, "false": False, "default": None, "none": None}
 
 
@@ -29,7 +27,7 @@ class Annotations(collections.Sequence):
     def __init__(self, annotations=None):
         # type: (Union[None, Text, Iterable[Text]]) -> None
         self._annotations = []  # type: List[AnnotationT]
-        if utils.is_string(annotations):
+        if isinstance(annotations, str):
             self.parse(cast(Text, annotations))
             return
         if annotations is None:
@@ -89,7 +87,7 @@ class Annotations(collections.Sequence):
                         value = arg.s
                     elif isinstance(arg, ast.Name):
                         value = SPECIAL_NAMES.get(arg.id.lower(), arg.id)
-                    elif hasattr(ast, "NameConstant") and isinstance(arg, ast.NameConstant):  # type: ignore
+                    elif isinstance(arg, ast.NameConstant):
                         # "True", "False", "None" in Python 3
                         value = arg.value
                     else:
@@ -113,12 +111,7 @@ class Annotations(collections.Sequence):
                 continue
             # TODO: .displayname or .spelling ? does it matter?
             text = child.spelling
-            try:
-                string_type = unicode  # type: Type[Text]
-            except NameError: # Python 3
-                string_type = str
-            if not isinstance(text, string_type):
-                text = text.decode("utf-8")
+            assert isinstance(text, str)
             if not text.startswith(LOZENGE):
                 continue
             text = text[len(LOZENGE):]

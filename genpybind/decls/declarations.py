@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from clang import cindex
 from clang.cindex import AccessSpecifier
 
@@ -12,7 +10,7 @@ if False:  # pylint: disable=using-constant-test
         Any, FrozenSet, Iterable, Optional, Set, Text, Tuple, Union)
 
 
-class Visibility(object):  # pylint: disable=too-few-public-methods
+class Visibility:  # pylint: disable=too-few-public-methods
     def __init__(self, value, allow_unspecified=False):
         # type: (Union[bool, None, Tuple[()]], bool) -> None
         self.value = value
@@ -32,11 +30,9 @@ class Visibility(object):  # pylint: disable=too-few-public-methods
         # type: (Any) -> bool
         return not self == other
 
-    def __nonzero__(self):
+    def __bool__(self):
         # type: () -> bool
         raise TypeError("visibility used as bool")
-
-    __bool__ = __nonzero__
 
     VISIBLE = None  # type: Visibility
     HIDDEN = None  # type: Visibility
@@ -49,7 +45,7 @@ Visibility.DEFAULT = Visibility(None)
 Visibility.UNSPECIFIED = Visibility((), allow_unspecified=True)
 
 
-class Declaration(object):
+class Declaration:
     __slots__ = (
         "_cursor",
         "_parent_cursor",

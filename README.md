@@ -108,6 +108,8 @@ a single C++ tool based on the internal `libtooling` API.  I eventually plan to 
 
 # Installation
 
+_Note: genpybind requires Python version 3.7 or above._
+
 1. Build and install llvm/clang 9.0.0 with the patches provided in `llvm-patches`.  You can use a
    different prefix when installing, to prevent the patched clang from interfering with the version
    provided by your distribution.  Let's assume you unpacked the source code to `$HOME/llvm-src` and
@@ -119,7 +121,7 @@ a single C++ tool based on the internal `libtooling` API.  I eventually plan to 
    ```
 3. Build the `genpybind-parse` executable:
    ```bash
-   PYTHON=/usr/bin/python2 CXX=/bin/clang++ CC=/bin/clang \
+   PYTHON=/usr/bin/python3 CXX=/bin/clang++ CC=/bin/clang \
      LLVM_CONFIG=$HOME/llvm/bin/llvm-config \
      ./waf configure --disable-tests
    ./waf build
@@ -147,7 +149,7 @@ a single C++ tool based on the internal `libtooling` API.  I eventually plan to 
      /path/to/example.h -- \
      -D__GENPYBIND__ -xc++ -std=c++14 \
      -I/path/to/some/includes \
-     -resource-dir=$HOME/llvm/lib/clang/5.0.0
+     -resource-dir=$HOME/llvm/lib/clang/9.0.0
    ```
    The flags after the second `--` are essentially what you would pass to the compiler when
    processing the translation unit corresponding to the header file.

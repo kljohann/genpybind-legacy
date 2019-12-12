@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-import sys
-
 from clang.cindex import CursorKind
 
 from .. import cutils, utils
@@ -20,6 +17,7 @@ _RAW_OPERATORS = [
     (("sub", "rsub"), "operator-", "l - r"),
     (("add", "radd"), "operator+", "l + r"),
     (("mul", "rmul"), "operator*", "l * r"),
+    (("truediv", "rtruediv"), "operator/", "l / r"),
     (("mod", "rmod"), "operator%", "l % r"),
     (("lshift", "rlshift"), "operator<<", "l << r"),
     (("rshift", "rrshift"), "operator>>", "l >> r"),
@@ -35,6 +33,7 @@ _RAW_OPERATORS = [
     (("iadd",), "operator+=", "l += r"),
     (("isub",), "operator-=", "l -= r"),
     (("imul",), "operator*=", "l *= r"),
+    (("itruediv",), "operator/=", "l /= r"),
     (("imod",), "operator%=", "l %= r"),
     (("ilshift",), "operator<<=", "l <<= r"),
     (("irshift",), "operator>>=", "l >>= r"),
@@ -45,13 +44,6 @@ _RAW_OPERATORS = [
     (("pos",), "operator+", "+l"),
     (("invert",), "operator~", "(~l)"),
 ]  # type: List[Tuple[Tuple[Text, ...], Text, Text]]
-
-_RAW_OPERATORS.extend([
-    ((("truediv", "rtruediv"), "operator/", "l / r") if sys.version_info >= (3,)
-     else (("div", "rdiv"), "operator/", "l / r")),
-    ((("itruediv",), "operator/=", "l /= r") if sys.version_info >= (3,)
-     else (("idiv",), "operator/=", "l /= r")),
-])
 
 _OPERATORS = {
     (key, 1 + expr.count("r")):(names, expr)

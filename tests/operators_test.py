@@ -1,6 +1,5 @@
 import inspect
 import operator
-import sys
 
 import pytest
 import pyoperators as m
@@ -13,11 +12,10 @@ def test_call_operator():
 def pythonic_name(name):
     if name in ["and", "or"]:
         name = "{}_".format(name)
-    if sys.version_info >= (3,):
-        if name == "div":
-            name = "truediv"
-        if name == "idiv":
-            name = "itruediv"
+    if name == "div":
+        name = "truediv"
+    if name == "idiv":
+        name = "itruediv"
     return name
 
 BINARY_OPERATORS = "lt le eq ne gt ge sub add mul div mod lshift rshift and or xor".split()
@@ -37,9 +35,6 @@ def test_has_no_binary_operator(variant, name):
     if name in ["eq", "ne"]:
         # TODO: sadly, Python 3 seems to synthesize a default function in the
         # absence of __eq__ or __ne__ :(
-        return
-    if sys.version_info < (3,):
-        # TODO: Python 2 always synthesizes default versions
         return
     name = pythonic_name(name)
     with pytest.raises(TypeError, match="|".join([
@@ -76,7 +71,6 @@ def test_has_nullary_operator(name):
         elif key in NULLARY_OPERATORS:
             assert val is False
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3")
 @pytest.mark.skip(reason="not implemented")
 def test_has_floordiv():
     obj = m.has_floordiv()
@@ -84,7 +78,6 @@ def test_has_floordiv():
     assert hasattr(obj, "__floordiv__")
     assert obj // 5 == 8
 
-@pytest.mark.skipif(sys.version_info < (3,), reason="requires python 3")
 @pytest.mark.skip(reason="not implemented")
 def test_has_friend_floordiv():
     obj = m.has_friend_floordiv()

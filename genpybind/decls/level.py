@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from .declarations import Declaration
 
 if False:  # pylint: disable=using-constant-test
