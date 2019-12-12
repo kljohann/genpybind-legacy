@@ -41,10 +41,11 @@ def test_has_no_binary_operator(variant, name):
         # TODO: Python 2 always synthesizes default versions
         return
     name = pythonic_name(name)
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="|".join([
+            r"not supported between instances of",
+            r"unsupported operand type\(s\)",
+    ])):
         getattr(operator, name)(obj, obj)
-    assert ("not supported between instances of" in str(excinfo.value) or
-            "unsupported operand type(s)" in str(excinfo.value))
 
 UNARY_OPERATORS = "iadd isub imul idiv imod ilshift irshift iand ior ixor".split()
 

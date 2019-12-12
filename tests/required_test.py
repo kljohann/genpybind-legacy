@@ -9,6 +9,5 @@ def test_nullptr():
 def test_required():
     obj = m.Parent()
     obj.required(m.Child())
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.required(None)
-    assert "incompatible function arguments" in str(excinfo.value)

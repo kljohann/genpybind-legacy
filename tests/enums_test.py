@@ -10,9 +10,8 @@ def test_unscoped_enum():
     assert sorted(m.State.__members__.keys()) == ["MAYBE", "NO", "YES"]
     assert int(m.YES) == 0 and m.YES == 0
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="unsupported operand type"):
         m.YES | m.NO # pylint: disable=pointless-statement
-    assert "unsupported operand type" in str(excinfo.value)
 
 def test_arithmetic_enum():
     assert int(m.Access.Read | m.Access.Write | m.Access.Execute) == 7
@@ -33,29 +32,22 @@ def test_scoped_enum():
     with pytest.raises(TypeError):
         m.test_enum(2)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.Color.blue == 0 # pylint: disable=pointless-statement
-    assert "incompatible function arguments" in str(excinfo.value)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         0 == m.Color.blue # pylint: disable=pointless-statement
-    assert "incompatible function arguments" in str(excinfo.value)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.Color.blue == "uiae" # pylint: disable=pointless-statement
-    assert "incompatible function arguments" in str(excinfo.value)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         "uiae" == m.Color.blue # pylint: disable=pointless-statement
-    assert "incompatible function arguments" in str(excinfo.value)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="not supported between instances of"):
         m.Color.blue < 0 # pylint: disable=pointless-statement
-    assert "not supported between instances of" in str(excinfo.value)
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="not supported between instances of"):
         0 < m.Color.blue # pylint: disable=pointless-statement
-    assert "not supported between instances of" in str(excinfo.value)
 
-    with pytest.raises(AttributeError):
-        m.blue # pylint: disable=pointless-statement
+    assert not hasattr(m, "blue")

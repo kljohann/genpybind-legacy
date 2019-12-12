@@ -6,15 +6,11 @@ def test_default():
     obj = m.Default()
     obj.some_function()
     obj.existing_field = False
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="'what' is read-only"):
         obj.what = 5
-    assert "'what' is read-only" in str(excinfo.value)
-    with pytest.raises(AttributeError) as excinfo:
-        obj.something = 12
-    assert "has no attribute 'something'" in str(excinfo.value)
-    with pytest.raises(AttributeError) as excinfo:
+    assert not hasattr(obj, "something")
+    with pytest.raises(AttributeError, match="'some_function' is read-only"):
         obj.some_function = 123
-    assert "'some_function' is read-only" in str(excinfo.value)
 
 def test_dynamic_attr():
     m.WithDynamic.what = 5

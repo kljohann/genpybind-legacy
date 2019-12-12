@@ -1,9 +1,7 @@
-import pytest
 import pysubmodules as m
 
 def test_submodule():
-    with pytest.raises(AttributeError):
-        m.X # pylint: disable=pointless-statement
+    assert not hasattr(m, "X")
     obj = m.submodule.X()
     assert "pysubmodules.submodule.X" in repr(obj)
 
@@ -20,7 +18,6 @@ def test_submodule_expose_as():
     assert "pysubmodules.expose_as.X" in repr(obj)
 
 def test_submodule_named_expose_as():
-    with pytest.raises(AttributeError):
-        m.ignored # pylint: disable=pointless-statement
+    assert not hasattr(m, "ignored")
     obj = m.xyz.X()
     assert "pysubmodules.xyz.X" in repr(obj)

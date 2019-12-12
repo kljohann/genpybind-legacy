@@ -12,30 +12,26 @@ def test_static_field(tagdecl):
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_static_const_field(tagdecl):
     assert tagdecl.static_const_field == 2
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         tagdecl.static_const_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_static_constexpr_field(tagdecl):
     assert tagdecl.static_constexpr_field == 3
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         tagdecl.static_constexpr_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_static_readonly_field(tagdecl):
     assert tagdecl.static_readonly_field == 4
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         tagdecl.static_readonly_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_static_writable_false_field(tagdecl):
     assert tagdecl.static_writable_false_field == 5
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         tagdecl.static_writable_false_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_field(tagdecl):
@@ -48,25 +44,22 @@ def test_field(tagdecl):
 def test_const_field(tagdecl):
     obj = tagdecl()
     assert obj.const_field == 2
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         obj.const_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_readonly_field(tagdecl):
     obj = tagdecl()
     assert obj.readonly_field == 4
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         obj.readonly_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 @pytest.mark.parametrize("tagdecl", TAGDECLS)
 def test_writable_false_field(tagdecl):
     obj = tagdecl()
     assert obj.writable_false_field == 5
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         obj.writable_false_field = -1
-    assert "can't set attribute" in str(excinfo.value)
 
 def test_global_variables():
     assert m.var == 1
@@ -76,6 +69,5 @@ def test_global_variables():
 
 @pytest.mark.xfail(reason="not enforceable")
 def test_global_const_variable_is_readonly():
-    with pytest.raises(AttributeError) as excinfo:
+    with pytest.raises(AttributeError, match="can't set attribute"):
         m.const_var = -1
-    assert "can't set attribute" in str(excinfo.value)

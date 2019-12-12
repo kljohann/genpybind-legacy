@@ -20,9 +20,8 @@ def test_cannot_be_set_to_wrong_type():
     x = m.Nested(value=3)
 
     obj = m.ReferenceMember(x)
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.nested = 123
-    assert "incompatible function arguments" in str(excinfo.value)
 
 
 def test_identity_of_reference_member():

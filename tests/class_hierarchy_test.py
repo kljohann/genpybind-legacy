@@ -16,9 +16,8 @@ def test_derived_public():
     assert isinstance(obj, m.Base)
     assert obj.from_base() is True
     assert obj.overloaded(5) is False
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.overloaded(5, 7)
-    assert "incompatible function arguments" in str(excinfo.value)
     assert obj.base_field == 0
     obj.base_field = 42
     assert obj.base_field == 42
@@ -27,16 +26,11 @@ def test_derived_private():
     obj = m.DerivedPrivate()
     assert isinstance(obj, m.DerivedPrivate)
     assert not isinstance(obj, m.Base)
-    with pytest.raises(AttributeError) as excinfo:
-        obj.from_base()
-    assert "has no attribute 'from_base'" in str(excinfo.value)
+    assert not hasattr(obj, "from_base")
     assert obj.overloaded(5) is False
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.overloaded(5, 7)
-    assert "incompatible function arguments" in str(excinfo.value)
-    with pytest.raises(AttributeError) as excinfo:
-        obj.base_field # pylint: disable=pointless-statement
-    assert "has no attribute 'base_field'" in str(excinfo.value)
+    assert not hasattr(obj, "base_field")
 
 def test_derived_inline():
     obj = m.DerivedInline()
@@ -44,9 +38,8 @@ def test_derived_inline():
     assert not isinstance(obj, m.Base)
     assert obj.from_base() is True
     assert obj.overloaded(5) is False
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.overloaded(5, 7)
-    assert "incompatible function arguments" in str(excinfo.value)
     assert obj.base_field == 0
     obj.base_field = 42
     assert obj.base_field == 42
