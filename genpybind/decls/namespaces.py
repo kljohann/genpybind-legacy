@@ -37,7 +37,12 @@ class Namespace(Level):
         # TODO: Consider applying this check for all namespaces here, this
         # would amount to not descending to the nested declarations at all.
         if self.module is not None and not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
+            # TODO: In principle it would be necessary to visit all
+            # declarations contained in this scope and add them to the
+            # blacklist in turn.  This is however only used to prevent an
+            # `opaque(false)` typedef from force-exposing a type that is
+            # already exposed in a different module.
             return
 
         for result in self.statements(parent, registry):

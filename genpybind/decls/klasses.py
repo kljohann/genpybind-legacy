@@ -176,7 +176,7 @@ class Klass(Level):
             return
 
         if not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
             # We need to give child declarations the chance to
             # blacklist cursors in the registry.
             for declaration in self.declarations():

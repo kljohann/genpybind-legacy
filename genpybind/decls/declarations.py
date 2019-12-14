@@ -168,7 +168,7 @@ class Declaration(object):
             return
 
         if not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
             return
 
         for result in self.statements(parent, registry):
