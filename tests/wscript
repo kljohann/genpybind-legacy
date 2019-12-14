@@ -113,10 +113,15 @@ def build(bld):
             pytest_path=[bld.path.get_bld()],
         )
 
+        run_after = []
+        if target.startswith("typedefs_across_modules"):
+            run_after.append("pytypedefs_definition")
+
         bld(
             pytest_source=test,
             features="pytest",
             use=pytarget,
+            run_after=run_after,
             ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
         )
 
