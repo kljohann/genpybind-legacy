@@ -7,6 +7,11 @@ def test_visible():
     obj = m.WithArgTrue()
     assert hasattr(obj, "with_arg_default")
     assert not hasattr(obj, "with_arg_false")
+    assert hasattr(obj, "with_arg_none")
+
+    obj = m.WithPythonSpelling()
+    assert not hasattr(obj, "with_arg_false")
+    assert hasattr(obj, "with_arg_none")
 
 @pytest.mark.parametrize("args", [(1, 1., 1.), (1., 1, 1.), (1., 1., 1)])
 def test_noconvert(args):
