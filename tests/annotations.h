@@ -2,6 +2,16 @@
 
 #include "genpybind.h"
 
+#ifdef __GENPYBIND__
+#define NO_MAGIC_PREFIX(...) __attribute__((annotate(#__VA_ARGS__)))
+#else
+#define NO_MAGIC_PREFIX(...)
+#endif // __GENPYBIND__
+
+struct NO_MAGIC_PREFIX("unrelated") Unrelated {};
+
+struct GENPYBIND() Empty {};
+
 struct GENPYBIND(visible) Plain {};
 
 struct GENPYBIND(visible()) AsCall {};

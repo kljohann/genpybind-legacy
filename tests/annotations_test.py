@@ -2,6 +2,8 @@ import pytest
 import pyannotations as m
 
 def test_visible():
+    assert not hasattr(m, "Unrelated")
+    assert not hasattr(m, "Empty")
     _obj = m.Plain()
     _obj = m.AsCall()
     obj = m.WithArgTrue()
