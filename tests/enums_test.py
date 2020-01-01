@@ -51,3 +51,8 @@ def test_scoped_enum():
         0 < m.Color.blue # pylint: disable=pointless-statement,misplaced-comparison-constant
 
     assert not hasattr(m, "blue")
+
+def test_export_values():
+    assert m.EnumerationFromScoped == m.ScopedButExportValues.EnumerationFromScoped
+    assert hasattr(m.UnscopedNoExport, "EnumerationNotExported")
+    assert not hasattr(m, "EnumeratinNotExported")
