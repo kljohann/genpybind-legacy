@@ -58,7 +58,7 @@ class Typedef(Declaration):
         decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
         decl = registry.get(decl_cursor, None)
 
-        if self.exposed_elsewhere(registry) or decl is not None:
+        if self.exposed_elsewhere(registry) or decl is not None or self.opaque is None:
             tpl = "genpybind_get_type_object<{}>()"
             obj = tpl.format(decl_cursor.type.fully_qualified_name)
             yield "{parent}.attr({name}) = {obj};".format(
@@ -66,10 +66,6 @@ class Typedef(Declaration):
                 name=quote(self.expose_as),
                 obj=obj,
             )
-            return
-
-        if self.opaque is None: # alias
-            yield "// FIXME: expose {}".format(self)
             return
 
         assert self.opaque is False
