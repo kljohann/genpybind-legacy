@@ -64,3 +64,8 @@ def strip_prefix(text, *prefixes):
         if text.startswith(prefix):
             text = text[len(prefix):]
     return text
+
+
+def drain_iterable(iterable):
+    # type: (Iterable[Any]) -> None
+    _ = list(iterable)
