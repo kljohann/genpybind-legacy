@@ -12,3 +12,7 @@ GENPYBIND_MANUAL({ parent->py::module::import("pytypedefs_definition"); })
 
 typedef definition::Definition alias GENPYBIND(visible);
 typedef definition::Typedef alias_for_typedef GENPYBIND(visible);
+typedef definition::Definition::NestedDefinition
+    alias_for_nested GENPYBIND(visible);
+typedef definition::Definition::NestedTypedef
+    alias_for_nested_typedef GENPYBIND(visible);
