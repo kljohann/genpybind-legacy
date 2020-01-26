@@ -1,0 +1,36 @@
+NAME
+    pyargument_names
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Something
+
+    class Something(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Something
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyargument_names.Something, first: int, second: bool, third: int=5) -> None
+     |
+     |      2. __init__(self: pyargument_names.Something, arg0: pyargument_names.Something) -> None
+     |
+     |  do_something(...)
+     |      do_something(self: pyargument_names.Something, some_argument: int, another_argument: float) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    some_function(...) method of builtins.PyCapsule instance
+        some_function(option: bool, something: bool=True) -> bool
+

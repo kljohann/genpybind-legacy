@@ -1,0 +1,75 @@
+NAME
+    pyreturn_value_policy
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Nested
+        Something
+
+    class Nested(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Nested
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyreturn_value_policy.Nested) -> None
+     |
+     |      2. __init__(self: pyreturn_value_policy.Nested, arg0: pyreturn_value_policy.Nested) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Something(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Something
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyreturn_value_policy.Something) -> None
+     |
+     |      2. __init__(self: pyreturn_value_policy.Something, arg0: pyreturn_value_policy.Something) -> None
+     |
+     |  cref(...)
+     |      cref(self: pyreturn_value_policy.Something) -> pyreturn_value_policy.Nested
+     |
+     |  cref_as_ref_int(...)
+     |      cref_as_ref_int(self: pyreturn_value_policy.Something) -> pyreturn_value_policy.Nested
+     |
+     |  ref(...)
+     |      ref(self: pyreturn_value_policy.Something) -> pyreturn_value_policy.Nested
+     |
+     |  ref_as_copy(...)
+     |      ref_as_copy(self: pyreturn_value_policy.Something) -> pyreturn_value_policy.Nested
+     |
+     |  ref_as_ref_int(...)
+     |      ref_as_ref_int(self: pyreturn_value_policy.Something) -> pyreturn_value_policy.Nested
+     |
+     |  value(...)
+     |      value(self: pyreturn_value_policy.Something) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

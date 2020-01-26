@@ -1,0 +1,84 @@
+NAME
+    pyannotations
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        AsCall
+        Plain
+        WithArgTrue
+
+    class AsCall(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      AsCall
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyannotations.AsCall) -> None
+     |
+     |      2. __init__(self: pyannotations.AsCall, arg0: pyannotations.AsCall) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Plain(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Plain
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyannotations.Plain) -> None
+     |
+     |      2. __init__(self: pyannotations.Plain, arg0: pyannotations.Plain) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class WithArgTrue(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      WithArgTrue
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyannotations.WithArgTrue) -> None
+     |
+     |      2. __init__(self: pyannotations.WithArgTrue, arg0: pyannotations.WithArgTrue) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  with_arg_default
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    multiple_mixed_args(...) method of builtins.PyCapsule instance
+        multiple_mixed_args(first: float, second: float, third: float) -> float
+

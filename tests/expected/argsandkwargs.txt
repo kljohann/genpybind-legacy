@@ -1,0 +1,24 @@
+NAME
+    pyargsandkwargs
+
+FUNCTIONS
+    test(...) method of builtins.PyCapsule instance
+        test(*args, **kwargs)
+        Overloaded function.
+
+        1. test(*args) -> int
+
+        2. test(**kwargs) -> int
+
+        3. test(i: int, f: float, *args) -> int
+
+        4. test(i: int, f: float, **kwargs) -> int
+
+        5. test(i: int, f: float, *args, **kwargs) -> int
+
+    test_args(...) method of builtins.PyCapsule instance
+        test_args(*args) -> int
+
+    test_kwargs(...) method of builtins.PyCapsule instance
+        test_kwargs(**kwargs) -> int
+

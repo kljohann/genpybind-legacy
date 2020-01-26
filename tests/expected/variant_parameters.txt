@@ -1,0 +1,7 @@
+NAME
+    pyvariant_parameters
+
+FUNCTIONS
+    foo(...) method of builtins.PyCapsule instance
+        foo(: Union[int, str]) -> Union[int, str]
+

@@ -1,0 +1,148 @@
+NAME
+    pyexpose_as
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Dummy
+        X
+        enum
+
+    class Dummy(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Dummy
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyexpose_as.Dummy) -> int
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyexpose_as.Dummy, value: int) -> None
+     |
+     |      2. __init__(self: pyexpose_as.Dummy, arg0: pyexpose_as.Dummy) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyexpose_as.Dummy) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  static(...) from builtins.PyCapsule
+     |      static() -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  constant_
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  member_
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  typedef = <class 'pyexpose_as.X'>
+     |
+     |
+     |  y_type_ = <class 'pyexpose_as.Dummy.y_type_'>
+     |
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class X(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      X
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyexpose_as.X) -> None
+     |
+     |      2. __init__(self: pyexpose_as.X, arg0: pyexpose_as.X) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  xfield
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class enum(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      enum
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyexpose_as.enum, arg0: pyexpose_as.enum) -> bool
+     |
+     |  __getstate__(...)
+     |      __getstate__(self: pyexpose_as.enum) -> tuple
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyexpose_as.enum) -> int
+     |
+     |  __init__(...)
+     |      __init__(self: pyexpose_as.enum, arg0: int) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyexpose_as.enum) -> int
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyexpose_as.enum, arg0: pyexpose_as.enum) -> bool
+     |
+     |  __repr__(...)
+     |      __repr__(self: pyexpose_as.enum) -> str
+     |
+     |  __setstate__(...)
+     |      __setstate__(self: pyexpose_as.enum, arg0: tuple) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  __members__
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  A = enum.A
+     |
+     |  B = enum.B
+     |
+     |  C = enum.C
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    free_function_(...) method of builtins.PyCapsule instance
+        free_function_() -> None
+
+DATA
+    x_instance = <pyexpose_as.X object>
+

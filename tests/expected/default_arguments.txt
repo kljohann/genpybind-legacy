@@ -1,0 +1,70 @@
+NAME
+    pydefault_arguments
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        X
+        Y
+
+    class X(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      X
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pydefault_arguments.X) -> None
+     |
+     |      2. __init__(self: pydefault_arguments.X, arg0: pydefault_arguments.X) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Y(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Y
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pydefault_arguments.Y) -> None
+     |
+     |      2. __init__(self: pydefault_arguments.Y, arg0: pydefault_arguments.Y) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  N
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    function_builtin(...) method of builtins.PyCapsule instance
+        function_builtin(x: int=5, arg: bool=True) -> None
+
+    function_class(...) method of builtins.PyCapsule instance
+        function_class(x: pydefault_arguments.X=<pydefault_arguments.X object>) -> None
+
+    function_class_in_namespace(...) method of builtins.PyCapsule instance
+        function_class_in_namespace(y: pydefault_arguments.Y=<pydefault_arguments.Y object>) -> None
+
+    function_class_outside_namespace(...) method of builtins.PyCapsule instance
+        function_class_outside_namespace(y: pydefault_arguments.Y=<pydefault_arguments.Y object>) -> None
+

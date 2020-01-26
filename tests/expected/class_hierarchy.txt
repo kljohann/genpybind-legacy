@@ -1,0 +1,219 @@
+NAME
+    pyclass_hierarchy
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Base
+            DerivedMultiple(Base, OtherBase)
+            DerivedPublic
+        DerivedInline
+        DerivedPrivate
+        OtherBase
+
+    class Base(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Base
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.Base) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.Base, arg0: pyclass_hierarchy.Base) -> None
+     |
+     |  from_base(...)
+     |      from_base(self: pyclass_hierarchy.Base) -> bool
+     |
+     |  overloaded(...)
+     |      overloaded(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. overloaded(self: pyclass_hierarchy.Base, value: int) -> bool
+     |
+     |      2. overloaded(self: pyclass_hierarchy.Base, first: int, second: int) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class DerivedInline(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DerivedInline
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.DerivedInline) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.DerivedInline, arg0: pyclass_hierarchy.DerivedInline) -> None
+     |
+     |  from_base(...)
+     |      from_base(self: pyclass_hierarchy.DerivedInline) -> bool
+     |
+     |  overloaded(...)
+     |      overloaded(self: pyclass_hierarchy.DerivedInline, value: int) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class DerivedMultiple(Base, OtherBase)
+     |  Method resolution order:
+     |      DerivedMultiple
+     |      Base
+     |      OtherBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.DerivedMultiple) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.DerivedMultiple, arg0: pyclass_hierarchy.DerivedMultiple) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Base:
+     |
+     |  from_base(...)
+     |      from_base(self: pyclass_hierarchy.Base) -> bool
+     |
+     |  overloaded(...)
+     |      overloaded(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. overloaded(self: pyclass_hierarchy.Base, value: int) -> bool
+     |
+     |      2. overloaded(self: pyclass_hierarchy.Base, first: int, second: int) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Base:
+     |
+     |  base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from OtherBase:
+     |
+     |  from_other_base(...)
+     |      from_other_base(self: pyclass_hierarchy.OtherBase) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class DerivedPrivate(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DerivedPrivate
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.DerivedPrivate) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.DerivedPrivate, arg0: pyclass_hierarchy.DerivedPrivate) -> None
+     |
+     |  overloaded(...)
+     |      overloaded(self: pyclass_hierarchy.DerivedPrivate, value: int) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class DerivedPublic(Base)
+     |  Method resolution order:
+     |      DerivedPublic
+     |      Base
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.DerivedPublic) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.DerivedPublic, arg0: pyclass_hierarchy.DerivedPublic) -> None
+     |
+     |  overloaded(...)
+     |      overloaded(self: pyclass_hierarchy.DerivedPublic, value: int) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from Base:
+     |
+     |  from_base(...)
+     |      from_base(self: pyclass_hierarchy.Base) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Base:
+     |
+     |  base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class OtherBase(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      OtherBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyclass_hierarchy.OtherBase) -> None
+     |
+     |      2. __init__(self: pyclass_hierarchy.OtherBase, arg0: pyclass_hierarchy.OtherBase) -> None
+     |
+     |  from_other_base(...)
+     |      from_other_base(self: pyclass_hierarchy.OtherBase) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

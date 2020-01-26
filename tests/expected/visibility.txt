@@ -1,0 +1,155 @@
+NAME
+    pyvisibility
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        SomeScope
+        UnannotatedInNamespaceInVisibleNamespace
+        UnannotatedInVisibleNamespace
+        Visible
+        VisibleDefaultInVisibleNamespace
+        VisibleInVisibleNamespace
+
+    class SomeScope(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      SomeScope
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.SomeScope) -> None
+     |
+     |      2. __init__(self: pyvisibility.SomeScope, arg0: pyvisibility.SomeScope) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  ExposedHere = <class 'pyvisibility.SomeScope.ExposedHere'>
+     |
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class UnannotatedInNamespaceInVisibleNamespace(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      UnannotatedInNamespaceInVisibleNamespace
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.UnannotatedInNamespaceInVisibleNamespace) -> None
+     |
+     |      2. __init__(self: pyvisibility.UnannotatedInNamespaceInVisibleNamespace, arg0: pyvisibility.UnannotatedInNamespaceInVisibleNamespace) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class UnannotatedInVisibleNamespace(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      UnannotatedInVisibleNamespace
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.UnannotatedInVisibleNamespace) -> None
+     |
+     |      2. __init__(self: pyvisibility.UnannotatedInVisibleNamespace, arg0: pyvisibility.UnannotatedInVisibleNamespace) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Visible(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Visible
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.Visible) -> None
+     |
+     |      2. __init__(self: pyvisibility.Visible, arg0: pyvisibility.Visible) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  public_constant
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class VisibleDefaultInVisibleNamespace(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      VisibleDefaultInVisibleNamespace
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.VisibleDefaultInVisibleNamespace) -> None
+     |
+     |      2. __init__(self: pyvisibility.VisibleDefaultInVisibleNamespace, arg0: pyvisibility.VisibleDefaultInVisibleNamespace) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class VisibleInVisibleNamespace(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      VisibleInVisibleNamespace
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyvisibility.VisibleInVisibleNamespace) -> None
+     |
+     |      2. __init__(self: pyvisibility.VisibleInVisibleNamespace, arg0: pyvisibility.VisibleInVisibleNamespace) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

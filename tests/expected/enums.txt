@@ -1,0 +1,270 @@
+NAME
+    pyenums
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Access
+        Color
+        State
+
+    class Access(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Access
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __and__(...)
+     |      __and__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __and__(self: pyenums.Access, arg0: int) -> int
+     |
+     |      2. __and__(self: pyenums.Access, arg0: pyenums.Access) -> int
+     |
+     |  __eq__(...)
+     |      __eq__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __eq__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __eq__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __ge__(...)
+     |      __ge__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __ge__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __ge__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __getstate__(...)
+     |      __getstate__(self: pyenums.Access) -> tuple
+     |
+     |  __gt__(...)
+     |      __gt__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __gt__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __gt__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyenums.Access) -> int
+     |
+     |  __init__(...)
+     |      __init__(self: pyenums.Access, arg0: int) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyenums.Access) -> int
+     |
+     |  __invert__(...)
+     |      __invert__(self: pyenums.Access) -> int
+     |
+     |  __le__(...)
+     |      __le__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __le__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __le__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __lt__(...)
+     |      __lt__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __lt__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __lt__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __ne__(...)
+     |      __ne__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __ne__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |
+     |      2. __ne__(self: pyenums.Access, arg0: int) -> bool
+     |
+     |  __or__(...)
+     |      __or__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __or__(self: pyenums.Access, arg0: int) -> int
+     |
+     |      2. __or__(self: pyenums.Access, arg0: pyenums.Access) -> int
+     |
+     |  __rand__(...)
+     |      __rand__(self: pyenums.Access, arg0: int) -> int
+     |
+     |  __repr__(...)
+     |      __repr__(self: pyenums.Access) -> str
+     |
+     |  __ror__(...)
+     |      __ror__(self: pyenums.Access, arg0: int) -> int
+     |
+     |  __rxor__(...)
+     |      __rxor__(self: pyenums.Access, arg0: int) -> int
+     |
+     |  __setstate__(...)
+     |      __setstate__(self: pyenums.Access, arg0: tuple) -> None
+     |
+     |  __xor__(...)
+     |      __xor__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __xor__(self: pyenums.Access, arg0: int) -> int
+     |
+     |      2. __xor__(self: pyenums.Access, arg0: pyenums.Access) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  __members__
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  Execute = Access.Execute
+     |
+     |  Read = Access.Read
+     |
+     |  Write = Access.Write
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Color(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Color
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyenums.Color, arg0: pyenums.Color) -> bool
+     |
+     |  __getstate__(...)
+     |      __getstate__(self: pyenums.Color) -> tuple
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyenums.Color) -> int
+     |
+     |  __init__(...)
+     |      __init__(self: pyenums.Color, arg0: int) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyenums.Color) -> int
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyenums.Color, arg0: pyenums.Color) -> bool
+     |
+     |  __repr__(...)
+     |      __repr__(self: pyenums.Color) -> str
+     |
+     |  __setstate__(...)
+     |      __setstate__(self: pyenums.Color, arg0: tuple) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  __members__
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  blue = Color.blue
+     |
+     |  green = Color.green
+     |
+     |  red = Color.red
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class State(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      State
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __eq__(self: pyenums.State, arg0: pyenums.State) -> bool
+     |
+     |      2. __eq__(self: pyenums.State, arg0: int) -> bool
+     |
+     |  __getstate__(...)
+     |      __getstate__(self: pyenums.State) -> tuple
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyenums.State) -> int
+     |
+     |  __init__(...)
+     |      __init__(self: pyenums.State, arg0: int) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyenums.State) -> int
+     |
+     |  __ne__(...)
+     |      __ne__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __ne__(self: pyenums.State, arg0: pyenums.State) -> bool
+     |
+     |      2. __ne__(self: pyenums.State, arg0: int) -> bool
+     |
+     |  __repr__(...)
+     |      __repr__(self: pyenums.State) -> str
+     |
+     |  __setstate__(...)
+     |      __setstate__(self: pyenums.State, arg0: tuple) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  __members__
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  MAYBE = State.MAYBE
+     |
+     |  NO = State.NO
+     |
+     |  YES = State.YES
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    test_enum(...) method of builtins.PyCapsule instance
+        test_enum(*args, **kwargs)
+        Overloaded function.
+
+        1. test_enum(state: pyenums.State) -> str
+
+        2. test_enum(color: pyenums.Color) -> str
+
+DATA
+    Execute = Access.Execute
+    MAYBE = State.MAYBE
+    NO = State.NO
+    Read = Access.Read
+    Write = Access.Write
+    YES = State.YES
+

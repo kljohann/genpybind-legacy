@@ -1,0 +1,127 @@
+NAME
+    pyhide_base
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Exposed
+            ExposedBase
+        HiddenExposedBase
+        HiddenUnexposedBase
+        PrivateBase
+
+    class Exposed(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Exposed
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyhide_base.Exposed) -> None
+     |
+     |      2. __init__(self: pyhide_base.Exposed, arg0: pyhide_base.Exposed) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  exposed_base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class ExposedBase(Exposed)
+     |  Method resolution order:
+     |      ExposedBase
+     |      Exposed
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyhide_base.ExposedBase) -> None
+     |
+     |      2. __init__(self: pyhide_base.ExposedBase, arg0: pyhide_base.ExposedBase) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from Exposed:
+     |
+     |  exposed_base_field
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class HiddenExposedBase(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      HiddenExposedBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyhide_base.HiddenExposedBase) -> None
+     |
+     |      2. __init__(self: pyhide_base.HiddenExposedBase, arg0: pyhide_base.HiddenExposedBase) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class HiddenUnexposedBase(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      HiddenUnexposedBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyhide_base.HiddenUnexposedBase) -> None
+     |
+     |      2. __init__(self: pyhide_base.HiddenUnexposedBase, arg0: pyhide_base.HiddenUnexposedBase) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class PrivateBase(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      PrivateBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(self: pyhide_base.PrivateBase) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
