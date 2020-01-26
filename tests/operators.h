@@ -99,7 +99,7 @@ struct GENPYBIND(visible) has_nullary {
 #undef TESTCASE_NULLARY_OPERATOR
 
 struct GENPYBIND(visible) has_floordiv {
-  // One should be able to explicitly provide a name for operators.
+  // TODO: One should be able to explicitly provide a name for operators.
   // At the moment this leads to the wrapping being handled by the regular
   // method wrapping code.
   GENPYBIND(expose_as(__floordiv__))
@@ -107,8 +107,8 @@ struct GENPYBIND(visible) has_floordiv {
 };
 
 struct GENPYBIND(visible) has_friend_floordiv {
-  // One should be able to explicitly provide a name for friend operators.
-  // At the moment this does not work yet.
+  // TODO: One should be able to explicitly provide a name for friend
+  // operators.  At the moment this does not work yet.
   GENPYBIND(expose_as(__floordiv__))
   friend has_friend_floordiv operator/(const has_friend_floordiv &,
                                        const has_friend_floordiv &) {

@@ -16,11 +16,6 @@ struct GENPYBIND(visible) Parent {
   Parent();
   ~Parent();
 
-  GENPYBIND(readonly)
-  static int created;
-  GENPYBIND(readonly)
-  static int destroyed;
-
   GENPYBIND(keep_alive(this, child))
   Parent(Child *child);
 
@@ -39,4 +34,9 @@ struct GENPYBIND(visible) Parent {
 
   GENPYBIND(keep_alive("return", this))
   Child *source_keep_alive_parent();
+
+  GENPYBIND(readonly)
+  static int created;
+  GENPYBIND(readonly)
+  static int destroyed;
 };
