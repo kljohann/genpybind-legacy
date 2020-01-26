@@ -15,6 +15,11 @@ def options(opt):
     opt.load("pytest")
 
     opt.add_option(
+        "--update-snapshots", action="store_true", default=False,
+        help="Update snapshot artifacts for record/replay tests",
+    )
+
+    opt.add_option(
         "--pybind11-includes", type="string",
         default=os.environ.get("PYBIND11_INCLUDES", ""), dest="pybind11_includes",
         help="""path to the directory where the pybind11 includes are,
@@ -86,6 +91,11 @@ def build(bld):
     report_dir = bld.path.get_bld().make_node("reports")
     junit_option = lambda node: "--junit-xml={}".format(
         report_dir.find_or_declare(node.change_ext(".xml").name))
+
+    check_snapshot_command = "${PYTHON} check-snapshot.py ${SRC}"
+    if bld.options.update_snapshots:
+        check_snapshot_command += " --update"
+
     for node in bld.path.ant_glob("*.cpp"):
         target = os.path.splitext(node.name)[0]
         pytarget = "py{0}".format(target)
@@ -123,6 +133,14 @@ def build(bld):
             use=pytarget,
             run_after=run_after,
             ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
+        )
+
+        bld(
+            pytest_source=header,
+            features="pytest",
+            use=pytarget,
+            run_after=run_after,
+            ut_str=check_snapshot_command,
         )
 
     for test in bld.path.ant_glob("*_unit_test.py"):
