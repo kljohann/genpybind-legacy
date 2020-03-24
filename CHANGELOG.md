@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.2.1
+
+### Enhancements
+
+* Snapshot tests based on pydoc have been added.  For each test target, a
+  text-only documentation is generated that contains a description of the
+  contained modules, classes, functions and methods, their default arguments and
+  docstrings etc.  This documentation is compared to artifact files stored in
+  [`tests/expected`](./tests/expected).
+
 ## 0.2.0
 
 Thanks to several contributors from the [Electronic Vision(s)
@@ -37,6 +47,7 @@ documentation and helping to test this release!
 * The test suite has been expanded.
 
 ### Fixes
+
 * Functions with `pybind::args` or `pybind::kwargs` parameters are now
   wrapped properly.
 * Sub-modules are no longer exposed when the enclosing namespace is not exposed.
