@@ -37,7 +37,11 @@ def describe(target_name: str) -> str:
 
 def artifact_path(target_name: str) -> Path:
     snapshots: Path = Path(__file__).resolve().parent / "expected"
-    return (snapshots / target_name).with_suffix(".txt")
+    path = (snapshots / target_name).with_suffix(".txt")
+    version_specific_path = path.with_suffix(".py{}.{}.txt".format(*sys.version_info))
+    if version_specific_path.is_file():
+        return version_specific_path
+    return path
 
 
 def load_expected_description(target_name: str) -> Optional[str]:
