@@ -92,6 +92,7 @@ def build(bld):
     junit_option = lambda node: "--junit-xml={}".format(
         report_dir.find_or_declare(node.change_ext(".xml").name))
 
+    bld.options.clear_failed_tests = True  # always rebuild failed tests
     check_snapshot_command = "${PYTHON} check-snapshot.py ${SRC}"
     if bld.options.update_snapshots:
         check_snapshot_command += " --update"
@@ -135,8 +136,15 @@ def build(bld):
             ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
         )
 
+        # There can optionally be a version-dependent snapshot file.
+        snapshot = node.parent.find_node(
+            "expected/{0}.py{1}.txt".format(target, bld.env.PYTHON_VERSION)
+        ) or node.parent.make_node("expected/{0}.txt".format(target))
+        if not snapshot.exists():
+            snapshot.write("")
+
         bld(
-            pytest_source=header,
+            pytest_source=[header, snapshot],
             features="pytest",
             use=pytarget,
             run_after=run_after,

@@ -35,32 +35,23 @@ def describe(target_name: str) -> str:
     return StablePlainTextDoc().document(module)
 
 
-def artifact_path(target_name: str) -> Path:
-    snapshots: Path = Path(__file__).resolve().parent / "expected"
-    path = (snapshots / target_name).with_suffix(".txt")
-    version_specific_path = path.with_suffix(".py{}.{}.txt".format(*sys.version_info))
-    if version_specific_path.is_file():
-        return version_specific_path
-    return path
-
-
-def load_expected_description(target_name: str) -> Optional[str]:
-    path = artifact_path(target_name)
-    if not path.is_file():
+def load_expected_description(artifact_path: Path) -> Optional[str]:
+    if not artifact_path.is_file():
         return None
-    return path.read_text(encoding="utf-8")
+    return artifact_path.read_text(encoding="utf-8")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("header", type=Path)
+    parser.add_argument("artifact", type=Path)
     # TODO: --interactive with os.isatty?
     parser.add_argument("--update", action="store_true")
     args = parser.parse_args()
 
-    path = artifact_path(args.header.stem)
+    artifact_path = args.artifact
 
-    expected = load_expected_description(args.header.stem) or ""
+    expected = load_expected_description(artifact_path) or ""
     try:
         actual = describe(args.header.stem)
     except ModuleNotFoundError as error:
@@ -69,14 +60,14 @@ def main() -> None:
         difflib.unified_diff(
             expected.splitlines(keepends=True),
             actual.splitlines(keepends=True),
-            fromfile="expected/" + path.name,
-            tofile="actual/" + path.name,
+            fromfile="expected/" + artifact_path.name,
+            tofile="actual/" + artifact_path.name,
         )
     )
     sys.stderr.writelines(diff)
 
     if args.update:
-        path.write_text(actual, encoding="utf-8")
+        artifact_path.write_text(actual, encoding="utf-8")
         print("Updated snapshot.")
     elif diff:
         print("Generated output does not match snapshot.")
