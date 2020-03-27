@@ -66,12 +66,15 @@ def main() -> None:
     )
     sys.stderr.writelines(diff)
 
-    if args.update:
-        artifact_path.write_text(actual, encoding="utf-8")
-        print("Updated snapshot.")
-    elif diff:
-        print("Generated output does not match snapshot.")
-        sys.exit(1)
+    if diff:
+        if args.update:
+            artifact_path.write_text(actual, encoding="utf-8")
+            print("snapshot updated")
+        else:
+            print("snapshot does not match")
+            sys.exit(1)
+    else:
+        print("snapshot matches")
 
 
 if __name__ == "__main__":
