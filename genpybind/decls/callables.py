@@ -102,7 +102,7 @@ class Callable(Declaration):
 
         return "typedef {ret} ({namespace}*{name}) ({arguments}){qualifiers};".format(
             name=name,
-            ret=self.cursor.type.get_result().fully_qualified_name,
+            ret=self.cursor.type.get_result().get_canonical().fully_qualified_name,
             arguments=join_arguments(self.argument_types()),
             namespace=namespace,
             qualifiers=" " + (" ".join(qualifiers)) if qualifiers else "",
