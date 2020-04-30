@@ -1,10 +1,7 @@
-import pytest
 import pyhide_base as m
 
 def test_unexposed():
-    with pytest.raises(AttributeError) as excinfo:
-        m.Unexposed # pylint: disable=pointless-statement
-    assert "has no attribute" in str(excinfo.value)
+    assert not hasattr(m, "Unexposed")
 
 def test_exposed():
     obj = m.Exposed()
@@ -17,13 +14,9 @@ def test_exposed_base():
 
 def test_hidden_unexposed_base():
     obj = m.HiddenUnexposedBase()
-    with pytest.raises(AttributeError) as excinfo:
-        obj.unexposed_base_field # pylint: disable=pointless-statement
-    assert "has no attribute" in str(excinfo.value)
+    assert not hasattr(obj, "unexposed_base_field")
 
 def test_hidden_exposed_base():
     obj = m.HiddenExposedBase()
-    with pytest.raises(AttributeError) as excinfo:
-        obj.exposed_base_field # pylint: disable=pointless-statement
-    assert "has no attribute" in str(excinfo.value)
+    assert not hasattr(obj, "exposed_base_field")
     assert not isinstance(obj, m.Exposed)

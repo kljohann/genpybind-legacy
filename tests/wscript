@@ -15,6 +15,11 @@ def options(opt):
     opt.load("pytest")
 
     opt.add_option(
+        "--update-snapshots", action="store_true", default=False,
+        help="Update snapshot artifacts for record/replay tests",
+    )
+
+    opt.add_option(
         "--pybind11-includes", type="string",
         default=os.environ.get("PYBIND11_INCLUDES", ""), dest="pybind11_includes",
         help="""path to the directory where the pybind11 includes are,
@@ -86,6 +91,12 @@ def build(bld):
     report_dir = bld.path.get_bld().make_node("reports")
     junit_option = lambda node: "--junit-xml={}".format(
         report_dir.find_or_declare(node.change_ext(".xml").name))
+
+    bld.options.clear_failed_tests = True  # always rebuild failed tests
+    check_snapshot_command = "${PYTHON} check-snapshot.py ${SRC}"
+    if bld.options.update_snapshots:
+        check_snapshot_command += " --update"
+
     for node in bld.path.ant_glob("*.cpp"):
         target = os.path.splitext(node.name)[0]
         pytarget = "py{0}".format(target)
@@ -96,6 +107,7 @@ def build(bld):
             target=target,
             source=node,
             features="cxx cxxshlib pyembed",
+            use=["PYBIND11"],
             export_includes=".",
             cxxflags="-std=c++17",
             install_path=None,
@@ -104,7 +116,7 @@ def build(bld):
         bld(
             target=pytarget,
             source=header,
-            features="genpybind cxx cxxshlib pyext",
+            features="genpybind cxx cxxshlib pyext pyembed",
             genpybind_tags=["all_tests", target],
             use=[target, "PYBIND11"],
             install_path=None,
@@ -112,11 +124,31 @@ def build(bld):
             pytest_path=[bld.path.get_bld()],
         )
 
+        run_after = []
+        if target.startswith("typedefs_across_modules"):
+            run_after.append("pytypedefs_definition")
+
         bld(
             pytest_source=test,
             features="pytest",
             use=pytarget,
+            run_after=run_after,
             ut_str="${PYTEST} -q ${SRC} " + junit_option(test),
+        )
+
+        # There can optionally be a version-dependent snapshot file.
+        snapshot = node.parent.find_node(
+            "expected/{0}.py{1}.txt".format(target, bld.env.PYTHON_VERSION)
+        ) or node.parent.make_node("expected/{0}.txt".format(target))
+        if not snapshot.exists():
+            snapshot.write("")
+
+        bld(
+            pytest_source=[header, snapshot],
+            features="pytest",
+            use=pytarget,
+            run_after=run_after,
+            ut_str=check_snapshot_command,
         )
 
     for test in bld.path.ant_glob("*_unit_test.py"):

@@ -10,9 +10,8 @@ def test_unscoped_enum():
     assert sorted(m.State.__members__.keys()) == ["MAYBE", "NO", "YES"]
     assert int(m.YES) == 0 and m.YES == 0
 
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="unsupported operand type"):
         m.YES | m.NO # pylint: disable=pointless-statement
-    assert "unsupported operand type" in str(excinfo.value)
 
 def test_arithmetic_enum():
     assert int(m.Access.Read | m.Access.Write | m.Access.Execute) == 7
@@ -25,17 +24,35 @@ def test_arithmetic_enum():
     assert (state & m.Access.Execute) == 0
 
 def test_scoped_enum():
+    assert m.Color(2) == m.Color.blue
     assert m.test_enum(m.Color.red) == "red"
     assert m.test_enum(m.Color.green) == "green"
     assert m.test_enum(m.Color.blue) == "blue"
 
-    with pytest.raises(AttributeError):
-        m.blue # pylint: disable=pointless-statement
-
-@pytest.mark.skip
-def test_scoped_enum_disabled():
-    # FIXME (related to upstream issue #20): this is supposed to work but does not with pybind11 2.3
     with pytest.raises(TypeError):
-        m.Color.blue > 0 # pylint: disable=pointless-statement
+        m.test_enum(2)
 
+    with pytest.raises(TypeError, match="incompatible function arguments"):
+        m.Color.blue == 0 # pylint: disable=pointless-statement
 
+    with pytest.raises(TypeError, match="incompatible function arguments"):
+        0 == m.Color.blue # pylint: disable=pointless-statement,misplaced-comparison-constant
+
+    with pytest.raises(TypeError, match="incompatible function arguments"):
+        m.Color.blue == "uiae" # pylint: disable=pointless-statement
+
+    with pytest.raises(TypeError, match="incompatible function arguments"):
+        "uiae" == m.Color.blue # pylint: disable=pointless-statement,misplaced-comparison-constant
+
+    with pytest.raises(TypeError, match="not supported between instances of"):
+        m.Color.blue < 0 # pylint: disable=pointless-statement
+
+    with pytest.raises(TypeError, match="not supported between instances of"):
+        0 < m.Color.blue # pylint: disable=pointless-statement,misplaced-comparison-constant
+
+    assert not hasattr(m, "blue")
+
+def test_export_values():
+    assert m.EnumerationFromScoped == m.ScopedButExportValues.EnumerationFromScoped
+    assert hasattr(m.UnscopedNoExport, "EnumerationNotExported")
+    assert not hasattr(m, "EnumeratinNotExported")

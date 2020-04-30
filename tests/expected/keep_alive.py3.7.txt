@@ -1,0 +1,86 @@
+NAME
+    pykeep_alive
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Child
+        Parent
+
+    class Child(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Child
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pykeep_alive.Child) -> None
+     |
+     |      2. __init__(self: pykeep_alive.Child, arg0: pykeep_alive.Child) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  created
+     |
+     |  destroyed
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Parent(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Parent
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pykeep_alive.Parent) -> None
+     |
+     |      2. __init__(self: pykeep_alive.Parent, child: pykeep_alive.Child) -> None
+     |
+     |      3. __init__(self: pykeep_alive.Parent, arg0: pykeep_alive.Parent) -> None
+     |
+     |  sink(...)
+     |      sink(self: pykeep_alive.Parent, child: pykeep_alive.Child) -> None
+     |
+     |  sink_keep_alive(...)
+     |      sink_keep_alive(self: pykeep_alive.Parent, child: pykeep_alive.Child) -> None
+     |
+     |  sink_keep_alive_plain(...)
+     |      sink_keep_alive_plain(self: pykeep_alive.Parent, child: pykeep_alive.Child) -> None
+     |
+     |  source(...)
+     |      source(self: pykeep_alive.Parent) -> pykeep_alive.Child
+     |
+     |  source_keep_alive(...)
+     |      source_keep_alive(self: pykeep_alive.Parent) -> pykeep_alive.Child
+     |
+     |  source_keep_alive_parent(...)
+     |      source_keep_alive_parent(self: pykeep_alive.Parent) -> pykeep_alive.Child
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  created
+     |
+     |  destroyed
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

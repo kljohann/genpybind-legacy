@@ -1,0 +1,10 @@
+NAME
+    pysubmodules
+
+SUBMODULES
+    expose_as
+    named
+    submodule
+    submodule_
+    xyz
+

@@ -1,0 +1,62 @@
+NAME
+    pyinline_base_crtp
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Enum
+
+    class Enum(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Enum
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __ge__(...)
+     |      __ge__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __gt__(...)
+     |      __gt__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __hash__(...)
+     |      __hash__(self: pyinline_base_crtp.Enum) -> int
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyinline_base_crtp.Enum, val: int=0) -> None
+     |
+     |      2. __init__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> None
+     |
+     |  __int__(...)
+     |      __int__(self: pyinline_base_crtp.Enum) -> int
+     |
+     |  __le__(...)
+     |      __le__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __lt__(...)
+     |      __lt__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> bool
+     |
+     |  __repr__(...)
+     |      __repr__(self: pyinline_base_crtp.Enum) -> str
+     |
+     |  __str__(...)
+     |      __str__(self: pyinline_base_crtp.Enum) -> str
+     |
+     |  value(...)
+     |      value(self: pyinline_base_crtp.Enum) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

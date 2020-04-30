@@ -1,0 +1,2555 @@
+NAME
+    pyoperators
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        has_call
+        has_floordiv
+        has_friend_add
+        has_friend_and
+        has_friend_div
+        has_friend_eq
+        has_friend_floordiv
+        has_friend_ge
+        has_friend_gt
+        has_friend_le
+        has_friend_lshift
+        has_friend_lt
+        has_friend_mod
+        has_friend_mul
+        has_friend_ne
+        has_friend_or
+        has_friend_rshift
+        has_friend_sub
+        has_friend_xor
+        has_hidden_add
+        has_hidden_and
+        has_hidden_div
+        has_hidden_eq
+        has_hidden_friend_add
+        has_hidden_friend_and
+        has_hidden_friend_div
+        has_hidden_friend_eq
+        has_hidden_friend_ge
+        has_hidden_friend_gt
+        has_hidden_friend_le
+        has_hidden_friend_lshift
+        has_hidden_friend_lt
+        has_hidden_friend_mod
+        has_hidden_friend_mul
+        has_hidden_friend_ne
+        has_hidden_friend_or
+        has_hidden_friend_rshift
+        has_hidden_friend_sub
+        has_hidden_friend_xor
+        has_hidden_ge
+        has_hidden_gt
+        has_hidden_le
+        has_hidden_lshift
+        has_hidden_lt
+        has_hidden_mod
+        has_hidden_mul
+        has_hidden_ne
+        has_hidden_or
+        has_hidden_rshift
+        has_hidden_sub
+        has_hidden_xor
+        has_member_add
+        has_member_and
+        has_member_div
+        has_member_eq
+        has_member_ge
+        has_member_gt
+        has_member_le
+        has_member_lshift
+        has_member_lt
+        has_member_mod
+        has_member_mul
+        has_member_ne
+        has_member_or
+        has_member_rshift
+        has_member_sub
+        has_member_xor
+        has_non_const_member_add
+        has_non_const_member_and
+        has_non_const_member_div
+        has_non_const_member_eq
+        has_non_const_member_ge
+        has_non_const_member_gt
+        has_non_const_member_le
+        has_non_const_member_lshift
+        has_non_const_member_lt
+        has_non_const_member_mod
+        has_non_const_member_mul
+        has_non_const_member_ne
+        has_non_const_member_or
+        has_non_const_member_rshift
+        has_non_const_member_sub
+        has_non_const_member_xor
+        has_nullary
+        has_private_add
+        has_private_and
+        has_private_div
+        has_private_eq
+        has_private_ge
+        has_private_gt
+        has_private_le
+        has_private_lshift
+        has_private_lt
+        has_private_mod
+        has_private_mul
+        has_private_ne
+        has_private_or
+        has_private_rshift
+        has_private_sub
+        has_private_xor
+        has_unary
+
+    class has_call(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_call
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __call__(...)
+     |      __call__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __call__(self: pyoperators.has_call, value: int) -> int
+     |
+     |      2. __call__(self: pyoperators.has_call, first: int, second: int) -> int
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_call) -> None
+     |
+     |      2. __init__(self: pyoperators.has_call, arg0: pyoperators.has_call) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_floordiv(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_floordiv
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __floordiv__(...)
+     |      __floordiv__(self: pyoperators.has_floordiv, div: int) -> int
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_floordiv) -> None
+     |
+     |      2. __init__(self: pyoperators.has_floordiv, arg0: pyoperators.has_floordiv) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __add__(...)
+     |      __add__(self: pyoperators.has_friend_add, arg0: pyoperators.has_friend_add) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_add, arg0: pyoperators.has_friend_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __and__(...)
+     |      __and__(self: pyoperators.has_friend_and, arg0: pyoperators.has_friend_and) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_and, arg0: pyoperators.has_friend_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_div, arg0: pyoperators.has_friend_div) -> None
+     |
+     |  __truediv__(...)
+     |      __truediv__(self: pyoperators.has_friend_div, arg0: pyoperators.has_friend_div) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyoperators.has_friend_eq, arg0: pyoperators.has_friend_eq) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_eq, arg0: pyoperators.has_friend_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_floordiv(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_floordiv
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_floordiv) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_floordiv, arg0: pyoperators.has_friend_floordiv) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __ge__(...)
+     |      __ge__(self: pyoperators.has_friend_ge, arg0: pyoperators.has_friend_ge) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_ge, arg0: pyoperators.has_friend_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __gt__(...)
+     |      __gt__(self: pyoperators.has_friend_gt, arg0: pyoperators.has_friend_gt) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_gt, arg0: pyoperators.has_friend_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_le, arg0: pyoperators.has_friend_le) -> None
+     |
+     |  __le__(...)
+     |      __le__(self: pyoperators.has_friend_le, arg0: pyoperators.has_friend_le) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_lshift, arg0: pyoperators.has_friend_lshift) -> None
+     |
+     |  __lshift__(...)
+     |      __lshift__(self: pyoperators.has_friend_lshift, arg0: pyoperators.has_friend_lshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_lt, arg0: pyoperators.has_friend_lt) -> None
+     |
+     |  __lt__(...)
+     |      __lt__(self: pyoperators.has_friend_lt, arg0: pyoperators.has_friend_lt) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_mod, arg0: pyoperators.has_friend_mod) -> None
+     |
+     |  __mod__(...)
+     |      __mod__(self: pyoperators.has_friend_mod, arg0: pyoperators.has_friend_mod) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_mul, arg0: pyoperators.has_friend_mul) -> None
+     |
+     |  __mul__(...)
+     |      __mul__(self: pyoperators.has_friend_mul, arg0: pyoperators.has_friend_mul) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_ne, arg0: pyoperators.has_friend_ne) -> None
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyoperators.has_friend_ne, arg0: pyoperators.has_friend_ne) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_or, arg0: pyoperators.has_friend_or) -> None
+     |
+     |  __or__(...)
+     |      __or__(self: pyoperators.has_friend_or, arg0: pyoperators.has_friend_or) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_rshift, arg0: pyoperators.has_friend_rshift) -> None
+     |
+     |  __rshift__(...)
+     |      __rshift__(self: pyoperators.has_friend_rshift, arg0: pyoperators.has_friend_rshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_sub, arg0: pyoperators.has_friend_sub) -> None
+     |
+     |  __sub__(...)
+     |      __sub__(self: pyoperators.has_friend_sub, arg0: pyoperators.has_friend_sub) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_friend_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_friend_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_friend_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_friend_xor, arg0: pyoperators.has_friend_xor) -> None
+     |
+     |  __xor__(...)
+     |      __xor__(self: pyoperators.has_friend_xor, arg0: pyoperators.has_friend_xor) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_add, arg0: pyoperators.has_hidden_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_and, arg0: pyoperators.has_hidden_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_div, arg0: pyoperators.has_hidden_div) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_eq, arg0: pyoperators.has_hidden_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_add, arg0: pyoperators.has_hidden_friend_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_and, arg0: pyoperators.has_hidden_friend_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_div, arg0: pyoperators.has_hidden_friend_div) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_eq, arg0: pyoperators.has_hidden_friend_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_ge, arg0: pyoperators.has_hidden_friend_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_gt, arg0: pyoperators.has_hidden_friend_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_le, arg0: pyoperators.has_hidden_friend_le) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_lshift, arg0: pyoperators.has_hidden_friend_lshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_lt, arg0: pyoperators.has_hidden_friend_lt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_mod, arg0: pyoperators.has_hidden_friend_mod) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_mul, arg0: pyoperators.has_hidden_friend_mul) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_ne, arg0: pyoperators.has_hidden_friend_ne) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_or, arg0: pyoperators.has_hidden_friend_or) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_rshift, arg0: pyoperators.has_hidden_friend_rshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_sub, arg0: pyoperators.has_hidden_friend_sub) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_friend_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_friend_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_friend_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_friend_xor, arg0: pyoperators.has_hidden_friend_xor) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_ge, arg0: pyoperators.has_hidden_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_gt, arg0: pyoperators.has_hidden_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_le, arg0: pyoperators.has_hidden_le) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_lshift, arg0: pyoperators.has_hidden_lshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_lt, arg0: pyoperators.has_hidden_lt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_mod, arg0: pyoperators.has_hidden_mod) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_mul, arg0: pyoperators.has_hidden_mul) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_ne, arg0: pyoperators.has_hidden_ne) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_or, arg0: pyoperators.has_hidden_or) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_rshift, arg0: pyoperators.has_hidden_rshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_sub, arg0: pyoperators.has_hidden_sub) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_hidden_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_hidden_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_hidden_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_hidden_xor, arg0: pyoperators.has_hidden_xor) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __add__(...)
+     |      __add__(self: pyoperators.has_member_add, arg0: pyoperators.has_member_add) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_add, arg0: pyoperators.has_member_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __and__(...)
+     |      __and__(self: pyoperators.has_member_and, arg0: pyoperators.has_member_and) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_and, arg0: pyoperators.has_member_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_div, arg0: pyoperators.has_member_div) -> None
+     |
+     |  __truediv__(...)
+     |      __truediv__(self: pyoperators.has_member_div, arg0: pyoperators.has_member_div) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyoperators.has_member_eq, arg0: pyoperators.has_member_eq) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_eq, arg0: pyoperators.has_member_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __ge__(...)
+     |      __ge__(self: pyoperators.has_member_ge, arg0: pyoperators.has_member_ge) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_ge, arg0: pyoperators.has_member_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __gt__(...)
+     |      __gt__(self: pyoperators.has_member_gt, arg0: pyoperators.has_member_gt) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_gt, arg0: pyoperators.has_member_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_le, arg0: pyoperators.has_member_le) -> None
+     |
+     |  __le__(...)
+     |      __le__(self: pyoperators.has_member_le, arg0: pyoperators.has_member_le) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_lshift, arg0: pyoperators.has_member_lshift) -> None
+     |
+     |  __lshift__(...)
+     |      __lshift__(self: pyoperators.has_member_lshift, arg0: pyoperators.has_member_lshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_lt, arg0: pyoperators.has_member_lt) -> None
+     |
+     |  __lt__(...)
+     |      __lt__(self: pyoperators.has_member_lt, arg0: pyoperators.has_member_lt) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_mod, arg0: pyoperators.has_member_mod) -> None
+     |
+     |  __mod__(...)
+     |      __mod__(self: pyoperators.has_member_mod, arg0: pyoperators.has_member_mod) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_mul, arg0: pyoperators.has_member_mul) -> None
+     |
+     |  __mul__(...)
+     |      __mul__(self: pyoperators.has_member_mul, arg0: pyoperators.has_member_mul) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_ne, arg0: pyoperators.has_member_ne) -> None
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyoperators.has_member_ne, arg0: pyoperators.has_member_ne) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_or, arg0: pyoperators.has_member_or) -> None
+     |
+     |  __or__(...)
+     |      __or__(self: pyoperators.has_member_or, arg0: pyoperators.has_member_or) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_rshift, arg0: pyoperators.has_member_rshift) -> None
+     |
+     |  __rshift__(...)
+     |      __rshift__(self: pyoperators.has_member_rshift, arg0: pyoperators.has_member_rshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_sub, arg0: pyoperators.has_member_sub) -> None
+     |
+     |  __sub__(...)
+     |      __sub__(self: pyoperators.has_member_sub, arg0: pyoperators.has_member_sub) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_member_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_member_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_member_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_member_xor, arg0: pyoperators.has_member_xor) -> None
+     |
+     |  __xor__(...)
+     |      __xor__(self: pyoperators.has_member_xor, arg0: pyoperators.has_member_xor) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __add__(...)
+     |      __add__(self: pyoperators.has_non_const_member_add, arg0: pyoperators.has_non_const_member_add) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_add, arg0: pyoperators.has_non_const_member_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __and__(...)
+     |      __and__(self: pyoperators.has_non_const_member_and, arg0: pyoperators.has_non_const_member_and) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_and, arg0: pyoperators.has_non_const_member_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_div, arg0: pyoperators.has_non_const_member_div) -> None
+     |
+     |  __truediv__(...)
+     |      __truediv__(self: pyoperators.has_non_const_member_div, arg0: pyoperators.has_non_const_member_div) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pyoperators.has_non_const_member_eq, arg0: pyoperators.has_non_const_member_eq) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_eq, arg0: pyoperators.has_non_const_member_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __ge__(...)
+     |      __ge__(self: pyoperators.has_non_const_member_ge, arg0: pyoperators.has_non_const_member_ge) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_ge, arg0: pyoperators.has_non_const_member_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __gt__(...)
+     |      __gt__(self: pyoperators.has_non_const_member_gt, arg0: pyoperators.has_non_const_member_gt) -> bool
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_gt, arg0: pyoperators.has_non_const_member_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_le, arg0: pyoperators.has_non_const_member_le) -> None
+     |
+     |  __le__(...)
+     |      __le__(self: pyoperators.has_non_const_member_le, arg0: pyoperators.has_non_const_member_le) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_lshift, arg0: pyoperators.has_non_const_member_lshift) -> None
+     |
+     |  __lshift__(...)
+     |      __lshift__(self: pyoperators.has_non_const_member_lshift, arg0: pyoperators.has_non_const_member_lshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_lt, arg0: pyoperators.has_non_const_member_lt) -> None
+     |
+     |  __lt__(...)
+     |      __lt__(self: pyoperators.has_non_const_member_lt, arg0: pyoperators.has_non_const_member_lt) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_mod, arg0: pyoperators.has_non_const_member_mod) -> None
+     |
+     |  __mod__(...)
+     |      __mod__(self: pyoperators.has_non_const_member_mod, arg0: pyoperators.has_non_const_member_mod) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_mul, arg0: pyoperators.has_non_const_member_mul) -> None
+     |
+     |  __mul__(...)
+     |      __mul__(self: pyoperators.has_non_const_member_mul, arg0: pyoperators.has_non_const_member_mul) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_ne, arg0: pyoperators.has_non_const_member_ne) -> None
+     |
+     |  __ne__(...)
+     |      __ne__(self: pyoperators.has_non_const_member_ne, arg0: pyoperators.has_non_const_member_ne) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_or, arg0: pyoperators.has_non_const_member_or) -> None
+     |
+     |  __or__(...)
+     |      __or__(self: pyoperators.has_non_const_member_or, arg0: pyoperators.has_non_const_member_or) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_rshift, arg0: pyoperators.has_non_const_member_rshift) -> None
+     |
+     |  __rshift__(...)
+     |      __rshift__(self: pyoperators.has_non_const_member_rshift, arg0: pyoperators.has_non_const_member_rshift) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_sub, arg0: pyoperators.has_non_const_member_sub) -> None
+     |
+     |  __sub__(...)
+     |      __sub__(self: pyoperators.has_non_const_member_sub, arg0: pyoperators.has_non_const_member_sub) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_non_const_member_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_non_const_member_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_non_const_member_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_non_const_member_xor, arg0: pyoperators.has_non_const_member_xor) -> None
+     |
+     |  __xor__(...)
+     |      __xor__(self: pyoperators.has_non_const_member_xor, arg0: pyoperators.has_non_const_member_xor) -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_nullary(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_nullary
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_nullary) -> None
+     |
+     |      2. __init__(self: pyoperators.has_nullary, arg0: pyoperators.has_nullary) -> None
+     |
+     |  __invert__(...)
+     |      __invert__(self: pyoperators.has_nullary) -> pyoperators.has_nullary
+     |
+     |  __neg__(...)
+     |      __neg__(self: pyoperators.has_nullary) -> pyoperators.has_nullary
+     |
+     |  __pos__(...)
+     |      __pos__(self: pyoperators.has_nullary) -> pyoperators.has_nullary
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  invert
+     |
+     |  neg
+     |
+     |  pos
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_add(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_add
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_add) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_add, arg0: pyoperators.has_private_add) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_and(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_and
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_and) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_and, arg0: pyoperators.has_private_and) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_div(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_div
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_div) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_div, arg0: pyoperators.has_private_div) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_eq(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_eq
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_eq) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_eq, arg0: pyoperators.has_private_eq) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_ge(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_ge
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_ge) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_ge, arg0: pyoperators.has_private_ge) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_gt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_gt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_gt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_gt, arg0: pyoperators.has_private_gt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_le(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_le
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_le) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_le, arg0: pyoperators.has_private_le) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_lshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_lshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_lshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_lshift, arg0: pyoperators.has_private_lshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_lt(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_lt
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_lt) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_lt, arg0: pyoperators.has_private_lt) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_mod(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_mod
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_mod) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_mod, arg0: pyoperators.has_private_mod) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_mul(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_mul
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_mul) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_mul, arg0: pyoperators.has_private_mul) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_ne(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_ne
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_ne) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_ne, arg0: pyoperators.has_private_ne) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_or(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_or
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_or) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_or, arg0: pyoperators.has_private_or) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_rshift(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_rshift
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_rshift) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_rshift, arg0: pyoperators.has_private_rshift) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_sub(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_sub
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_sub) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_sub, arg0: pyoperators.has_private_sub) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_private_xor(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_private_xor
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_private_xor) -> None
+     |
+     |      2. __init__(self: pyoperators.has_private_xor, arg0: pyoperators.has_private_xor) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class has_unary(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      has_unary
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __iadd__(...)
+     |      __iadd__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __iand__(...)
+     |      __iand__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __ilshift__(...)
+     |      __ilshift__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __imod__(...)
+     |      __imod__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __imul__(...)
+     |      __imul__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyoperators.has_unary) -> None
+     |
+     |      2. __init__(self: pyoperators.has_unary, arg0: pyoperators.has_unary) -> None
+     |
+     |  __ior__(...)
+     |      __ior__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __irshift__(...)
+     |      __irshift__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __isub__(...)
+     |      __isub__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __itruediv__(...)
+     |      __itruediv__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  __ixor__(...)
+     |      __ixor__(self: pyoperators.has_unary, arg0: int) -> pyoperators.has_unary
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  iadd
+     |
+     |  iand
+     |
+     |  idiv
+     |
+     |  ilshift
+     |
+     |  imod
+     |
+     |  imul
+     |
+     |  ior
+     |
+     |  irshift
+     |
+     |  isub
+     |
+     |  ixor
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

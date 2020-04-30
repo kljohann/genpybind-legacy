@@ -1,0 +1,147 @@
+NAME
+    pytags_a
+
+SUBMODULES
+    NestedSubmoduleOnlyInAB
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Everywhere
+        EverywhereInTests
+        NamespacedEverywhere
+        NamespacedOnlyInAB
+        OnlyInA
+        OnlyInAB
+
+    class Everywhere(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Everywhere
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.Everywhere) -> None
+     |
+     |      2. __init__(self: pytags_a.Everywhere, arg0: pytags_a.Everywhere) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class EverywhereInTests(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      EverywhereInTests
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.EverywhereInTests) -> None
+     |
+     |      2. __init__(self: pytags_a.EverywhereInTests, arg0: pytags_a.EverywhereInTests) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class NamespacedEverywhere(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      NamespacedEverywhere
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.NamespacedEverywhere) -> None
+     |
+     |      2. __init__(self: pytags_a.NamespacedEverywhere, arg0: pytags_a.NamespacedEverywhere) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class NamespacedOnlyInAB(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      NamespacedOnlyInAB
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.NamespacedOnlyInAB) -> None
+     |
+     |      2. __init__(self: pytags_a.NamespacedOnlyInAB, arg0: pytags_a.NamespacedOnlyInAB) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class OnlyInA(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      OnlyInA
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.OnlyInA) -> None
+     |
+     |      2. __init__(self: pytags_a.OnlyInA, arg0: pytags_a.OnlyInA) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class OnlyInAB(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      OnlyInAB
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytags_a.OnlyInAB) -> None
+     |
+     |      2. __init__(self: pytags_a.OnlyInAB, arg0: pytags_a.OnlyInAB) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

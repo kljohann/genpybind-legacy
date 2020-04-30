@@ -1,15 +1,11 @@
 import pyholder_type as h
-import pytest
 
 
 def test_shared_ptr():
-    p = h.Parent()
-    c0 = p.get_use_count()
-    assert c0 == 1
-    sp1 = p.get_child()
-    c1 = p.get_use_count()
-    assert c1 == 2
-    assert sp1 == p.get_child()
-    del sp1
-    c2 = p.get_use_count()
-    assert c2 == 1
+    parent = h.Parent()
+    assert parent.get_use_count() == 1
+    shared_child1 = parent.get_child()
+    assert parent.get_use_count() == 2
+    assert shared_child1 == parent.get_child()
+    del shared_child1
+    assert parent.get_use_count() == 1

@@ -1,0 +1,24 @@
+NAME
+    pynoconvert
+
+FUNCTIONS
+    called_with_double(...) method of builtins.PyCapsule instance
+        called_with_double(*args, **kwargs)
+        Overloaded function.
+
+        1. called_with_double(value: float) -> bool
+
+        2. called_with_double(value: int) -> bool
+
+    convert(...) method of builtins.PyCapsule instance
+        convert(value: float) -> float
+
+    noconvert(...) method of builtins.PyCapsule instance
+        noconvert(value: float) -> float
+
+    noconvert_first(...) method of builtins.PyCapsule instance
+        noconvert_first(first: float, second: float) -> float
+
+    noconvert_numeric(...) method of builtins.PyCapsule instance
+        noconvert_numeric(first: float, second: float) -> float
+

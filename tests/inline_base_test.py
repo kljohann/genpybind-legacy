@@ -1,4 +1,3 @@
-import pytest
 import pyinline_base as m
 
 def test_inline_base():
@@ -54,12 +53,8 @@ def test_derived_indirect():
 def test_derived_indirect_hide():
     obj = m.DerivedHide()
     assert isinstance(obj, m.DerivedHide)
-    with pytest.raises(AttributeError) as excinfo:
-        obj.member_function # pylint: disable=pointless-statement
-    assert "" in str(excinfo.value)
-    with pytest.raises(AttributeError) as excinfo:
-        obj.from_indirect # pylint: disable=pointless-statement
-    assert "" in str(excinfo.value)
+    assert not hasattr(obj, "member_function")
+    assert not hasattr(obj, "from_indirect")
     classes = [c.__name__ for c in m.DerivedHide.mro()]
     assert "DerivedHide" in classes
     assert not "Base" in classes

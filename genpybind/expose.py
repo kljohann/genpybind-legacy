@@ -42,12 +42,20 @@ def expose_as(
         }}
     }};
 
+    // If `T` is registered with pybind11 the corresponding Python type is returned.
+    // Else a warning is emitted and None is returned.
     template <typename T>
-    py::object genpybind_get_type_object()
-    {{
-        auto tinfo = py::detail::get_type_info(
-            typeid(T), /*throw_if_missing=*/true);
-        return py::reinterpret_borrow<py::object>((PyObject*)tinfo->type);
+    py::object genpybind_get_type_object() {{
+        std::type_info const &tp = typeid(T);
+        auto tinfo = py::detail::get_type_info(tp, /*throw_if_missing=*/false);
+        if (!tinfo) {{
+            std::string name = tp.name();
+            py::detail::clean_type_id(name);
+            PyErr_WarnFormat(PyExc_Warning, /*stack_level=*/7,
+                             "Reference to unknown type '%s'", name.c_str());
+            return pybind11::none();
+        }}
+        return py::reinterpret_borrow<py::object>((PyObject *)tinfo->type);
     }}
 
     PYBIND11_MODULE({module}, {var}) {{

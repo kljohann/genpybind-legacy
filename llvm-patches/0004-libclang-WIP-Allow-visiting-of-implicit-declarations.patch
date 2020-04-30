@@ -1,0 +1,442 @@
+From d10d66b8e762c1dd1329d5920f9ef952cf4f6940 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <johann.klaehn@kip.uni-heidelberg.de>
+Date: Mon, 17 Jul 2017 12:25:49 +0200
+Subject: [PATCH 4/5] [libclang] WIP: Allow visiting of implicit declarations
+ and template instantiations
+
+---
+ clang/bindings/python/clang/cindex.py         |  45 +++++--
+ .../python/tests/cindex/test_cursor.py        |  33 ++++++
+ clang/include/clang-c/Index.h                 |  33 +++++-
+ clang/tools/libclang/CIndex.cpp               | 112 ++++++++++++++++--
+ clang/tools/libclang/CursorVisitor.h          |  12 +-
+ clang/tools/libclang/libclang.exports         |   2 +
+ 6 files changed, 220 insertions(+), 17 deletions(-)
+
+diff --git a/clang/bindings/python/clang/cindex.py b/clang/bindings/python/clang/cindex.py
+index 1589acc9e7e..b023be6cdc8 100644
+--- a/clang/bindings/python/clang/cindex.py
++++ b/clang/bindings/python/clang/cindex.py
+@@ -1426,6 +1426,15 @@ class Cursor(Structure):
+     """
+     _fields_ = [("_kind_id", c_int), ("xdata", c_int), ("data", c_void_p * 3)]
+ 
++    # Default behavior.
++    GET_CHILDREN_NONE = 0
++
++    # Used to indicate that implicit cursors should be visited.
++    GET_CHILDREN_WITH_IMPLICIT = 1
++
++    # Used to indicate that template instantiations should be visited.
++    GET_CHILDREN_WITH_TEMPLATE_INSTANTIATIONS = 2
++
+     @staticmethod
+     def from_location(tu, location):
+         # We store a reference to the TU in the instance so the TU won't get
+@@ -1515,6 +1524,10 @@ class Cursor(Structure):
+         """
+         return conf.lib.clang_EnumDecl_isScoped(self)
+ 
++    def is_implicit(self):
++        """Test whether the cursor refers to an implicit declaration."""
++        return conf.lib.clang_isImplicit(self)
++
+     def get_definition(self):
+         """
+         If the cursor is a reference to a declaration or a declaration of
+@@ -1831,8 +1844,12 @@ class Cursor(Structure):
+         """Returns the value of the indicated arg as an unsigned 64b integer."""
+         return conf.lib.clang_Cursor_getTemplateArgumentUnsignedValue(self, num)
+ 
+-    def get_children(self):
+-        """Return an iterator for accessing the children of this cursor."""
++    def get_children(self, with_implicit=False, with_template_instantiations=False):
++        """Return an iterator for accessing the children of this cursor.
++
++        By default, cursors representing implicit declarations or template instantiations
++        will be skipped.
++        """
+ 
+         # FIXME: Expose iteration from CIndex, PR6125.
+         def visitor(child, parent, children):
+@@ -1845,18 +1862,24 @@ class Cursor(Structure):
+             children.append(child)
+             return 1 # continue
+         children = []
+-        conf.lib.clang_visitChildren(self, callbacks['cursor_visit'](visitor),
+-            children)
++        dispatch = conf.lib.clang_visitChildren
++        options = Cursor.GET_CHILDREN_NONE
++        if with_implicit:
++            options |= Cursor.GET_CHILDREN_WITH_IMPLICIT
++        if with_template_instantiations:
++            options |= Cursor.GET_CHILDREN_WITH_TEMPLATE_INSTANTIATIONS
++        conf.lib.clang_visitChildrenWithOptions(
++            self, callbacks['cursor_visit'](visitor), children, options)
+         return iter(children)
+ 
+-    def walk_preorder(self):
++    def walk_preorder(self, **kwargs):
+         """Depth-first preorder walk over the cursor and its descendants.
+ 
+         Yields cursors.
+         """
+         yield self
+-        for child in self.get_children():
+-            for descendant in child.walk_preorder():
++        for child in self.get_children(**kwargs):
++            for descendant in child.walk_preorder(**kwargs):
+                 yield descendant
+ 
+     def get_tokens(self, options=0):
+@@ -3927,6 +3950,10 @@ functionList = [
+    [Type],
+    bool),
+ 
++  ("clang_isImplicit",
++   [Cursor],
++   bool),
++
+   ("clang_isInvalid",
+    [CursorKind],
+    bool),
+@@ -3990,6 +4017,10 @@ functionList = [
+    [Cursor, callbacks['cursor_visit'], py_object],
+    c_uint),
+ 
++  ("clang_visitChildrenWithOptions",
++   [Cursor, callbacks['cursor_visit'], py_object, c_uint],
++   c_uint),
++
+   ("clang_Cursor_getNumArguments",
+    [Cursor],
+    c_int),
+diff --git a/clang/bindings/python/tests/cindex/test_cursor.py b/clang/bindings/python/tests/cindex/test_cursor.py
+index 0965c1f4ae1..d061f37c25c 100644
+--- a/clang/bindings/python/tests/cindex/test_cursor.py
++++ b/clang/bindings/python/tests/cindex/test_cursor.py
+@@ -94,6 +94,39 @@ class TestCursor(unittest.TestCase):
+         self.assertEqual(tu_nodes[2].displayname, 'f0(int, int)')
+         self.assertEqual(tu_nodes[2].is_definition(), True)
+ 
++    def test_get_children_with_implicit():
++        tu = get_tu('struct X {}; X x;', lang='cpp')
++        cursor = get_cursor(tu, 'X')
++
++        children = list(cursor.get_children())
++        self.assertEqual(len(children), 0, [(c.kind, c.spelling) for c in children])
++
++        children = list(cursor.get_children(with_implicit=True))
++        self.assertNotEqual(len(children), 0)
++        for child in children:
++            self.assertTrue(child.is_implicit())
++            self.assertEqual(child.spelling, "X")
++            self.assertIn(child.kind, [CursorKind.CONSTRUCTOR, CursorKind.STRUCT_DECL])
++
++    def test_get_children_with_template_instantiations():
++        tu = get_tu(
++            'template <typename T> T frobnicate(T val);'
++            'extern template int frobnicate<int>(int);',
++            lang='cpp')
++        cursor = get_cursor(tu, 'frobnicate')
++        self.assertEqual(cursor.kind, CursorKind.FUNCTION_TEMPLATE)
++
++        for child in cursor.get_children():
++            # should not return an instantiation:
++            self.assertNotEqual(child.kind, CursorKind.FUNCTION_DECL)
++
++        for child in cursor.get_children(with_template_instantiations=True):
++            if child.kind == CursorKind.FUNCTION_DECL:
++                self.assertEqual(child.spelling, 'frobnicate')
++                break
++        else:
++            self.fail("Couldn't find template instantiation")
++
+     def test_references(self):
+         """Ensure that references to TranslationUnit are kept."""
+         tu = get_tu('int x;')
+diff --git a/clang/include/clang-c/Index.h b/clang/include/clang-c/Index.h
+index 84ed03b8920..57acbcba143 100644
+--- a/clang/include/clang-c/Index.h
++++ b/clang/include/clang-c/Index.h
+@@ -32,7 +32,7 @@
+  * compatible, thus CINDEX_VERSION_MAJOR is expected to remain stable.
+  */
+ #define CINDEX_VERSION_MAJOR 0
+-#define CINDEX_VERSION_MINOR 61
++#define CINDEX_VERSION_MINOR 62
+ 
+ #define CINDEX_VERSION_ENCODE(major, minor) ( \
+       ((major) * 10000)                       \
+@@ -2775,6 +2775,11 @@ CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
+  */
+ CINDEX_LINKAGE unsigned clang_isUnexposed(enum CXCursorKind);
+ 
++/***
++ * \brief Determine whether the given cursor represents an implicit declaration.
++ */
++CINDEX_LINKAGE unsigned clang_isImplicit(CXCursor);
++
+ /**
+  * Describe the linkage of the entity referred to by a cursor.
+  */
+@@ -4199,6 +4204,32 @@ CINDEX_LINKAGE unsigned clang_visitChildrenWithBlock(CXCursor parent,
+ #  endif
+ #endif
+ 
++typedef enum {
++  /**
++   * \brief Default behavior.
++   */
++  CXVisitChildren_None = 0x0,
++
++  /**
++   * \brief Used to indicate that implicit cursors should be visited.
++   */
++  CXVisitChildren_WithImplicit = 0x1,
++
++  /**
++   * \brief Used to indicate that template instantiations should be visited.
++   */
++  CXVisitChildren_WithTemplateInstantiations = 0x2
++} CXVisitChildren_Flags;
++
++/**
++ * \brief Visits the children of a cursor, allowing to pass extra options.
++ * Behaves identically to clang_visitChildren() in all other respects.
++ */
++CINDEX_LINKAGE unsigned clang_visitChildrenWithOptions(CXCursor parent,
++                                                       CXCursorVisitor visitor,
++                                                       CXClientData client_data,
++                                                       unsigned options);
++
+ /**
+  * @}
+  */
+diff --git a/clang/tools/libclang/CIndex.cpp b/clang/tools/libclang/CIndex.cpp
+index 3a283e76ed8..7ee6b704647 100644
+--- a/clang/tools/libclang/CIndex.cpp
++++ b/clang/tools/libclang/CIndex.cpp
+@@ -195,10 +195,11 @@ bool CursorVisitor::Visit(CXCursor Cursor, bool CheckedRegionOfInterest) {
+       assert(0 && "Invalid declaration cursor");
+       return true; // abort.
+     }
+-    
+-    // Ignore implicit declarations, unless it's an objc method because
+-    // currently we should report implicit methods for properties when indexing.
+-    if (D->isImplicit() && !isa<ObjCMethodDecl>(D))
++
++    // Unless instructed otherwise we ignore implicit declarations.
++    // ObjC methods are currently visited in any case, because implicit methods
++    // for properties should be reported when indexing.
++    if (!VisitImplicitDeclarations && D->isImplicit() && !isa<ObjCMethodDecl>(D))
+       return false;
+   }
+ 
+@@ -703,10 +704,13 @@ bool CursorVisitor::VisitTagDecl(TagDecl *D) {
+ 
+ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
+                                           ClassTemplateSpecializationDecl *D) {
+-  bool ShouldVisitBody = false;
++  bool ShouldVisitBody = VisitTemplateInstantiations;
+   switch (D->getSpecializationKind()) {
+-  case TSK_Undeclared:
+   case TSK_ImplicitInstantiation:
++    if (VisitTemplateInstantiations && VisitImplicitDeclarations) {
++      break;
++    }
++  case TSK_Undeclared:
+     // Nothing to visit
+     return false;
+       
+@@ -715,6 +719,7 @@ bool CursorVisitor::VisitClassTemplateSpecializationDecl(
+     break;
+       
+   case TSK_ExplicitSpecialization:
++    // Always visit body of explicit specializations
+     ShouldVisitBody = true;
+     break;
+   }
+@@ -930,7 +935,31 @@ bool CursorVisitor::VisitFunctionTemplateDecl(FunctionTemplateDecl *D) {
+     return true;
+   
+   auto* FD = D->getTemplatedDecl();
+-  return VisitAttributes(FD) || VisitFunctionDecl(FD);
++  if (VisitAttributes(FD) || VisitFunctionDecl(FD))
++    return true;
++
++  if (VisitTemplateInstantiations && D == D->getCanonicalDecl()) {
++    for (auto *FD : D->specializations()) {
++      for (auto *RD : FD->redecls()) {
++        switch (RD->getTemplateSpecializationKind()) {
++        case TSK_Undeclared:
++        case TSK_ImplicitInstantiation:
++        case TSK_ExplicitInstantiationDeclaration:
++        case TSK_ExplicitInstantiationDefinition: {
++          const Optional<bool> V = handleDeclForVisitation(RD);
++          if (!V.hasValue())
++            continue;
++          return V.getValue();
++        }
++
++        case TSK_ExplicitSpecialization:
++          break;
++        }
++      }
++    }
++  }
++
++  return false;
+ }
+ 
+ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+@@ -940,7 +969,40 @@ bool CursorVisitor::VisitClassTemplateDecl(ClassTemplateDecl *D) {
+     return true;
+   
+   auto* CD = D->getTemplatedDecl();
+-  return VisitAttributes(CD) || VisitCXXRecordDecl(CD);
++  if (VisitAttributes(CD) || VisitCXXRecordDecl(CD))
++    return true;
++
++  if (VisitTemplateInstantiations && D == D->getCanonicalDecl()) {
++    for (auto *SD : D->specializations()) {
++      for (auto *RD : SD->redecls()) {
++        // We don't want to visit injected-class-names in this traversal.
++        if (cast<CXXRecordDecl>(RD)->isInjectedClassName())
++          continue;
++
++        switch (
++            cast<ClassTemplateSpecializationDecl>(RD)->getSpecializationKind()) {
++          // Visit the implicit instantiations with the requested pattern.
++        case TSK_Undeclared:
++        case TSK_ImplicitInstantiation: {
++          const Optional<bool> V = handleDeclForVisitation(RD);
++          if (!V.hasValue())
++            continue;
++          return V.getValue();
++        }
++
++          // We don't need to do anything on an explicit instantiation
++          // or explicit specialization because there will be an explicit
++          // node for it elsewhere.
++        case TSK_ExplicitInstantiationDeclaration:
++        case TSK_ExplicitInstantiationDefinition:
++        case TSK_ExplicitSpecialization:
++          break;
++        }
++      }
++    }
++  }
++
++  return false;
+ }
+ 
+ bool CursorVisitor::VisitTemplateTemplateParmDecl(TemplateTemplateParmDecl *D) {
+@@ -4426,6 +4488,24 @@ unsigned clang_visitChildrenWithBlock(CXCursor parent,
+   return clang_visitChildren(parent, visitWithBlock, block);
+ }
+ 
++unsigned clang_visitChildrenWithOptions(CXCursor parent,
++                                        CXCursorVisitor visitor,
++                                        CXClientData client_data,
++                                        unsigned options) {
++  CursorVisitor CursorVis(
++      getCursorTU(parent), visitor, client_data,
++      /*VisitPreprocessorLast=*/false,
++      /*VisitIncludedPreprocessingEntries=*/false,
++      /*RegionOfInterest=*/SourceRange(),
++      /*VisitDeclsOnly=*/false,
++      /*PostChildrenVisitor=*/nullptr,
++      /*VisitImplicitDeclarations=*/(options & CXVisitChildren_WithImplicit),
++      /*VisitTemplateInstantiations=*/
++      (options & CXVisitChildren_WithTemplateInstantiations));
++
++  return CursorVis.VisitChildren(parent);
++}
++
+ static CXString getDeclSpelling(const Decl *D) {
+   if (!D)
+     return cxstring::createEmpty();
+@@ -5774,6 +5854,22 @@ unsigned clang_isUnexposed(enum CXCursorKind K) {
+   }
+ }
+ 
++unsigned clang_isImplicit(CXCursor Cursor) {
++  if (clang_isInvalid(Cursor.kind))
++    return false;
++
++  if (!clang_isDeclaration(Cursor.kind))
++    return false;
++
++  const Decl *D = getCursorDecl(Cursor);
++  if (!D) {
++    assert(0 && "Invalid declaration cursor");
++    return true; // abort.
++  }
++
++  return D->isImplicit();
++}
++
+ CXCursorKind clang_getCursorKind(CXCursor C) {
+   return C.kind;
+ }
+diff --git a/clang/tools/libclang/CursorVisitor.h b/clang/tools/libclang/CursorVisitor.h
+index b0afa5a0b59..94f4596d5fa 100644
+--- a/clang/tools/libclang/CursorVisitor.h
++++ b/clang/tools/libclang/CursorVisitor.h
+@@ -95,6 +95,12 @@ private:
+   /// record entries.
+   bool VisitDeclsOnly;
+ 
++  /// \brief Whether we should visit implicit declarations.
++  bool VisitImplicitDeclarations;
++
++  /// \brief Whether we should recurse into template instantiations.
++  bool VisitTemplateInstantiations;
++
+   // FIXME: Eventually remove.  This part of a hack to support proper
+   // iteration over all Decls contained lexically within an ObjC container.
+   DeclContext::decl_iterator *DI_current;
+@@ -146,7 +152,9 @@ public:
+                 bool VisitIncludedPreprocessingEntries = false,
+                 SourceRange RegionOfInterest = SourceRange(),
+                 bool VisitDeclsOnly = false,
+-                PostChildrenVisitorTy PostChildrenVisitor = nullptr)
++                PostChildrenVisitorTy PostChildrenVisitor = nullptr,
++                bool VisitImplicitDeclarations = false,
++                bool VisitTemplateInstantiations = false)
+     : TU(TU), AU(cxtu::getASTUnit(TU)),
+       Visitor(Visitor), PostChildrenVisitor(PostChildrenVisitor),
+       ClientData(ClientData),
+@@ -154,6 +162,8 @@ public:
+       VisitIncludedEntities(VisitIncludedPreprocessingEntries),
+       RegionOfInterest(RegionOfInterest),
+       VisitDeclsOnly(VisitDeclsOnly),
++      VisitImplicitDeclarations(VisitImplicitDeclarations),
++      VisitTemplateInstantiations(VisitTemplateInstantiations),
+       DI_current(nullptr), FileDI_current(nullptr)
+   {
+     Parent.kind = CXCursor_NoDeclFound;
+diff --git a/clang/tools/libclang/libclang.exports b/clang/tools/libclang/libclang.exports
+index 6af6c0ca3e8..d17eb83187d 100644
+--- a/clang/tools/libclang/libclang.exports
++++ b/clang/tools/libclang/libclang.exports
+@@ -313,6 +313,7 @@ clang_isInvalidDeclaration
+ clang_isExpression
+ clang_isFileMultipleIncludeGuarded
+ clang_isFunctionTypeVariadic
++clang_isImplicit
+ clang_isInvalid
+ clang_isPODType
+ clang_isPreprocessing
+@@ -354,6 +355,7 @@ clang_CompileCommand_getNumArgs
+ clang_CompileCommand_getArg
+ clang_visitChildren
+ clang_visitChildrenWithBlock
++clang_visitChildrenWithOptions
+ clang_ModuleMapDescriptor_create
+ clang_ModuleMapDescriptor_dispose
+ clang_ModuleMapDescriptor_setFrameworkModuleName
+-- 
+2.23.0
+

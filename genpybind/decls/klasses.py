@@ -5,7 +5,7 @@ from clang.cindex import AccessSpecifier, CursorKind
 
 from .. import cutils, utils
 from ..registry import RE_NON_IDENTIFIER
-from ..utils import join_arguments, quote
+from ..utils import drain_iterable, join_arguments, quote
 from .constructors import Constructor
 from .gather import gather_declarations
 from .level import Level
@@ -176,13 +176,13 @@ class Klass(Level):
             return
 
         if not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
             # We need to give child declarations the chance to
             # blacklist cursors in the registry.
             for declaration in self.declarations():
                 # As each child declaration has the same tags
                 # it is not allowed to be exposed, too.
-                declaration.expose(parent, registry)
+                drain_iterable(declaration.expose(parent, registry))
             return
 
         for result in self.statements(parent, registry):

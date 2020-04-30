@@ -142,7 +142,7 @@ class Callable(Declaration):
                 is_after_args_or_kwargs = True
                 continue
             if is_after_args_or_kwargs:
-                 raise RuntimeError("py::args / py::kwargs cannot be followed by other arguments")
+                raise RuntimeError("py::args / py::kwargs cannot be followed by other arguments")
             default_value = ""
             expr = next(cutils.children_by_kind(child, cutils.EXPRESSION_KINDS), None)
             if expr:

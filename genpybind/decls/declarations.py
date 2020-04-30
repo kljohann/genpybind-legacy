@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from clang import cindex
 from clang.cindex import AccessSpecifier
 
-from .. import cutils, utils
+from .. import cutils
 
 if False:  # pylint: disable=using-constant-test
     from clang.cindex import Cursor  # pylint: disable=unused-import
@@ -168,7 +168,7 @@ class Declaration(object):
             return
 
         if not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
             return
 
         for result in self.statements(parent, registry):
@@ -176,7 +176,7 @@ class Declaration(object):
 
     def expose_later(self, _toplevel, _parent, _registry):
         # type: (Text, Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
-        raise RuntimeError("expose_later called on {}", self.__class__.__name__)
+        raise RuntimeError("expose_later called on {}".format(self.__class__.__name__))
 
     def statements(self, _parent, _registry):
         # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]

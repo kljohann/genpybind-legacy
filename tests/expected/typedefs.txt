@@ -1,0 +1,236 @@
+NAME
+    pytypedefs
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        DefinedLaterTarget
+        Target
+        VisibleParent
+
+    class DefinedLaterTarget(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DefinedLaterTarget
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |      2. __init__(self: pytypedefs.DefinedLaterTarget, arg0: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Target(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Target
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.Target) -> None
+     |
+     |      2. __init__(self: pytypedefs.Target, arg0: pytypedefs.Target) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class VisibleParent(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      VisibleParent
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.VisibleParent) -> None
+     |
+     |      2. __init__(self: pytypedefs.VisibleParent, arg0: pytypedefs.VisibleParent) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  typedef_defined_later_target = <class 'pytypedefs.DefinedLaterTarget'>
+     |
+     |
+     |  typedef_explicitly_visible = <class 'pytypedefs.Target'>
+     |
+     |
+     |  typedef_implicitly_visible = <class 'pytypedefs.Target'>
+     |
+     |
+     |  typedef_unexposed_target = None
+     |
+     |  using_defined_later_target = <class 'pytypedefs.DefinedLaterTarget'>
+     |
+     |
+     |  using_explicitly_visible = <class 'pytypedefs.Target'>
+     |
+     |
+     |  using_implicitly_visible = <class 'pytypedefs.Target'>
+     |
+     |
+     |  using_unexposed_target = None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_defined_later_target = class DefinedLaterTarget(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DefinedLaterTarget
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |      2. __init__(self: pytypedefs.DefinedLaterTarget, arg0: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_explicitly_visible = class Target(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Target
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.Target) -> None
+     |
+     |      2. __init__(self: pytypedefs.Target, arg0: pytypedefs.Target) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_implicitly_visible = class Target(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Target
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.Target) -> None
+     |
+     |      2. __init__(self: pytypedefs.Target, arg0: pytypedefs.Target) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    using_defined_later_target = class DefinedLaterTarget(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DefinedLaterTarget
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |      2. __init__(self: pytypedefs.DefinedLaterTarget, arg0: pytypedefs.DefinedLaterTarget) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    using_explicitly_visible = class Target(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Target
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.Target) -> None
+     |
+     |      2. __init__(self: pytypedefs.Target, arg0: pytypedefs.Target) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    using_implicitly_visible = class Target(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Target
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pytypedefs.Target) -> None
+     |
+     |      2. __init__(self: pytypedefs.Target, arg0: pytypedefs.Target) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+DATA
+    typedef_unexposed_target = None
+    using_unexposed_target = None
+

@@ -65,13 +65,13 @@ class Annotations(collections.Sequence):
             if isinstance(elem, ast.Module):
                 for module_elem in elem.body:
                     recurse_ast(module_elem)
-                return
+                return None
             if isinstance(elem, ast.Expr):
                 return recurse_ast(elem.value)
             if isinstance(elem, ast.Tuple):
                 for tuple_elem in elem.elts:
                     recurse_ast(tuple_elem)
-                return
+                return None
             if isinstance(elem, ast.Name):
                 return append(elem.id, [])
             if isinstance(elem, ast.Call):

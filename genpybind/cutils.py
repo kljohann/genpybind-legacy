@@ -26,6 +26,7 @@ TYPE_KINDS = frozenset([
     CursorKind.CLASS_DECL,
     CursorKind.STRUCT_DECL,
     CursorKind.TYPEDEF_DECL,
+    CursorKind.TYPE_ALIAS_DECL,
 ])
 
 
@@ -60,7 +61,7 @@ def get_tokens_with_whitespace(cursor):
 
 def typedef_underlying_declaration(cursor):
     # type: (Cursor) -> Cursor
-    while cursor.kind == CursorKind.TYPEDEF_DECL:
+    while cursor.kind in [CursorKind.TYPEDEF_DECL, CursorKind.TYPE_ALIAS_DECL]:
         underlying_type = cursor.underlying_typedef_type
         cursor_ = underlying_type.get_declaration()
         if cursor_.kind == CursorKind.NO_DECL_FOUND:

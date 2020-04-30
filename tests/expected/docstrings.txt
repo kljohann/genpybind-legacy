@@ -1,0 +1,57 @@
+NAME
+    pydocstrings
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Something
+
+    class Something(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Something
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(...)
+     |      __eq__(self: pydocstrings.Something, arg0: pydocstrings.Something) -> bool
+     |
+     |      A comparison operator! More documentation here.
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pydocstrings.Something) -> None
+     |
+     |      The default constructor! More documentation here.
+     |
+     |      2. __init__(self: pydocstrings.Something, arg0: pydocstrings.Something) -> None
+     |
+     |  __lt__(...)
+     |      __lt__(self: pydocstrings.Something, arg0: pydocstrings.Something) -> bool
+     |
+     |      Less than! More documentation here.
+     |
+     |  __ne__(...)
+     |      __ne__(self: pydocstrings.Something, arg0: pydocstrings.Something) -> bool
+     |
+     |      Inline friend! More documentation here.
+     |
+     |  do_something(...)
+     |      do_something(self: pydocstrings.Something) -> None
+     |
+     |      A member function! More documentation here.
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    some_function(...) method of builtins.PyCapsule instance
+        some_function() -> None
+
+        A free function! More documentation here.
+

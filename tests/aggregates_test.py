@@ -3,9 +3,8 @@ import pyaggregates as m
 
 @pytest.mark.skip(reason="not implemented")
 def test_aggregate_does_not_have_default_ctor():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible constructor arguments"):
         obj = m.Aggregate()  # pylint: disable=unused-variable
-    assert "incompatible constructor arguments" in str(excinfo.value)
 
 @pytest.mark.skip(reason="not implemented")
 def test_aggregate_has_ctor():

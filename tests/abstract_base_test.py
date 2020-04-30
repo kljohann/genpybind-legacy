@@ -2,9 +2,8 @@ import pytest
 import pyabstract_base as m
 
 def test_base():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="No constructor defined!"):
         m.AbstractBase()
-    assert "No constructor defined!" in str(excinfo.value)
     assert m.AbstractBase.static_method() is True
 
 def test_derived():

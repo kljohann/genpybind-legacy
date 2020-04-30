@@ -8,8 +8,6 @@ import re
 if False:  # pylint: disable=using-constant-test
     from typing import (  # pylint: disable=unused-import
         Any, Callable, Iterable, List, Optional, Pattern, Text, TypeVar)
-    T = TypeVar("T")
-    U = TypeVar("U")
 
 
 def is_string(text):
@@ -66,3 +64,8 @@ def strip_prefix(text, *prefixes):
         if text.startswith(prefix):
             text = text[len(prefix):]
     return text
+
+
+def drain_iterable(iterable):
+    # type: (Iterable[Any]) -> None
+    _ = list(iterable)

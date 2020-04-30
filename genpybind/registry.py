@@ -24,9 +24,21 @@ class Registry(collections.Mapping):
 
     def should_expose(self, declaration):
         # type: (Declaration) -> bool
+        # TODO: Reconsider handling of tags for exclusion of types.  Currently
+        # it's not possible to stop at the topmost scope that has been excluded
+        # as declarations within could still have additional tags.
         if not self._tags or not declaration.tags:
             return True
         return bool(self._tags.intersection(declaration.tags))
+
+    def add_tombstone(self, cursor):
+        # type: (cindex.Cursor) -> None
+        """Add a tombstone that marks a type, which has been excluded via tags,
+        as 'exposed elsewhere'.
+        """
+        # Types that have been excluded via tags are marked using `None`.
+        # TODO: Use value different from None to encode this.
+        self.register(cursor, None)
 
     @staticmethod
     def identifier(thing):

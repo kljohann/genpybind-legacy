@@ -1,0 +1,81 @@
+NAME
+    pyabstract_base
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        AbstractBase
+            Derived
+
+    class AbstractBase(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      AbstractBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  return_magic_number(...)
+     |      return_magic_number(self: pyabstract_base.AbstractBase) -> float
+     |
+     |  something(...)
+     |      something(self: pyabstract_base.AbstractBase, value: int) -> int
+     |
+     |  whatever(...)
+     |      whatever(self: pyabstract_base.AbstractBase, value: int) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  static_method(...) from builtins.PyCapsule
+     |      static_method() -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Derived(AbstractBase)
+     |  Method resolution order:
+     |      Derived
+     |      AbstractBase
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyabstract_base.Derived, arg0: pyabstract_base.Derived) -> None
+     |
+     |      2. __init__(self: pyabstract_base.Derived) -> None
+     |
+     |  return_magic_number(...)
+     |      return_magic_number(self: pyabstract_base.Derived) -> float
+     |
+     |  something(...)
+     |      something(self: pyabstract_base.Derived, value: int) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from AbstractBase:
+     |
+     |  whatever(...)
+     |      whatever(self: pyabstract_base.AbstractBase, value: int) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from AbstractBase:
+     |
+     |  static_method(...) from builtins.PyCapsule
+     |      static_method() -> bool
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

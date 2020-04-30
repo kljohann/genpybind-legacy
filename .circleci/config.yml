@@ -2,23 +2,28 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: kljohann/genpybind-ci:0.0.4
+      - image: kljohann/genpybind-ci:0.9.0
     steps:
       - checkout
       - run:
+          name: Set up pybind11
+          command: git clone https://github.com/pybind/pybind11 --branch v2.2.1 --depth=1
+      - run:
           name: Set up environment
-          command: cat .circleci/spack.sh >> $BASH_ENV
+          command: |
+            pip3 install pytest
+            echo "export PYBIND11_INCLUDES=$PWD/pybind11/include" >> $BASH_ENV
       - run:
           name: Configure
           command: |
-            ./waf configure
+            python3 ./waf configure
             cat ./build/config.log
       - run:
           name: Build
-          command: ./waf build --notests -v -j4
+          command: python3 ./waf build --notests -v -j4
       - run:
           name: Test
-          command: ./waf build --alltests
+          command: python3 ./waf build --alltests
       - run:
           name: Clean up build directory
           when: always

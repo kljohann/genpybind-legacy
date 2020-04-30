@@ -2,22 +2,23 @@ import pytest
 import pyimplicit_conversion as m
 
 def test_from_class_implicit_without_annotation():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.test_value(m.One())
-    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_from_class_explicit_without_annotation():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.test_value(m.Two())
-    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_from_class_implicit_with_annotation():
-    m.test_value(m.Three())
+    assert m.test_value(m.Three()) == 3
 
 def test_from_pod_explicit_without_annotation():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.test_value(2.0)
-    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_from_pod_implicit_with_annotation():
-    m.test_value(42)
+    assert m.test_value(42) == 42
+
+def test_by_reference():
+    number = m.Number(123)
+    assert m.test_by_reference(number) == 123

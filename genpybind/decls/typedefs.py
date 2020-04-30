@@ -55,43 +55,38 @@ class Typedef(Declaration):
         # type: (Text, Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
         assert not self.opaque
 
-        decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
-        decl = registry.get(decl_cursor, None)
-
-        if self.exposed_elsewhere(registry) or decl is not None:
-            tpl = "genpybind_get_type_object<{}>()"
-            obj = tpl.format(decl_cursor.type.fully_qualified_name)
-            yield "{parent}.attr({name}) = {obj};".format(
-                parent=parent,
-                name=quote(self.expose_as),
-                obj=obj,
-            )
-            return
-
-        if self.opaque is None: # alias
-            yield "// FIXME: expose {}".format(self)
-            return
-
-        assert self.opaque is False
-
         decl_cursor = self.underlying_cursor()
-        declarations = gather_declarations(decl_cursor, default_visibility=True)
-        if not declarations:
-            raise RuntimeError(
-                "could not load declaration when exposing {}".format(self))
-        declaration = declarations[0]
 
-        self._annotations.apply_to(declaration, exclude=["opaque"])
-        for result in declaration.expose(toplevel, registry):
-            yield result
+        # If this typedef is marked `opaque(false)` and the type has neither
+        # already been exposed nor marked as "exposed elsewhere", try to expose
+        # it now:
+        if self.opaque is False and not registry.has(decl_cursor):
+            declarations = gather_declarations(decl_cursor, default_visibility=True)
+            if not declarations:
+                raise RuntimeError(
+                    "could not load declaration when exposing {}".format(self))
+            declaration = declarations[0]
 
-        # retrigger expose_later to expose the alias
-        yield (self, parent)
+            self._annotations.apply_to(declaration, exclude=["opaque"])
+            for result in declaration.expose(toplevel, registry):
+                yield result
 
-    def exposed_elsewhere(self, registry):
-        # type: (Registry) -> bool
-        decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
-        return registry.get(decl_cursor, True) is None
+            # retrigger expose_later to expose the alias
+            yield (self, parent)
+            return
+
+        # If the target type is visible and not blacklisted via mismatched tags
+        # (see Registry.should_expose) it should have already been exposed at
+        # this point.  For types exposed elsewhere we assume the corresponding
+        # module to be present at run time.  As a consequence it's sensible to
+        # unconditionally create an alias here.
+        tpl = "genpybind_get_type_object<{}>()"
+        obj = tpl.format(decl_cursor.type.fully_qualified_name)
+        yield "{parent}.attr({name}) = {obj};".format(
+            parent=parent,
+            name=quote(self.expose_as),
+            obj=obj,
+        )
 
     def expose(self, parent, registry):
         # type: (Text, Registry) -> Iterable[Union[Tuple[Declaration, Text], Text]]
@@ -99,10 +94,10 @@ class Typedef(Declaration):
             return
 
         if not registry.should_expose(self):
-            registry.register(self.cursor, None)
+            registry.add_tombstone(self.cursor)
             if self.opaque:
                 decl_cursor = cutils.typedef_underlying_declaration(self.cursor)
-                registry.register(decl_cursor, None)
+                registry.add_tombstone(decl_cursor)
             return
 
         for result in self.statements(parent, registry):

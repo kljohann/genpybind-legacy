@@ -1,0 +1,41 @@
+NAME
+    pyproperties
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        Something
+
+    class Something(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Something
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyproperties.Something) -> None
+     |
+     |      2. __init__(self: pyproperties.Something, arg0: pyproperties.Something) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  readonly
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  other
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

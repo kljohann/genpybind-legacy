@@ -1,0 +1,235 @@
+NAME
+    pyopaque_typedefs
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        TargetForOpaqueFalse
+        TargetForOpaqueFalseAlreadyExposed
+        TargetForOpaqueFalseExtraKeywords
+        typedef_opaque
+        typedef_opaque_true
+        typedef_opaque_true_extra_keywords
+
+    class TargetForOpaqueFalse(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalse
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalse) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalse, arg0: pyopaque_typedefs.TargetForOpaqueFalse) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class TargetForOpaqueFalseAlreadyExposed(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalseAlreadyExposed
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed, arg0: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class TargetForOpaqueFalseExtraKeywords(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalseExtraKeywords
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords, arg0: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class typedef_opaque(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      typedef_opaque
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.typedef_opaque) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.typedef_opaque, arg0: pyopaque_typedefs.typedef_opaque) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  x
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_opaque_false = class TargetForOpaqueFalse(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalse
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalse) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalse, arg0: pyopaque_typedefs.TargetForOpaqueFalse) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_opaque_false_already_exposed = class TargetForOpaqueFalseAlreadyExposed(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalseAlreadyExposed
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed, arg0: pyopaque_typedefs.TargetForOpaqueFalseAlreadyExposed) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    typedef_opaque_false_extra_keywords = class TargetForOpaqueFalseExtraKeywords(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      TargetForOpaqueFalseExtraKeywords
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords, arg0: pyopaque_typedefs.TargetForOpaqueFalseExtraKeywords) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class typedef_opaque_true(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      typedef_opaque_true
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.typedef_opaque_true) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.typedef_opaque_true, arg0: pyopaque_typedefs.typedef_opaque_true) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  x
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class typedef_opaque_true_extra_keywords(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      typedef_opaque_true_extra_keywords
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyopaque_typedefs.typedef_opaque_true_extra_keywords) -> None
+     |
+     |      2. __init__(self: pyopaque_typedefs.typedef_opaque_true_extra_keywords, arg0: pyopaque_typedefs.typedef_opaque_true_extra_keywords) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+

@@ -1,0 +1,174 @@
+NAME
+    pyimplicit_conversion
+
+CLASSES
+    pybind11_builtins.pybind11_object(builtins.object)
+        ByReference
+        Number
+        One
+        Three
+        Two
+        Value
+
+    class ByReference(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      ByReference
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.ByReference, number: pyimplicit_conversion.Number) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.ByReference, arg0: pyimplicit_conversion.ByReference) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Number(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Number
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.Number, value: int) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.Number, arg0: pyimplicit_conversion.Number) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class One(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      One
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.One) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.One, arg0: pyimplicit_conversion.One) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Three(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Three
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.Three) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.Three, arg0: pyimplicit_conversion.Three) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Two(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Two
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.Two) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.Two, arg0: pyimplicit_conversion.Two) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class Value(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      Value
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pyimplicit_conversion.Value, one: pyimplicit_conversion.One) -> None
+     |
+     |      2. __init__(self: pyimplicit_conversion.Value, two: pyimplicit_conversion.Two) -> None
+     |
+     |      3. __init__(self: pyimplicit_conversion.Value, three: pyimplicit_conversion.Three) -> None
+     |
+     |      4. __init__(self: pyimplicit_conversion.Value, value: float) -> None
+     |
+     |      5. __init__(self: pyimplicit_conversion.Value, value: int) -> None
+     |
+     |      6. __init__(self: pyimplicit_conversion.Value, arg0: pyimplicit_conversion.Value) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+FUNCTIONS
+    test_by_reference(...) method of builtins.PyCapsule instance
+        test_by_reference(instance: pyimplicit_conversion.ByReference) -> int
+
+    test_value(...) method of builtins.PyCapsule instance
+        test_value(value: pyimplicit_conversion.Value) -> int
+

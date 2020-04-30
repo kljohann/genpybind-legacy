@@ -3,6 +3,7 @@
 #include "clang/Frontend/FrontendActions.h"
 #include "clang/Tooling/CommonOptionsParser.h"
 #include "clang/Tooling/Tooling.h"
+#include "llvm/ADT/StringRef.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/PrettyStackTrace.h"
@@ -39,7 +40,7 @@ public:
   }
 
   std::unique_ptr<clang::ASTConsumer>
-  CreateASTConsumer(clang::CompilerInstance &, StringRef) override {
+  CreateASTConsumer(clang::CompilerInstance &, llvm::StringRef) override {
     return llvm::make_unique<GenpybindExpandASTConsumer>();
   }
 }; // ASTFrontendAction

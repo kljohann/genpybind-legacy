@@ -15,10 +15,8 @@ def test_free_function_float():
     assert isinstance(val, float)
 
 def test_free_function_invalid():
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         m.frobnicate("uiae")
-
-    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_member_function_int():
     obj = m.Klass()
@@ -26,10 +24,8 @@ def test_member_function_int():
 
 def test_member_function_invalid():
     obj = m.Klass()
-    with pytest.raises(TypeError) as excinfo:
+    with pytest.raises(TypeError, match="incompatible function arguments"):
         obj.increase("uiae")
-
-    assert "incompatible function arguments" in str(excinfo.value)
 
 def test_constructor():
     obj = m.Something()

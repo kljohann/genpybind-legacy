@@ -1,0 +1,7 @@
+NAME
+    pyoptional_parameters
+
+FUNCTIONS
+    foo(...) method of builtins.PyCapsule instance
+        foo(o: Optional[int]=None) -> Optional[int]
+
