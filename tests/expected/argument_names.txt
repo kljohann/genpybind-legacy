@@ -17,7 +17,7 @@ CLASSES
      |      __init__(*args, **kwargs)
      |      Overloaded function.
      |
-     |      1. __init__(self: pyargument_names.Something, first: int, second: bool, third: int=5) -> None
+     |      1. __init__(self: pyargument_names.Something, first: int, second: bool, third: int = 5) -> None
      |
      |      2. __init__(self: pyargument_names.Something, arg0: pyargument_names.Something) -> None
      |
@@ -32,5 +32,5 @@ CLASSES
 
 FUNCTIONS
     some_function(...) method of builtins.PyCapsule instance
-        some_function(option: bool, something: bool=True) -> bool
+        some_function(option: bool, something: bool = True) -> bool
 

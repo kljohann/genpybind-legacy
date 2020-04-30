@@ -10,6 +10,14 @@ CLASSES
         UnscopedNoExport
 
     class Access(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  Read
+     |
+     |  Write
+     |
+     |  Execute
+     |
      |  Method resolution order:
      |      Access
      |      pybind11_builtins.pybind11_object
@@ -17,43 +25,26 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __and__(...)
-     |      __and__(*args, **kwargs)
-     |      Overloaded function.
+     |  __and__ = (...)
+     |      (self: object, arg0: object) -> object
      |
-     |      1. __and__(self: pyenums.Access, arg0: int) -> int
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      2. __and__(self: pyenums.Access, arg0: pyenums.Access) -> int
+     |  __ge__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __eq__(...)
-     |      __eq__(*args, **kwargs)
-     |      Overloaded function.
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |      1. __eq__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |  __gt__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      2. __eq__(self: pyenums.Access, arg0: int) -> bool
+     |  __hash__ = (...)
+     |      (self: object) -> int_
      |
-     |  __ge__(...)
-     |      __ge__(*args, **kwargs)
-     |      Overloaded function.
-     |
-     |      1. __ge__(self: pyenums.Access, arg0: pyenums.Access) -> bool
-     |
-     |      2. __ge__(self: pyenums.Access, arg0: int) -> bool
-     |
-     |  __getstate__(...)
-     |      __getstate__(self: pyenums.Access) -> tuple
-     |
-     |  __gt__(...)
-     |      __gt__(*args, **kwargs)
-     |      Overloaded function.
-     |
-     |      1. __gt__(self: pyenums.Access, arg0: pyenums.Access) -> bool
-     |
-     |      2. __gt__(self: pyenums.Access, arg0: int) -> bool
-     |
-     |  __hash__(...)
-     |      __hash__(self: pyenums.Access) -> int
+     |  __index__(...)
+     |      __index__(self: pyenums.Access) -> int
      |
      |  __init__(...)
      |      __init__(self: pyenums.Access, arg0: int) -> None
@@ -61,68 +52,46 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyenums.Access) -> int
      |
-     |  __invert__(...)
-     |      __invert__(self: pyenums.Access) -> int
+     |  __invert__ = (...)
+     |      (self: object) -> object
      |
-     |  __le__(...)
-     |      __le__(*args, **kwargs)
-     |      Overloaded function.
+     |  __le__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      1. __le__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |  __lt__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      2. __le__(self: pyenums.Access, arg0: int) -> bool
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __lt__(...)
-     |      __lt__(*args, **kwargs)
-     |      Overloaded function.
+     |  __or__ = (...)
+     |      (self: object, arg0: object) -> object
      |
-     |      1. __lt__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |  __rand__ = (...)
+     |      (self: object, arg0: object) -> object
      |
-     |      2. __lt__(self: pyenums.Access, arg0: int) -> bool
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |  __ne__(...)
-     |      __ne__(*args, **kwargs)
-     |      Overloaded function.
+     |  __ror__ = (...)
+     |      (self: object, arg0: object) -> object
      |
-     |      1. __ne__(self: pyenums.Access, arg0: pyenums.Access) -> bool
+     |  __rxor__ = (...)
+     |      (self: object, arg0: object) -> object
      |
-     |      2. __ne__(self: pyenums.Access, arg0: int) -> bool
+     |  __setstate__ = (...)
+     |      (self: pyenums.Access, arg0: int) -> None
      |
-     |  __or__(...)
-     |      __or__(*args, **kwargs)
-     |      Overloaded function.
-     |
-     |      1. __or__(self: pyenums.Access, arg0: int) -> int
-     |
-     |      2. __or__(self: pyenums.Access, arg0: pyenums.Access) -> int
-     |
-     |  __rand__(...)
-     |      __rand__(self: pyenums.Access, arg0: int) -> int
-     |
-     |  __repr__(...)
-     |      __repr__(self: pyenums.Access) -> str
-     |
-     |  __ror__(...)
-     |      __ror__(self: pyenums.Access, arg0: int) -> int
-     |
-     |  __rxor__(...)
-     |      __rxor__(self: pyenums.Access, arg0: int) -> int
-     |
-     |  __setstate__(...)
-     |      __setstate__(self: pyenums.Access, arg0: tuple) -> None
-     |
-     |  __xor__(...)
-     |      __xor__(*args, **kwargs)
-     |      Overloaded function.
-     |
-     |      1. __xor__(self: pyenums.Access, arg0: int) -> int
-     |
-     |      2. __xor__(self: pyenums.Access, arg0: pyenums.Access) -> int
+     |  __xor__ = (...)
+     |      (self: object, arg0: object) -> object
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -140,6 +109,14 @@ CLASSES
      |      Create and return a new object.  See help(type) for accurate signature.
 
     class Color(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  red
+     |
+     |  green
+     |
+     |  blue
+     |
      |  Method resolution order:
      |      Color
      |      pybind11_builtins.pybind11_object
@@ -147,14 +124,17 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __eq__(...)
-     |      __eq__(self: pyenums.Color, arg0: pyenums.Color) -> bool
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __getstate__(...)
-     |      __getstate__(self: pyenums.Color) -> tuple
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |  __hash__(...)
-     |      __hash__(self: pyenums.Color) -> int
+     |  __hash__ = (...)
+     |      (self: object) -> int_
+     |
+     |  __index__(...)
+     |      __index__(self: pyenums.Color) -> int
      |
      |  __init__(...)
      |      __init__(self: pyenums.Color, arg0: int) -> None
@@ -162,19 +142,22 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyenums.Color) -> int
      |
-     |  __ne__(...)
-     |      __ne__(self: pyenums.Color, arg0: pyenums.Color) -> bool
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __repr__(...)
-     |      __repr__(self: pyenums.Color) -> str
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |  __setstate__(...)
-     |      __setstate__(self: pyenums.Color, arg0: tuple) -> None
+     |  __setstate__ = (...)
+     |      (self: pyenums.Color, arg0: int) -> None
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -192,6 +175,10 @@ CLASSES
      |      Create and return a new object.  See help(type) for accurate signature.
 
     class ScopedButExportValues(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  EnumerationFromScoped
+     |
      |  Method resolution order:
      |      ScopedButExportValues
      |      pybind11_builtins.pybind11_object
@@ -199,14 +186,17 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __eq__(...)
-     |      __eq__(self: pyenums.ScopedButExportValues, arg0: pyenums.ScopedButExportValues) -> bool
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __getstate__(...)
-     |      __getstate__(self: pyenums.ScopedButExportValues) -> tuple
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |  __hash__(...)
-     |      __hash__(self: pyenums.ScopedButExportValues) -> int
+     |  __hash__ = (...)
+     |      (self: object) -> int_
+     |
+     |  __index__(...)
+     |      __index__(self: pyenums.ScopedButExportValues) -> int
      |
      |  __init__(...)
      |      __init__(self: pyenums.ScopedButExportValues, arg0: int) -> None
@@ -214,19 +204,22 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyenums.ScopedButExportValues) -> int
      |
-     |  __ne__(...)
-     |      __ne__(self: pyenums.ScopedButExportValues, arg0: pyenums.ScopedButExportValues) -> bool
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __repr__(...)
-     |      __repr__(self: pyenums.ScopedButExportValues) -> str
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |  __setstate__(...)
-     |      __setstate__(self: pyenums.ScopedButExportValues, arg0: tuple) -> None
+     |  __setstate__ = (...)
+     |      (self: pyenums.ScopedButExportValues, arg0: int) -> None
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -240,6 +233,14 @@ CLASSES
      |      Create and return a new object.  See help(type) for accurate signature.
 
     class State(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  YES
+     |
+     |  NO
+     |
+     |  MAYBE
+     |
      |  Method resolution order:
      |      State
      |      pybind11_builtins.pybind11_object
@@ -247,19 +248,17 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __eq__(...)
-     |      __eq__(*args, **kwargs)
-     |      Overloaded function.
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      1. __eq__(self: pyenums.State, arg0: pyenums.State) -> bool
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |      2. __eq__(self: pyenums.State, arg0: int) -> bool
+     |  __hash__ = (...)
+     |      (self: object) -> int_
      |
-     |  __getstate__(...)
-     |      __getstate__(self: pyenums.State) -> tuple
-     |
-     |  __hash__(...)
-     |      __hash__(self: pyenums.State) -> int
+     |  __index__(...)
+     |      __index__(self: pyenums.State) -> int
      |
      |  __init__(...)
      |      __init__(self: pyenums.State, arg0: int) -> None
@@ -267,24 +266,22 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyenums.State) -> int
      |
-     |  __ne__(...)
-     |      __ne__(*args, **kwargs)
-     |      Overloaded function.
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |      1. __ne__(self: pyenums.State, arg0: pyenums.State) -> bool
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |      2. __ne__(self: pyenums.State, arg0: int) -> bool
-     |
-     |  __repr__(...)
-     |      __repr__(self: pyenums.State) -> str
-     |
-     |  __setstate__(...)
-     |      __setstate__(self: pyenums.State, arg0: tuple) -> None
+     |  __setstate__ = (...)
+     |      (self: pyenums.State, arg0: int) -> None
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
@@ -302,6 +299,10 @@ CLASSES
      |      Create and return a new object.  See help(type) for accurate signature.
 
     class UnscopedNoExport(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  EnumerationNotExported
+     |
      |  Method resolution order:
      |      UnscopedNoExport
      |      pybind11_builtins.pybind11_object
@@ -309,14 +310,17 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __eq__(...)
-     |      __eq__(self: pyenums.UnscopedNoExport, arg0: pyenums.UnscopedNoExport) -> bool
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __getstate__(...)
-     |      __getstate__(self: pyenums.UnscopedNoExport) -> tuple
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |  __hash__(...)
-     |      __hash__(self: pyenums.UnscopedNoExport) -> int
+     |  __hash__ = (...)
+     |      (self: object) -> int_
+     |
+     |  __index__(...)
+     |      __index__(self: pyenums.UnscopedNoExport) -> int
      |
      |  __init__(...)
      |      __init__(self: pyenums.UnscopedNoExport, arg0: int) -> None
@@ -324,19 +328,22 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyenums.UnscopedNoExport) -> int
      |
-     |  __ne__(...)
-     |      __ne__(self: pyenums.UnscopedNoExport, arg0: pyenums.UnscopedNoExport) -> bool
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __repr__(...)
-     |      __repr__(self: pyenums.UnscopedNoExport) -> str
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |  __setstate__(...)
-     |      __setstate__(self: pyenums.UnscopedNoExport, arg0: tuple) -> None
+     |  __setstate__ = (...)
+     |      (self: pyenums.UnscopedNoExport, arg0: int) -> None
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:

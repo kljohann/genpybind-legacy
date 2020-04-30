@@ -3,5 +3,5 @@ NAME
 
 FUNCTIONS
     foo(...) method of builtins.PyCapsule instance
-        foo(o: Optional[int]=None) -> Optional[int]
+        foo(o: Optional[int] = None) -> Optional[int]
 
