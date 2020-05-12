@@ -17,3 +17,7 @@ def test_crtp_enum():
     assert str(obj) == "[42]"
     assert repr(obj) == "[42]"
     assert hash(obj) == 42
+    assert obj.mvalue == 42
+    obj.mvalue = 23
+    assert obj.mvalue == 23
+    assert obj2.mvalue == 128

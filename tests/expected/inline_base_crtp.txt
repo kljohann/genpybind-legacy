@@ -55,6 +55,11 @@ CLASSES
      |      value(self: pyinline_base_crtp.Enum) -> int
      |
      |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  mvalue
+     |
+     |  ----------------------------------------------------------------------
      |  Static methods inherited from pybind11_builtins.pybind11_object:
      |
      |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
