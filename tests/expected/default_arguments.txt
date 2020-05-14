@@ -57,14 +57,14 @@ CLASSES
 
 FUNCTIONS
     function_builtin(...) method of builtins.PyCapsule instance
-        function_builtin(x: int=5, arg: bool=True) -> None
+        function_builtin(x: int = 5, arg: bool = True) -> None
 
     function_class(...) method of builtins.PyCapsule instance
-        function_class(x: pydefault_arguments.X=<pydefault_arguments.X object>) -> None
+        function_class(x: pydefault_arguments.X = <pydefault_arguments.X object>) -> None
 
     function_class_in_namespace(...) method of builtins.PyCapsule instance
-        function_class_in_namespace(y: pydefault_arguments.Y=<pydefault_arguments.Y object>) -> None
+        function_class_in_namespace(y: pydefault_arguments.Y = <pydefault_arguments.Y object>) -> None
 
     function_class_outside_namespace(...) method of builtins.PyCapsule instance
-        function_class_outside_namespace(y: pydefault_arguments.Y=<pydefault_arguments.Y object>) -> None
+        function_class_outside_namespace(y: pydefault_arguments.Y = <pydefault_arguments.Y object>) -> None
 

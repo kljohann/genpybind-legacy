@@ -29,7 +29,7 @@ CLASSES
      |      __init__(*args, **kwargs)
      |      Overloaded function.
      |
-     |      1. __init__(self: pyinline_base_crtp.Enum, val: int=0) -> None
+     |      1. __init__(self: pyinline_base_crtp.Enum, val: int = 0) -> None
      |
      |      2. __init__(self: pyinline_base_crtp.Enum, arg0: pyinline_base_crtp.Enum) -> None
      |

@@ -7,7 +7,7 @@ def test_constructor():
     except NameError: # Python 3 does not have 'long'
         val = 5
     assert ("__init__(self: pyargument_names.Something, "
-            "first: int, second: bool, third: int={!r})".format(val)) in doc
+            "first: int, second: bool, third: int = {!s})".format(val)) in doc
 
 def test_member_function():
     doc = m.Something.do_something.__doc__
@@ -19,5 +19,5 @@ def test_member_function():
 
 def test_free_function():
     assert m.some_function.__doc__ == (
-        "some_function(option: bool, something: bool=True) -> bool\n"
+        "some_function(option: bool, something: bool = True) -> bool\n"
     )

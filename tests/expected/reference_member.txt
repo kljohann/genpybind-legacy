@@ -18,7 +18,7 @@ CLASSES
      |      __init__(*args, **kwargs)
      |      Overloaded function.
      |
-     |      1. __init__(self: pyreference_member.Nested, value: int=0) -> None
+     |      1. __init__(self: pyreference_member.Nested, value: int = 0) -> None
      |
      |      2. __init__(self: pyreference_member.Nested, arg0: pyreference_member.Nested) -> None
      |

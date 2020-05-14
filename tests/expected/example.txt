@@ -22,7 +22,7 @@ CLASSES
      |      2. __init__(self: pyexample.Example, arg0: pyexample.Example) -> None
      |
      |  calculate(...)
-     |      calculate(self: pyexample.Example, some_argument: int=5) -> int
+     |      calculate(self: pyexample.Example, some_argument: int = 5) -> int
      |
      |      Do a complicated calculation.
      |

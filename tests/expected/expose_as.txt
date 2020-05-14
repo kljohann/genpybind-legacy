@@ -88,6 +88,14 @@ CLASSES
      |      Create and return a new object.  See help(type) for accurate signature.
 
     class enum(pybind11_builtins.pybind11_object)
+     |  Members:
+     |
+     |  A
+     |
+     |  B
+     |
+     |  C
+     |
      |  Method resolution order:
      |      enum
      |      pybind11_builtins.pybind11_object
@@ -95,14 +103,17 @@ CLASSES
      |
      |  Methods defined here:
      |
-     |  __eq__(...)
-     |      __eq__(self: pyexpose_as.enum, arg0: pyexpose_as.enum) -> bool
+     |  __eq__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __getstate__(...)
-     |      __getstate__(self: pyexpose_as.enum) -> tuple
+     |  __getstate__ = (...)
+     |      (self: object) -> int_
      |
-     |  __hash__(...)
-     |      __hash__(self: pyexpose_as.enum) -> int
+     |  __hash__ = (...)
+     |      (self: object) -> int_
+     |
+     |  __index__(...)
+     |      __index__(self: pyexpose_as.enum) -> int
      |
      |  __init__(...)
      |      __init__(self: pyexpose_as.enum, arg0: int) -> None
@@ -110,19 +121,22 @@ CLASSES
      |  __int__(...)
      |      __int__(self: pyexpose_as.enum) -> int
      |
-     |  __ne__(...)
-     |      __ne__(self: pyexpose_as.enum, arg0: pyexpose_as.enum) -> bool
+     |  __ne__ = (...)
+     |      (self: object, arg0: object) -> bool
      |
-     |  __repr__(...)
-     |      __repr__(self: pyexpose_as.enum) -> str
+     |  __repr__ = (...)
+     |      (self: handle) -> str
      |
-     |  __setstate__(...)
-     |      __setstate__(self: pyexpose_as.enum, arg0: tuple) -> None
+     |  __setstate__ = (...)
+     |      (self: pyexpose_as.enum, arg0: int) -> None
      |
      |  ----------------------------------------------------------------------
      |  Readonly properties defined here:
      |
      |  __members__
+     |
+     |  name
+     |      (self: handle) -> str
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
