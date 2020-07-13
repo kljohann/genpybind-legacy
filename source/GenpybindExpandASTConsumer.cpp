@@ -1,8 +1,41 @@
 #include "GenpybindExpandASTConsumer.h"
 
 #include <clang/AST/DeclCXX.h>
+#include <clang/AST/RecursiveASTVisitor.h>
 #include <clang/Sema/Sema.h>
 #include <clang/Sema/SemaDiagnostic.h>
+
+namespace {
+
+/// Force default argument instantiation, s.t. the corresponding `Expr` node is
+/// present in the AST.  (This is normally done lazily when gathering arguments
+/// at the call site.)
+class InstantiateDefaultArgsVisitor
+    : public clang::RecursiveASTVisitor<InstantiateDefaultArgsVisitor> {
+  clang::Sema *Sema = nullptr;
+
+public:
+  InstantiateDefaultArgsVisitor(clang::Sema *Sema) : Sema(Sema) {}
+
+  bool shouldWalkTypesOfTypeLocs() const { return false; }
+  bool shouldVisitTemplateInstantiations() const { return true; }
+  bool shouldVisitImplicitCode() const { return false; }
+
+  bool TraverseStmt(clang::Stmt *) {
+    // Do not visit statements and expressions.
+    return true;
+  }
+
+  bool VisitParmVarDecl(clang::ParmVarDecl *Decl) {
+    if (Decl->hasUnparsedDefaultArg() || Decl->hasUninstantiatedDefaultArg())
+      if (auto Function =
+              llvm::dyn_cast<clang::FunctionDecl>(Decl->getDeclContext()))
+        Sema->CheckCXXDefaultArgExpr(clang::SourceLocation(), Function, Decl);
+    return true;
+  }
+};
+
+} // namespace
 
 void GenpybindExpandASTConsumer::InitializeSema(clang::Sema &Sema_) {
   Sema = &Sema_;
@@ -47,6 +80,9 @@ void GenpybindExpandASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
   }
 
   Sema->ActOnEndOfTranslationUnit();
+
+  InstantiateDefaultArgsVisitor Visitor(Sema);
+  Visitor.TraverseDecl(Ctx.getTranslationUnitDecl());
 }
 
 void GenpybindExpandASTConsumer::AddImplicitMethods(clang::CXXRecordDecl *RD) {

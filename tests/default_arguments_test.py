@@ -24,3 +24,19 @@ def test_default_arguments(variant):
         pytest.skip("not implemented")
     fun = getattr(m, "function_{}".format(variant))
     fun()
+
+
+def test_template_function_with_default():
+    assert m.template_function_with_default() == 42
+    assert m.template_function_with_default(123) == 123
+
+
+def test_template_function_with_default_from_function():
+    assert m.template_function_with_default_from_function() == 23
+    assert m.template_function_with_default_from_function(123) == 123
+
+
+def test_class_template_member_function_with_default():
+    inst = m.HasMemberFunctionWithDefaultArguments_void_()
+    assert inst.identity() == 42
+    assert inst.identity(123) == 123

@@ -3,8 +3,68 @@ NAME
 
 CLASSES
     pybind11_builtins.pybind11_object(builtins.object)
+        DefaultValue
+        HasMemberFunctionWithDefaultArguments_void_
         X
         Y
+
+    class DefaultValue(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      DefaultValue
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pydefault_arguments.DefaultValue) -> None
+     |
+     |      2. __init__(self: pydefault_arguments.DefaultValue, arg0: pydefault_arguments.DefaultValue) -> None
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  foo(...) from builtins.PyCapsule
+     |      foo() -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  value
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
+
+    class HasMemberFunctionWithDefaultArguments_void_(pybind11_builtins.pybind11_object)
+     |  Method resolution order:
+     |      HasMemberFunctionWithDefaultArguments_void_
+     |      pybind11_builtins.pybind11_object
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(...)
+     |      __init__(*args, **kwargs)
+     |      Overloaded function.
+     |
+     |      1. __init__(self: pydefault_arguments.HasMemberFunctionWithDefaultArguments_void_) -> None
+     |
+     |      2. __init__(self: pydefault_arguments.HasMemberFunctionWithDefaultArguments_void_, arg0: pydefault_arguments.HasMemberFunctionWithDefaultArguments_void_) -> None
+     |
+     |  identity(...)
+     |      identity(self: pydefault_arguments.HasMemberFunctionWithDefaultArguments_void_, value: int=42) -> int
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from pybind11_builtins.pybind11_object:
+     |
+     |  __new__(*args, **kwargs) from pybind11_builtins.pybind11_type
+     |      Create and return a new object.  See help(type) for accurate signature.
 
     class X(pybind11_builtins.pybind11_object)
      |  Method resolution order:
@@ -67,4 +127,10 @@ FUNCTIONS
 
     function_class_outside_namespace(...) method of builtins.PyCapsule instance
         function_class_outside_namespace(y: pydefault_arguments.Y=<pydefault_arguments.Y object>) -> None
+
+    template_function_with_default(...) method of builtins.PyCapsule instance
+        template_function_with_default(value: int=42) -> int
+
+    template_function_with_default_from_function(...) method of builtins.PyCapsule instance
+        template_function_with_default_from_function(value: int=23) -> int
 
