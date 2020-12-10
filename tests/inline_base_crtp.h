@@ -43,6 +43,12 @@ public:
   GENPYBIND(expose_as(__hash__))
   size_t hash() const { return mValue; }
 
+  GENPYBIND(getter_for(mvalue))
+  value_type get_value() const { return mValue; }
+
+  GENPYBIND(setter_for(mvalue))
+  void set_value(value_type const& value) { mValue = value; }
+
 private:
   value_type mValue;
 };
