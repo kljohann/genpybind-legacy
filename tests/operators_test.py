@@ -21,6 +21,7 @@ def pythonic_name(name):
     return name
 
 BINARY_OPERATORS = "lt le eq ne gt ge sub add mul div mod lshift rshift and or xor".split()
+BINARY_ROPERATORS = "rsub radd rmul rdiv rmod rlshift rrshift rand ror rxor".split()
 
 @pytest.mark.parametrize("variant", ["member", "friend", "non_const_member"])
 @pytest.mark.parametrize("name", BINARY_OPERATORS)
@@ -29,6 +30,12 @@ def test_has_binary_operator(variant, name):
     name = pythonic_name(name)
     assert hasattr(obj, "__{}__".format(name.rstrip("_")))
     assert getattr(operator, name)(obj, obj) is True
+
+@pytest.mark.parametrize("variant", ["member", "friend", "non_const_member"])
+@pytest.mark.parametrize("name", BINARY_ROPERATORS)
+def test_has_binary_roperator(variant, name):
+    obj = getattr(m, "has_{}_{}".format(variant, name))()
+    assert hasattr(obj, "__{}__".format(name.rstrip("_")))
 
 @pytest.mark.parametrize("variant", ["hidden", "private", "hidden_friend"])
 @pytest.mark.parametrize("name", BINARY_OPERATORS)
@@ -47,6 +54,12 @@ def test_has_no_binary_operator(variant, name):
             r"unsupported operand type\(s\)",
     ])):
         getattr(operator, name)(obj, obj)
+
+@pytest.mark.parametrize("variant", ["hidden", "private", "hidden_friend"])
+@pytest.mark.parametrize("name", BINARY_ROPERATORS)
+def test_has_no_binary_roperator(variant, name):
+    obj = getattr(m, "has_{}_{}".format(variant, name))()
+    assert not hasattr(obj, "__{}__".format(name.rstrip("_")))
 
 UNARY_OPERATORS = "iadd isub imul idiv imod ilshift irshift iand ior ixor".split()
 

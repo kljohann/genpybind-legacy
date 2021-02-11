@@ -199,24 +199,24 @@ class Operator(Callable):
         _typedef_name = registry.register(self.cursor, self)
 
         # TODO: Add support for call policies
-        # TODO: Handle "r" variant of operators
 
         argument_types = self._argument_types()
 
-        yield "{parent}.def({args});".format(
-            parent=parent,
-            args=join_arguments(
-                quote("__{}__".format(names[0])),
-                "[]({args}) {{ return {expr}; }}".format(
-                    args=join_arguments(
-                        "{} {}& {}".format(
-                            utils.strip_prefix(tp.fully_qualified_name, "const "),
-                            "const" if self.cursor.is_const_method() else "",
-                            var)
-                        for tp, var in zip(argument_types, ["l", "r"])),
-                    expr=expr,
-                ),
-                quote(self.cursor.brief_comment),
-                "py::is_operator()",
+        for name in names:
+            yield "{parent}.def({args});".format(
+                parent=parent,
+                args=join_arguments(
+                    quote("__{}__".format(name)),
+                    "[]({args}) {{ return {expr}; }}".format(
+                        args=join_arguments(
+                            "{} {}& {}".format(
+                                utils.strip_prefix(tp.fully_qualified_name, "const "),
+                                "const" if self.cursor.is_const_method() else "",
+                                var)
+                            for tp, var in zip(argument_types, ["l", "r"])),
+                        expr=expr,
+                    ),
+                    quote(self.cursor.brief_comment),
+                    "py::is_operator()",
+                )
             )
-        )
