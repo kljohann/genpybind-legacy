@@ -56,7 +56,7 @@ def main():
                     status, rest))
             translation_unit = TranslationUnit.from_ast_file(ast_file)
         finally:
-            shutil.rmtree(name)
+            shutil.rmtree(name, ignore_errors=True)
 
     if translation_unit.diagnostics:
         for diag in translation_unit.diagnostics:
