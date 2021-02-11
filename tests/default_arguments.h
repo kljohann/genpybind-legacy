@@ -19,6 +19,11 @@ void GENPYBIND(visible) function_class_in_namespace(Y y = Y()) {}
 void GENPYBIND(visible)
     function_class_outside_namespace(example::Y y = example::Y()) {}
 
+template <typename T>
+int GENPYBIND(visible) function_templated(T o = T(42));
+
+extern template int GENPYBIND(visible) function_templated<int>(int o = 42);
+
 // TODO: genpybind uses `example::Y::N` as default argument?
 /*
 void GENPYBIND(visible) function_template_outside_namespace(

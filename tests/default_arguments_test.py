@@ -11,6 +11,7 @@ import pydefault_arguments as m
     "class_outside_namespace",
     "braced_outside_namespace",
     "template_outside_namespace",
+    "templated",
 ])
 def test_default_arguments(variant):
     # TODO: braced initialization not supported in default argument
